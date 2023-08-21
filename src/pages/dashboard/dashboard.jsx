@@ -94,11 +94,11 @@ const Dashboard = () => {
           <Sidebar />
         </div>
         <div className="flex-grow flex flex-col pl-4 pr-4  lg:w-3/4">
-          <div className="flex justify-center text-center bg-gray-100 rounded-2xl pr-3 pl-3 pt-1 pb-1 mb-2">
+          <div className="flex justify-center text-center bg-gray-100 rounded-3xl pr-3 pl-3 pt-2 pb-2 mb-2">
             {menuItems.map((item, index) => (
               <button
                 key={index}
-                className="flex item-center bg-blue-500 text-white pr-4 pl-4 mr-5 "
+                className="flex item-center bg-blue-500 text-white pr-4 pl-4 mr-5 pt-2 pb-2 "
               >
                 {item.icon} <span className="hidden lg:inline"> </span>
                 {item.label}
