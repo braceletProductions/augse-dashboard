@@ -1,5 +1,6 @@
-// components/Sidebar.jsx
 import React from "react";
+import Image from "next/image";
+import logo from "../../public/logo.png";
 
 const Sidebar = () => {
   const menuItems = [
@@ -12,21 +13,19 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="h-screen w-1/4 lg:w-4/5 bg-white flex flex-col">
-      <div
-        className="w-48 h-32 p-4  flex items-center justify-center"
-        style={{
-          backgroundImage: "url('/logo.png')",
-          backgroundSize: "contain",
-          backgroundRepeat: "no-repeat",
-          width: "100%",
-          height: "auto",
-        }}
-      ></div>
-      <div className="flex-grow w-36 pl-7 ">
-        <ul className="py-4">
+    <div className="h-screen w-1/4 lg:w-4/5 bg-white flex flex-col mb-10 justify-center text-center items-center">
+      <div className="mb-2 p-0 bg-gray-600 ">
+        <div className="bg-gray-200">
+          <a href="/dashboard/dashboard">
+            <Image src={logo} width={400} alt="Logo" />
+          </a>
+        </div>
+      </div>
+
+      <div className="flex-grow w-38 pl-7">
+        <ul className="py-1">
           {menuItems.map((item, index) => (
-            <li key={index} className="mb-8 ">
+            <li key={index} className="mb-5">
               <a
                 href="#"
                 className="flex items-center text-gray-900 font-medium hover:text-blue-400 p-3"
