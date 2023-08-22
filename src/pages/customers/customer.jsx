@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import Sidebar from "@/components/Sidebar";
 
 const Customer = () => {
+  const router = useRouter();
   // Example customer data array
   const customerData = [
     { id: 1, name: "Liza D'Souza", email: "awserdky.nhtrsdf@gmail.com" },
@@ -10,12 +12,7 @@ const Customer = () => {
   ];
 
   const handleProfileClick = (customerId) => {
-    const selectedCustomer = customerData.find(
-      (customer) => customer.id === customerId
-    );
-    if (selectedCustomer) {
-      console.log("Selected Customer Details:", selectedCustomer);
-    }
+    router.push(`/customers/${customerId}`); // Navigate to customer detail page
   };
   return (
     <div className="flex flex-col lg:flex-row min-h-screen">
