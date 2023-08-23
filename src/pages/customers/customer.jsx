@@ -11,7 +11,7 @@ const Customer = () => {
   ];
 
   const handleProfileClick = (customerId) => {
-    router.push(`/customers/${customerId}`); // Navigate to customer detail page
+    router.push(`/customers/dynamicRoutes/${customerId}`); // Navigate to customer detail page
   };
 
   return (

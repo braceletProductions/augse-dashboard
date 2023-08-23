@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import customerData from "./customerData"; // Assuming customerData.js is in the same directory
+import customerData from "../customerData"; // Assuming customerData.js is in the same directory
 
 const CustomerDetailPage = () => {
   const router = useRouter();
