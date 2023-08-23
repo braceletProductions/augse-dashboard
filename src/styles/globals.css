@@ -22,10 +22,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: rgb(50 100 154)
+  background: rgb(27, 72, 121);
+ 
 }
 
-.chart-container {
-  width: 30%; /* Adjust the width as needed */
-  margin: 1rem; /* Adjust the margin as needed */
-}

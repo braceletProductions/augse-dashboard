@@ -54,33 +54,46 @@ const Orders = () => {
     ],
   };
 
+  const doughnutOptions = {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const value = context.raw;
+            const percentage = calculatePercentage(value, totalOrders);
+            const label = context.label || "";
+
+            return `${label}: ${value} (${percentage}%)`;
+          },
+        },
+      },
+    },
+  };
+
   return (
     <div className="flex mt-5">
       <Sidebar />
-      <div className=" flex  bg-gray-100 mt-0 ml-2 rounded-2xl pr-10 pl-10 pt-3">
-        <div>
-          <h1>
+      <div className="flex-grow bg-gray-100 mt-0 ml-2 rounded-2xl pr-10 pl-10 pt-10 relative">
+        <div className=" text-blue-400   text-xl p-4 rounded-xl mb-4">
+          <h1 className="mb-1">
             <u>Total Orders</u>
           </h1>
-          <h1>Canceled Orders: {orderData.canceled}</h1>
-          <h1>Returned Orders: {orderData.returned}</h1>
-          <h1>Delivered Orders: {orderData.delivered}</h1>
-          <h1>Shipped Orders: {orderData.shipped}</h1>
-          <h1>Pending Orders: {orderData.pending}</h1>
+          <h1 className="mb-3 gap-x-2">Canceled Orders {orderData.canceled}</h1>
+          <h1 className="mb-3 gap-x-2">Return Orders {orderData.returned}</h1>
+          <h1 className="mb-3 gap-x-2">
+            Delivered Orders {orderData.delivered}
+          </h1>
+          <h1 className="mb-3 gap-x-2">
+            Shipped but not delivered {orderData.shipped}
+          </h1>
+          <h1 className="mb-3">Shipping is Pending {orderData.pending}</h1>
         </div>
-
-        <div className="chart-container">
-          <Doughnut data={doughnutData} />
+        <div className="lg:absolute top-5 right-28 p-4 rounded-xl ">
+          <Doughnut data={doughnutData} options={doughnutOptions} />
         </div>
-        <h1 className="justify-center text-center">
-          Orders segregated on the bases of category
-        </h1>
-        <h1 className="justify-center text-center">
-          Orders segregated on the bases of category
-        </h1>
-        <h1 className="justify-center text-center">
-          Orders segregated on the bases of category
-        </h1>
+        <div className=" mt-6 lg:mt-20 p-4  text-blue-400 rounded-xl text-center">
+          <h1>Orders segregated on the bases of category</h1>
+        </div>
       </div>
     </div>
   );

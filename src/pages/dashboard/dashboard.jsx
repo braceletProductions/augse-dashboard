@@ -23,11 +23,11 @@ Chart.register(
 const categoryData = [
   { category: "Pure Silk Saree", count: 50 },
   { category: "Semi Silk Saree", count: 30 },
-  { category: "Semi Silk Saree", count: 30 },
-  { category: "Semi Silk Saree", count: 30 },
-  { category: "Semi Silk Saree", count: 30 },
-  { category: "Semi Silk Saree", count: 30 },
-  { category: "Semi Silk Saree", count: 30 },
+  { category: "Cotton Saree", count: 30 },
+  { category: "Kanchivaram Saree", count: 30 },
+  { category: "Bandhani Saree", count: 30 },
+  { category: "Organza Saree", count: 30 },
+  { category: "Printed Saree", count: 30 },
 ];
 
 // Dummy sales data
