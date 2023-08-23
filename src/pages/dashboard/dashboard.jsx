@@ -86,10 +86,10 @@ const Dashboard = () => {
       <div>
         <Header />
       </div>
-      <div className="flex-grow  lg:flex lg:mt-5">
-        <div className="pr-8 lg:w-1/4 xl:w-1/5 sm:w-full ">
-          <Sidebar />
-        </div>
+
+      <div className="flex-grow  lg:flex lg:mt-5 ">
+        <Sidebar />
+
         <div className="flex-grow flex flex-col pl-4 pr-4  lg:w-3/4">
           <MenuItems />
           <div className="flex gap-9 flex-grow  flex-col lg:flex-row">
