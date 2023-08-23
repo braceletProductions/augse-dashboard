@@ -1,23 +1,24 @@
 import Sidebar from "@/components/Sidebar";
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import { Doughnut, Bar } from "react-chartjs-2";
+
 import {
-  Chart,
+  Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  LineElement,
-  PointElement,
-  ArcElement,
-  BarController,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
 } from "chart.js";
 
-Chart.register(
+ChartJS.register(
   CategoryScale,
   LinearScale,
-  LineElement,
-  PointElement,
-  ArcElement,
-  BarController
+  Title,
+  Tooltip,
+  Legend,
+  BarElement
 );
 
 const calculatePercentage = (value, total) =>
@@ -31,13 +32,15 @@ const Orders = () => {
     shipped: 15,
     pending: 5,
   };
-
-  const categoryData = {
-    cat1: 1,
-    cat2: 2,
-    cat3: 3,
-  };
-
+  const categoryData = [
+    { category: "Pure Silk Saree", count: 21 },
+    { category: "Semi Silk Saree", count: 16 },
+    { category: "Cotton Saree", count: 7 },
+    { category: "Kanchivaram Saree", count: 8 },
+    { category: "Bandhani Saree", count: 17 },
+    { category: "Organza Saree", count: 5 },
+    { category: "Printed Saree", count: 23 },
+  ];
   const totalOrders =
     orderData.canceled +
     orderData.returned +
@@ -56,7 +59,13 @@ const Orders = () => {
           orderData.shipped,
           orderData.pending,
         ],
-        backgroundColor: ["red", "orange", "green", "blue", "gray"],
+        backgroundColor: [
+          "#153e64",
+          "#03284a",
+          "#33f9f9",
+          "#08b7c2",
+          "#177cac",
+        ],
       },
     ],
   };
@@ -69,46 +78,41 @@ const Orders = () => {
             const value = context.raw;
             const percentage = calculatePercentage(value, totalOrders);
             const label = context.label || "";
-
             return `${label}: ${value} (${percentage}%)`;
           },
+          title: () => null, // Remove the default title (category label)
         },
       },
     },
     cutout: "55%",
     responsive: true,
   };
-
   const barData = {
-    labels: Object.keys(categoryData),
+    labels: categoryData.map((item) => item.category), // Extract category names as labels
     datasets: [
       {
-        label: "Orders by Category",
-        data: Object.values(categoryData),
-        backgroundColor: ["red", "orange", "green", "blue"], // Add more colors if needed
+        label: "Order segregated based on category",
+        data: categoryData.map((item) => item.count), // Extract count values as data
+        backgroundColor: ["#153e64"], // Add more colors if needed
       },
     ],
   };
-
   const barOptions = {
     scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
       y: {
         beginAtZero: true,
+        suggestedMax: 25,
+        tricks: {
+          stepSize: 5,
+        },
       },
     },
   };
-
-  const doughnutChartRef = useRef(null);
-  const barChartRef = useRef(null);
-
-  useEffect(() => {
-    if (doughnutChartRef.current) {
-      doughnutChartRef.current.destroy();
-    }
-    if (barChartRef.current) {
-      barChartRef.current.destroy();
-    }
-  }, []);
 
   return (
     <div className="flex mt-5">
@@ -128,20 +132,16 @@ const Orders = () => {
           </h1>
           <h1 className="mb-3">Shipping is Pending {orderData.pending}</h1>
           <div className="lg:absolute top-5 right-28 p-4 rounded-xl ">
-            <Doughnut
-              ref={doughnutChartRef}
-              data={doughnutData}
-              options={doughnutOptions}
-            />
+            <Doughnut data={doughnutData} options={doughnutOptions} />
           </div>
         </div>
 
-        <div className=" text-blue-400  text-center   text-xl p-6 rounded-xl ">
-          <h1 className="mb-1">Order segregated based on category</h1>
-        </div>
-
-        <div className="mt-6 p-4">
-          <Bar ref={barChartRef} data={barData} options={barOptions} />
+        <div className=" text-blue-400  text-center   text-xl  rounded-xl "></div>
+        <div
+          className="mt-6 ml-5 p-3 text-center justify-center"
+          style={{ width: "80%", display: "flex", justifyContent: "center" }}
+        >
+          <Bar data={barData} options={barOptions} />
         </div>
       </div>
     </div>
