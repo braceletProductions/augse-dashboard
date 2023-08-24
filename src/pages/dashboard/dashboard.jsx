@@ -2,6 +2,8 @@ import React from "react";
 import { Line, Doughnut } from "react-chartjs-2";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
+import categoryData from "@/tempData/categoryData";
+import salesData from "@/tempData/salesData";
 import {
   Chart,
   CategoryScale,
@@ -19,19 +21,6 @@ Chart.register(
   PointElement,
   ArcElement
 ); // Register the CategoryScale
-
-const categoryData = [
-  { category: "Pure Silk Saree", count: 50 },
-  { category: "Semi Silk Saree", count: 30 },
-  { category: "Cotton Saree", count: 30 },
-  { category: "Kanchivaram Saree", count: 30 },
-  { category: "Bandhani Saree", count: 30 },
-  { category: "Organza Saree", count: 30 },
-  { category: "Printed Saree", count: 30 },
-];
-
-// Dummy sales data
-const salesData = [0, 12, 10, 55, 34, 23, 67, 12, 34];
 
 const months = [
   "Jan",
@@ -64,6 +53,9 @@ const Dashboard = () => {
       x: {
         type: "category", // Use the "category" scale for x-axis
         labels: months,
+        grid: {
+          display: false, // Remove vertical grid lines
+        },
       },
       y: {
         beginAtZero: true,
