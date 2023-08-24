@@ -5,7 +5,7 @@ const shipping = () => {
     <div className="flex-1">
       <div className="mt-10 mb-12 px-4">
         <h1 className="text-3xl font-bold md:text-3xl lg:text-4xl xl:text-3xl text-gray-100 pb-5">
-          Shipping is pending
+          Shipping is Pending
         </h1>
         <div className="flex flex-col">
           {customerData.map((customer) => (
