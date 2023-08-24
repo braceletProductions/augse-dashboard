@@ -5,6 +5,7 @@ const customerData = [
     name: "Liza D'Souza",
     email: "awserdky.nhtrsdf@gmail.com",
     phone: "+919876543210",
+    productId: 101, // Add the productId here
     address1: {
       street: "9, A, Chembur Fairlawn Co op Soc, Sion Trombay Road, Chembur",
       city: "Mumbai",
@@ -31,6 +32,7 @@ const customerData = [
     name: "Sakshi Sinha",
     email: "awserdky.nhtrsdf@gmail.com",
     phone: "+919876543210",
+    productId: 102, // Add the productId here
     address1: {
       street: "9, A, Chembur Fairlawn Co op Soc, Sion Trombay Road, Chembur",
       city: "Mumbai",
