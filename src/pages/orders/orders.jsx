@@ -5,6 +5,7 @@ import categoryData from "@/tempData/categoryData";
 import orderData from "@/tempData/orderData";
 import doughnutData from "@/tempData/dougnutData";
 import barData from "@/tempData/barData";
+import Link from "next/link";
 
 import {
   Chart as ChartJS,
@@ -79,15 +80,40 @@ const Orders = () => {
           <h1 className="mb-1">
             <u>Total Orders</u>
           </h1>
-          <h1 className="mb-3 gap-x-2">Canceled Orders {orderData.canceled}</h1>
-          <h1 className="mb-3 gap-x-2">Return Orders {orderData.returned}</h1>
           <h1 className="mb-3 gap-x-2">
-            Delivered Orders {orderData.delivered}
+            <Link href="/shipping/shipping" passHref>
+              <p className="text-blue-600 hover:underline">Canceled Orders</p>
+            </Link>{" "}
+            {orderData.canceled}
           </h1>
           <h1 className="mb-3 gap-x-2">
-            Shipped but not delivered {orderData.shipped}
+            <Link href="/shipping/shipping" passHref>
+              <p className="text-blue-600 hover:underline">Return Orders</p>
+            </Link>{" "}
+            {orderData.returned}
           </h1>
-          <h1 className="mb-3">Shipping is Pending {orderData.pending}</h1>
+          <h1 className="mb-3 gap-x-2">
+            <Link href="/shipping/shipping" passHref>
+              <p className="text-blue-600 hover:underline">Delivered Orders</p>
+            </Link>{" "}
+            {orderData.delivered}
+          </h1>
+          <h1 className="mb-3 gap-x-2">
+            <Link href="/shipping/shipping" passHref>
+              <p className="text-blue-600 hover:underline">
+                Shipped but not delivered
+              </p>
+            </Link>{" "}
+            {orderData.shipped}
+          </h1>
+          <h1 className="mb-3">
+            <Link href="/shipping/shipping" passHref>
+              <p className="text-blue-600 hover:underline">
+                Shipping is Pending
+              </p>
+            </Link>{" "}
+            {orderData.pending}
+          </h1>
           <div className="lg:absolute top-5 right-28 p-4 rounded-xl ">
             <Doughnut data={doughnutData} options={doughnutOptions} />
           </div>

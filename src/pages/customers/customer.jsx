@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Sidebar from "@/components/Sidebar";
+import customerData from "@/tempData/customerData";
 
 const Customer = () => {
   const router = useRouter();
-  const customerData = [
-    { id: 1, name: "Liza D'Souza", email: "awserdky.nhtrsdf@gmail.com" },
-    { id: 2, name: "Sakshi Sinha", email: "awserdky.nhtrsdf@gmail.com" },
-    // Add more customer data entries here
-  ];
+  // const customerData = [
+  //   { id: 1, name: "Liza D'Souza", email: "awserdky.nhtrsdf@gmail.com" },
+  //   { id: 2, name: "Sakshi Sinha", email: "awserdky.nhtrsdf@gmail.com" },
+  //   // Add more customer data entries here
+  // ];
 
   const handleProfileClick = (customerId) => {
-    router.push(`/customers/dynamicRoutes/${customerId}`); // Navigate to customer detail page
+    router.push(`/customers/${customerId}`); // Navigate to customer detail page
   };
 
   return (
