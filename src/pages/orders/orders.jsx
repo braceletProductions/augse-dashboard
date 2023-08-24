@@ -1,6 +1,7 @@
 import Sidebar from "@/components/Sidebar";
 import React from "react";
 import { Doughnut, Bar } from "react-chartjs-2";
+import categoryData from "@/tempData/categoryData";
 
 import {
   Chart as ChartJS,
@@ -32,15 +33,15 @@ const Orders = () => {
     shipped: 15,
     pending: 5,
   };
-  const categoryData = [
-    { category: "Pure Silk Saree", count: 21 },
-    { category: "Semi Silk Saree", count: 16 },
-    { category: "Cotton Saree", count: 7 },
-    { category: "Kanchivaram Saree", count: 8 },
-    { category: "Bandhani Saree", count: 17 },
-    { category: "Organza Saree", count: 5 },
-    { category: "Printed Saree", count: 23 },
-  ];
+  // const categoryData = [
+  //   { category: "Pure Silk Saree", count: 21 },
+  //   { category: "Semi Silk Saree", count: 16 },
+  //   { category: "Cotton Saree", count: 7 },
+  //   { category: "Kanchivaram Saree", count: 8 },
+  //   { category: "Bandhani Saree", count: 17 },
+  //   { category: "Organza Saree", count: 5 },
+  //   { category: "Printed Saree", count: 23 },
+  // ];
   const totalOrders =
     orderData.canceled +
     orderData.returned +
