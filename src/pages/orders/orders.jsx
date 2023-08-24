@@ -78,28 +78,32 @@ const Orders = () => {
       <div className="flex-grow bg-gray-100 mt-0 ml-2 rounded-2xl pr-10 pl-10 pt-10 relative">
         <div className=" text-blue-400    text-xl p-6 rounded-xl mb-6">
           <h1 className="mb-1">
-            <u>Total Orders</u>
+            <Link href="/total/total" passHref>
+              <p className="text-blue-600 hover:underline">
+                <u>Total Orders</u>
+              </p>
+            </Link>{" "}
           </h1>
           <h1 className="mb-3 gap-x-2">
-            <Link href="/shipping/shipping" passHref>
+            <Link href="/cancel/cancel" passHref>
               <p className="text-blue-600 hover:underline">Canceled Orders</p>
             </Link>{" "}
             {orderData.canceled}
           </h1>
           <h1 className="mb-3 gap-x-2">
-            <Link href="/shipping/shipping" passHref>
+            <Link href="/return/return" passHref>
               <p className="text-blue-600 hover:underline">Return Orders</p>
             </Link>{" "}
             {orderData.returned}
           </h1>
           <h1 className="mb-3 gap-x-2">
-            <Link href="/shipping/shipping" passHref>
+            <Link href="/delivered/delivered" passHref>
               <p className="text-blue-600 hover:underline">Delivered Orders</p>
             </Link>{" "}
             {orderData.delivered}
           </h1>
           <h1 className="mb-3 gap-x-2">
-            <Link href="/shipping/shipping" passHref>
+            <Link href="/notDelivered/notdelivered" passHref>
               <p className="text-blue-600 hover:underline">
                 Shipped but not delivered
               </p>
