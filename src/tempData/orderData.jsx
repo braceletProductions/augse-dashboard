@@ -1,9 +1,10 @@
 const orderData = {
-  canceled: 20,
-  returned: 10,
-  delivered: 50,
-  shipped: 15,
-  pending: 5,
+  totalOrders: 1230,
+  canceled: 23,
+  returned: 12,
+  delivered: 1320,
+  shipped: 1320,
+  pending: 1320,
 };
 
 export default orderData;
