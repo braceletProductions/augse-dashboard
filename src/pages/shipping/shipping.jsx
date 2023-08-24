@@ -1,4 +1,6 @@
 import React from "react";
+import Link from "next/link"; // Import Link from Next.js
+
 import customerData from "@/tempData/customerData";
 const shipping = () => {
   return (
@@ -28,12 +30,14 @@ const shipping = () => {
                   </h2>
                 </div>
                 <div className="pr-7">
-                  <a
-                    href={`/${customer.productId}`}
-                    className="bg-blue-900 text-white px-14 py-2 rounded-3xl lg:mt-0 sm:mt-3"
+                  <Link
+                    href={`/product/[productId]`}
+                    as={`/product/${customer.productId}`} // Use the "as" prop
                   >
-                    Product Detail
-                  </a>
+                    <div className="bg-blue-900 text-white px-14 py-2 rounded-3xl lg:mt-0 sm:mt-3">
+                      Product Detail
+                    </div>
+                  </Link>
                   <button className="bg-blue-900 text-white px-14 py-2 rounded-3xl lg:mt-0 sm:mt-3">
                     Track
                   </button>
