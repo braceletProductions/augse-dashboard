@@ -2,6 +2,9 @@ import Sidebar from "@/components/Sidebar";
 import React from "react";
 import { Doughnut, Bar } from "react-chartjs-2";
 import categoryData from "@/tempData/categoryData";
+import orderData from "@/tempData/orderData";
+import doughnutData from "@/tempData/dougnutData";
+import barData from "@/tempData/barData";
 
 import {
   Chart as ChartJS,
@@ -26,50 +29,12 @@ const calculatePercentage = (value, total) =>
   ((value / total) * 100).toFixed(2);
 
 const Orders = () => {
-  const orderData = {
-    canceled: 20,
-    returned: 10,
-    delivered: 50,
-    shipped: 15,
-    pending: 5,
-  };
-  // const categoryData = [
-  //   { category: "Pure Silk Saree", count: 21 },
-  //   { category: "Semi Silk Saree", count: 16 },
-  //   { category: "Cotton Saree", count: 7 },
-  //   { category: "Kanchivaram Saree", count: 8 },
-  //   { category: "Bandhani Saree", count: 17 },
-  //   { category: "Organza Saree", count: 5 },
-  //   { category: "Printed Saree", count: 23 },
-  // ];
   const totalOrders =
     orderData.canceled +
     orderData.returned +
     orderData.delivered +
     orderData.shipped +
     orderData.pending;
-
-  const doughnutData = {
-    labels: ["Canceled", "Returned", "Delivered", "Shipped", "Pending"],
-    datasets: [
-      {
-        data: [
-          orderData.canceled,
-          orderData.returned,
-          orderData.delivered,
-          orderData.shipped,
-          orderData.pending,
-        ],
-        backgroundColor: [
-          "#153e64",
-          "#03284a",
-          "#33f9f9",
-          "#08b7c2",
-          "#177cac",
-        ],
-      },
-    ],
-  };
 
   const doughnutOptions = {
     plugins: {
@@ -88,16 +53,7 @@ const Orders = () => {
     cutout: "55%",
     responsive: true,
   };
-  const barData = {
-    labels: categoryData.map((item) => item.category), // Extract category names as labels
-    datasets: [
-      {
-        label: "Order segregated based on category",
-        data: categoryData.map((item) => item.count), // Extract count values as data
-        backgroundColor: ["#153e64"], // Add more colors if needed
-      },
-    ],
-  };
+
   const barOptions = {
     scales: {
       x: {
