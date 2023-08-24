@@ -28,7 +28,9 @@ const Shipping = () => {
                 </div>
                 <div className="pl-5 pr-7 py-2 flex-col">
                   <h2 className="text-base font-semibold text-gray-900">
-                    Product:
+                    {categoryData.find(
+                      (category) => category.categoryId === customer.productId
+                    )?.category || "Unknown Category"}
                   </h2>
                 </div>
                 <div className="pr-7 flex flex-col mt-3 sm:flex-row sm:space-x-3">
@@ -37,9 +39,7 @@ const Shipping = () => {
                     as={`/product/${customer.productId}`}
                   >
                     <div className="bg-blue-900 text-white px-10 py-2 rounded-3xl">
-                      {categoryData.find(
-                        (category) => category.categoryId === customer.productId
-                      )?.category || "Unknown Category"}
+                      Product Detail
                     </div>
                   </Link>
                   <button className="bg-blue-900 text-white px-10 py-2 rounded-3xl mt-3 sm:mt-0">
