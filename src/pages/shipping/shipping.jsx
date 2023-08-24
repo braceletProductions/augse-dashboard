@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 import customerData from "@/tempData/customerData";
+import categoryData from "@/tempData/categoryData";
 
 const Shipping = () => {
   return (
