@@ -82,7 +82,7 @@ const Orders = () => {
               <p className="text-blue-600 hover:underline">
                 <u>Total Orders</u>
               </p>
-            </Link>{" "}
+            </Link>
           </h1>
           <h1 className="mb-3 gap-x-2">
             <Link href="/cancel/cancel" passHref>
