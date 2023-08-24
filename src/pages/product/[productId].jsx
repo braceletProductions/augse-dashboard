@@ -10,7 +10,7 @@ const ProductDetail = () => {
   console.log("ProductId from URL:", productId);
 
   const matchingCustomers = customerData.filter(
-    (customer) => customer.productId === productId
+    (customer) => parseInt(customer.productId) === parseInt(productId)
   );
 
   console.log("Customers with matching productId:", matchingCustomers);
