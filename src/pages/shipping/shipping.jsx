@@ -1,8 +1,9 @@
 import React from "react";
-import Link from "next/link"; // Import Link from Next.js
+import Link from "next/link";
 
 import customerData from "@/tempData/customerData";
-const shipping = () => {
+
+const Shipping = () => {
   return (
     <div className="flex-1">
       <div className="mt-10 mb-12 px-4">
@@ -29,16 +30,16 @@ const shipping = () => {
                     Product:
                   </h2>
                 </div>
-                <div className="pr-7">
+                <div className="pr-7 flex flex-col mt-3 sm:flex-row sm:space-x-3">
                   <Link
                     href={`/product/[productId]`}
-                    as={`/product/${customer.productId}`} // Use the "as" prop
+                    as={`/product/${customer.productId}`}
                   >
-                    <div className="bg-blue-900 text-white px-14 py-2 rounded-3xl lg:mt-0 sm:mt-3">
+                    <div className="bg-blue-900 text-white px-10 py-2 rounded-3xl">
                       Product Detail
                     </div>
                   </Link>
-                  <button className="bg-blue-900 text-white px-14 py-2 rounded-3xl lg:mt-0 sm:mt-3">
+                  <button className="bg-blue-900 text-white px-10 py-2 rounded-3xl mt-3 sm:mt-0">
                     Track
                   </button>
                 </div>
@@ -51,4 +52,4 @@ const shipping = () => {
   );
 };
 
-export default shipping;
+export default Shipping;
