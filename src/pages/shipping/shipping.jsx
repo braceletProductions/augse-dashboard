@@ -37,7 +37,9 @@ const Shipping = () => {
                     as={`/product/${customer.productId}`}
                   >
                     <div className="bg-blue-900 text-white px-10 py-2 rounded-3xl">
-                      Product Detail
+                      {categoryData.find(
+                        (category) => category.categoryId === customer.productId
+                      )?.category || "Unknown Category"}
                     </div>
                   </Link>
                   <button className="bg-blue-900 text-white px-10 py-2 rounded-3xl mt-3 sm:mt-0">
