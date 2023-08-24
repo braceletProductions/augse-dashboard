@@ -29,7 +29,7 @@ const shipping = () => {
                 </div>
                 <div className="pr-7">
                   <a
-                    href={`c/${customer.productId}`}
+                    href={`/${customer.productId}`}
                     className="bg-blue-900 text-white px-14 py-2 rounded-3xl lg:mt-0 sm:mt-3"
                   >
                     Product Detail
