@@ -1,10 +1,8 @@
 import React, { useRef, useState, useEffect, Fragment } from "react";
 import imageBackground from "../assests/image-background.png";
-import axios from "axios";
 
 function ImageUpload(props) {
   const [file, setFile] = useState();
-  const [filePath, setFilePath] = useState();
   const [previewUrl, setPreviewUrl] = useState();
   const filePickerRef = useRef();
 
@@ -21,27 +19,8 @@ function ImageUpload(props) {
     let pickedFile;
     if (event.target.files && event.target.files.length === 1) {
       pickedFile = event.target.files[0];
-      if (filePath != undefined) {
-        try {
-          const res = await axios.post(
-            "http://localhost:4001/api/v1/products/deleteimage",
-            {
-              path: filePath,
-            }
-          );
-        } catch (error) {}
-      }
-      const formData = new FormData();
-      formData.append("image", pickedFile);
-      try {
-        const res = await axios.post(
-          "http://localhost:4001/api/v1/products/addimage",
-          formData
-        );
-        props.onInput(res.data.path);
-        setFile(pickedFile);
-        setFilePath(res.data.path);
-      } catch (error) {}
+      setFile(pickedFile);
+      props.onInput(pickedFile);
     }
   };
 
@@ -71,10 +50,20 @@ function ImageUpload(props) {
                 onClick={pickImageHandler}
               />
             )}
+            {!previewUrl && props.preview && (
+              <img
+                src={"http://localhost:4001/files/" + props.preview}
+                alt="Preview"
+                className={`${
+                  props.main ? "h-[10rem]" : "max-h-[7.5rem] max-w-[12rem]"
+                }`}
+                onClick={pickImageHandler}
+              />
+            )}
           </div>
         </div>
       </div>
-      {!previewUrl && (
+      {!previewUrl && !props.preview && (
         <div
           style={{
             backgroundImage: `url(${imageBackground.src})`,
