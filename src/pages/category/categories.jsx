@@ -71,7 +71,7 @@ const Categories = () => {
         label: tooltipCallback,
       },
     },
-    coutout: "60%",
+    coutout: "50%",
     responsive: true,
   };
 
@@ -105,12 +105,7 @@ const Categories = () => {
 
               {/* Display the pie chart */}
               <div className="text-blue-400 text-xl p-6 mt-6 rounded-xl mb-6">
-                <Pie
-                  data={pieChartData}
-                  options={pieChartOptions}
-                  height="200px"
-                  width="200px"
-                />
+                <Pie data={pieChartData} options={pieChartOptions} />
               </div>
             </div>
           </div>
