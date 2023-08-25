@@ -79,7 +79,7 @@ const Orders = () => {
         <div className=" text-blue-400    text-xl p-6 rounded-xl mb-6 ">
           <h1 className="mb-3 gap-x-7 flex items-center">
             <Link href="/total/total" passHref>
-              <p className="text-blue-600 hover:text-blue-900 underline">
+              <p className="text-blue-600 hover:text-blue-900 hover:underline">
                 Total Orders
               </p>
             </Link>{" "}
@@ -127,7 +127,12 @@ const Orders = () => {
             <span className="text-blue-600">{orderData.pending}</span>
           </h1>
           <div className="lg:absolute top-5 right-28 p-4 rounded-xl ">
-            <Doughnut data={doughnutData} options={doughnutOptions} />
+            <Doughnut
+              data={doughnutData}
+              options={doughnutOptions}
+              height="200px"
+              width="200px"
+            />
           </div>
         </div>
 
