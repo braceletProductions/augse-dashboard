@@ -4,6 +4,24 @@ import { Pie } from "react-chartjs-2";
 import categoryData from "@/tempData/categoryData";
 
 import Link from "next/link";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement
+);
 
 const Categories = () => {
   // Extracting category names and counts from categoryData
@@ -53,6 +71,8 @@ const Categories = () => {
         label: tooltipCallback,
       },
     },
+    coutout: "60%",
+    responsive: true,
   };
 
   return (
@@ -85,7 +105,12 @@ const Categories = () => {
 
               {/* Display the pie chart */}
               <div className="text-blue-400 text-xl p-6 mt-6 rounded-xl mb-6">
-                <Pie data={pieChartData} options={pieChartOptions} />
+                <Pie
+                  data={pieChartData}
+                  options={pieChartOptions}
+                  height="200px"
+                  width="200px"
+                />
               </div>
             </div>
           </div>

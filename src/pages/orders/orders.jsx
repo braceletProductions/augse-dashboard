@@ -127,7 +127,12 @@ const Orders = () => {
             <span className="text-blue-600">{orderData.pending}</span>
           </h1>
           <div className="lg:absolute top-5 right-28 p-4 rounded-xl ">
-            <Doughnut data={doughnutData} options={doughnutOptions} />
+            <Doughnut
+              data={doughnutData}
+              options={doughnutOptions}
+              height="200px"
+              width="200px"
+            />
           </div>
         </div>
 
