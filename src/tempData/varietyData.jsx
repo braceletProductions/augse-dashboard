@@ -33,7 +33,7 @@ const varietyData = [
     id: 6,
     name: "Category 6",
     description: "Description for Category 3",
-    imageUrl: "https://source.unsplash.com/random/200x300",
+    imageUrl: "https://picsum.photos/200/300",
   },
   {
     id: 7,
@@ -45,7 +45,7 @@ const varietyData = [
     id: 8,
     name: "Category 8",
     description: "Description for Category 3",
-    imageUrl: "https://source.unsplash.com/random/200x300",
+    imageUrl: "https://picsum.photos/200/300",
   },
   // Add more categories here...
 ];
