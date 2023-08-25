@@ -1,42 +1,74 @@
-import React from "react";
+import React, { useState } from "react";
 import customerData from "@/tempData/customerData";
-import categoryData from "@/tempData/categoryData";
+import trackOrderData from "@/tempData/trackOrder";
 
-const track = () => {
+function OrderStatus({ status, isActive }) {
+  const circleColor = isActive ? "bg-green-500" : "bg-gray-300";
+
+  return <div className={`w-4 h-4 rounded-full ${circleColor} mx-2`} />;
+}
+
+export default function Orders() {
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
+
   return (
-    <div className="flex-1">
-      <div className="mt-10 mb-12 px-4">
-        <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-3xl text-gray-100 pb-5">
-          Customers
-        </h1>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Order Tracking</h1>
+      <div className="grid grid-cols-2 gap-4">
         <div className="flex flex-col">
-          {customerData.map((customer) => (
-            <div
-              key={customer.id}
-              className="flex justify-between items-center bg-gray-100 rounded-3xl pt-2 pb-2 mt-1 mb-1"
-            >
-              <div className="flex items-start flex-col pl-5">
-                <h1 className="text-lg font-semibold text-blue-900">
-                  {customer.name}
-                </h1>
-                <p className="text-sm text-gray-600 text-blue-400">
-                  {customer.email}
-                </p>
-              </div>
-              <div className="pr-7">
-                <button
-                  className="bg-blue-900 text-white px-14 py-2 rounded-3xl lg:mt-0 sm:mt-3"
-                  onClick={() => handleProfileClick(customer.id)}
-                >
-                  Profile
-                </button>
-              </div>
-            </div>
-          ))}
+          <h2 className="text-xl font-semibold mb-2">Orders List</h2>
+          <ul>
+            {trackOrderData.map((order) => (
+              <li
+                key={order.id}
+                className={`cursor-pointer ${
+                  selectedOrderId === order.id ? "text-blue-500" : ""
+                }`}
+                onClick={() => setSelectedOrderId(order.id)}
+              >
+                {order.customer.name}
+              </li>
+            ))}
+          </ul>
         </div>
+        {selectedOrderId && (
+          <div className="flex flex-col">
+            <h2 className="text-xl font-semibold mb-2">Order Details</h2>
+            {trackOrderData.map((order) => {
+              if (order.id === selectedOrderId) {
+                return (
+                  <div key={order.id}>
+                    <p>
+                      Customer: {order.customer.name}
+                      <br />
+                      Email: {order.customer.email}
+                    </p>
+                    <h3 className="mt-4 mb-2 text-lg font-semibold">
+                      Product: {order.product.name}
+                    </h3>
+                    <div className="flex">
+                      {order.product.tracking.map((statusInfo, index) => (
+                        <div key={index} className="flex items-center">
+                          <OrderStatus
+                            status={statusInfo.status}
+                            isActive={
+                              index === order.product.tracking.length - 1
+                            }
+                          />
+                          <p>{statusInfo.status}</p>
+                          <p className="ml-2 text-gray-500">
+                            ({statusInfo.date})
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
-};
-
-export default track;
+}
