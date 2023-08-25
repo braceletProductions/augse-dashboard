@@ -1,103 +1,79 @@
 import Sidebar from "@/components/Sidebar";
 import React from "react";
-import { Doughnut, Bar } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
 import categoryData from "@/tempData/categoryData";
-import orderData from "@/tempData/orderData";
-import doughnutData from "@/tempData/dougnutData";
-import barData from "@/tempData/barData";
+
 import Link from "next/link";
 
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
-} from "chart.js";
+const Categories = () => {
+  // Extracting category names and counts from categoryData
+  const categoryNames = categoryData.map((category) => category.category);
+  const categoryCounts = categoryData.map((category) => category.count);
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  Title,
-  Tooltip,
-  Legend,
-  BarElement
-);
-
-const calculatePercentage = (value, total) =>
-  ((value / total) * 100).toFixed(2);
-
-const Orders = () => {
-  const totalOrders =
-    orderData.canceled +
-    orderData.returned +
-    orderData.delivered +
-    orderData.shipped +
-    orderData.pending;
-
-  const doughnutOptions = {
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: (context) => {
-            const value = context.raw;
-            const percentage = calculatePercentage(value, totalOrders);
-            const label = context.label || "";
-            return `${label}: ${value} (${percentage}%)`;
-          },
-          title: () => null, // Remove the default title (category label)
-        },
+  // Data for the pie chart
+  const pieChartData = {
+    labels: categoryNames,
+    datasets: [
+      {
+        data: categoryCounts,
+        backgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#66BB6A",
+          "#FF7043",
+          "#9575CD",
+        ], // You can customize the colors here
+        hoverBackgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#66BB6A",
+          "#FF7043",
+          "#9575CD",
+        ],
       },
-    },
-    cutout: "55%",
-    responsive: true,
-  };
-
-  const barOptions = {
-    scales: {
-      x: {
-        grid: {
-          display: false,
-        },
-      },
-      y: {
-        beginAtZero: true,
-        suggestedMax: 25,
-        tricks: {
-          stepSize: 5,
-        },
-      },
-    },
+    ],
   };
 
   return (
     <div className="flex mt-5">
       <Sidebar />
 
-      <div className="flex-grow bg-gray-100  ml-2 rounded-2xl pr-10 pl-10 pt-10 relative">
-        <h1 className="text-blue-800 font-bold  text-2xl">Categories</h1>
-        {/* Display product names and counts */}
-        <div className="text-blue-400 text-xl p-6 rounded-xl mb-6">
-          <ul>
-            {categoryData.map((category) => (
-              <li key={category.categoryId} className="mb-2">
-                <Link
-                  href={`/product/${category.categoryId}`} // Adjust the link based on your route
-                  passHref
-                >
-                  <p className="text-blue-600 hover:text-blue-900 underline">
-                    {category.category} ({category.count})
-                  </p>
-                </Link>
-              </li>
-            ))}
-          </ul>
+      <div className="flex flex-grow">
+        <div className="w-full bg-gray-100 ml-2 rounded-2xl pr-10 pl-10 pt-10">
+          <div className="flex flex-col h-full">
+            <h1 className="text-blue-800 ml-10 font-bold text-3xl mb-4">
+              Categories
+            </h1>
+
+            {/* Display product names and counts */}
+            <div className="w-full h-full flex  p-10 mb-10">
+              <div className="w-1/2 mt-4 mr-10">
+                {categoryData.map((category) => (
+                  <div
+                    key={category.categoryId}
+                    className="text-blue-400 text-xl m-5 p-1 rounded-xl"
+                  >
+                    <Link href={`/category/category`} passHref>
+                      <p className="text-blue-600 hover:text-blue-900 underline">
+                        {category.category} ({category.count})
+                      </p>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+
+              {/* Display the pie chart */}
+              <div className="text-blue-400 text-xl p-6 mt-6 rounded-xl mb-6">
+                <Pie data={pieChartData} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Orders;
+export default Categories;
