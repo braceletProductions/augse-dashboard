@@ -1,6 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import Sidebar from "@/components/Sidebar";
 import ImageUpload from "@/components/ImageUpload";
 
@@ -43,11 +43,17 @@ const helperData = [
   { id: 2, name: "Not Applicable", value: false },
 ];
 
-function addproduct() {
+function updateProduct() {
+  const router = useRouter();
+  const { productId } = router.query;
   const [mainImageFile, setMainImageFile] = useState();
   const [firstImageFile, setFirstImageFile] = useState();
   const [secondImageFile, setSecondImageFile] = useState();
   const [thirdImageFile, setThirdImageFile] = useState();
+  const [mainImageUrl, setMainImageUrl] = useState();
+  const [firstImageUrl, setFirstImageUrl] = useState();
+  const [secondImageUrl, setSecondImageUrl] = useState();
+  const [thirdImageUrl, setThirdImageUrl] = useState();
   const nameRef = useRef();
   const descriptionRef = useRef();
   const categoryRef = useRef();
@@ -62,6 +68,39 @@ function addproduct() {
   const mrpRef = useRef();
   const offeredValueRef = useRef();
   const detailRef = useRef();
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:4001/api/v1/products/product/" + productId
+        );
+        nameRef.current.value = res.data.productName;
+        descriptionRef.current.value = res.data.shortDescription;
+        categoryRef.current.value = res.data.category;
+        tagRef.current.value = res.data.tags;
+        taxRef.current.value = res.data.tax;
+        quantityRef.current.value = res.data.quantity;
+        colorRef.current.value = res.data.color;
+        sizeRef.current.value = res.data.size;
+        codRef.current.value = res.data.isCodAllowed;
+        returnRef.current.value = res.data.isReturnAble;
+        cancelOrderRef.current.value = res.data.isCancelAble;
+        mrpRef.current.value = res.data.mrp;
+        offeredValueRef.current.value = res.data.offeredPrice;
+        detailRef.current.value = res.data.detailedDescription;
+        setMainImageUrl(res.data.mainImage);
+        if (res.data.otherImages) {
+          setFirstImageUrl(res.data.otherImages[0]);
+          setSecondImageUrl(res.data.otherImages[1]);
+          setThirdImageUrl(res.data.otherImages[2]);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (productId) fetchDetails();
+  }, [productId]);
 
   const mainImageHandler = (file) => {
     setMainImageFile(file);
@@ -79,43 +118,78 @@ function addproduct() {
     setThirdImageFile(file);
   };
 
-  const addProductHandler = async () => {
-    const mainformData = new FormData();
-    mainformData.append("image", mainImageFile);
+  const updateProductHandler = async () => {
     let mainImagePath;
-    try {
-      mainImagePath = await axios.post(
-        "http://localhost:4001/api/v1/products/addimage",
-        mainformData
-      );
-    } catch (error) {}
-    const firstformData = new FormData();
-    firstformData.append("image", firstImageFile);
+    if (mainImageFile) {
+      try {
+        await axios.post("http://localhost:4001/api/v1/products/deleteimage", {
+          path: mainImageUrl,
+        });
+      } catch (error) {}
+      const mainformData = new FormData();
+      mainformData.append("image", mainImageFile);
+      try {
+        const response = await axios.post(
+          "http://localhost:4001/api/v1/products/addimage",
+          mainformData
+        );
+        mainImagePath = response.data.path;
+      } catch (error) {}
+    } else {
+      mainImagePath = mainImageUrl;
+    }
     let firstImagePath;
-    try {
-      firstImagePath = await axios.post(
-        "http://localhost:4001/api/v1/products/addimage",
-        firstformData
-      );
-    } catch (error) {}
-    const secondformData = new FormData();
-    secondformData.append("image", secondImageFile);
+    if (firstImageFile) {
+      try {
+        await axios.post("http://localhost:4001/api/v1/products/addimage", {
+          path: firstImageUrl,
+        });
+      } catch (error) {}
+      const firstformData = new FormData();
+      firstformData.append("image", firstImageFile);
+      try {
+        const response = await axios.post(
+          "http://localhost:4001/api/v1/products/addimage",
+          firstformData
+        );
+        firstImagePath = response.data.path;
+      } catch (error) {}
+    } else {
+      firstImagePath = firstImageUrl;
+    }
     let secondImagePath;
-    try {
-      secondImagePath = await axios.post(
-        "http://localhost:4001/api/v1/products/addimage",
-        secondformData
-      );
-    } catch (error) {}
-    const thirdformData = new FormData();
-    thirdformData.append("image", thirdImageFile);
+    if (secondImageFile) {
+      try {
+        await axios.post("http://localhost:4001/api/v1/products/addimage", {
+          path: secondImageUrl,
+        });
+      } catch (error) {}
+      const secondformData = new FormData();
+      secondformData.append("image", secondImageFile);
+      try {
+        const response = await axios.post(
+          "http://localhost:4001/api/v1/products/addimage",
+          secondformData
+        );
+        secondImagePath = response.data.path;
+      } catch (error) {}
+    } else {
+      secondImagePath = secondImageUrl;
+    }
     let thirdImagePath;
-    try {
-      thirdImagePath = await axios.post(
-        "http://localhost:4001/api/v1/products/addimage",
-        thirdformData
-      );
-    } catch (error) {}
+    if (thirdImageFile) {
+      const thirdformData = new FormData();
+      thirdformData.append("image", thirdImageFile);
+      try {
+        const response = await axios.post(
+          "http://localhost:4001/api/v1/products/addimage",
+          thirdformData
+        );
+        thirdImagePath = response.data.path;
+      } catch (error) {}
+    } else {
+      thirdImagePath = thirdImageUrl;
+    }
     const formData = new FormData();
     formData.append("productName", nameRef.current.value);
     formData.append("shortDescription", descriptionRef.current.value);
@@ -131,13 +205,13 @@ function addproduct() {
     formData.append("mrp", mrpRef.current.value);
     formData.append("offeredPrice", offeredValueRef.current.value);
     formData.append("detailedDescription", detailRef.current.value);
-    formData.append("mainImage", mainImagePath.data.path);
-    formData.append("firstImage", firstImagePath.data.path);
-    formData.append("secondImage", secondImagePath.data.path);
-    formData.append("thirdImage", thirdImagePath.data.path);
+    formData.append("mainImage", mainImagePath);
+    formData.append("firstImage", firstImagePath);
+    formData.append("secondImage", secondImagePath);
+    formData.append("thirdImage", thirdImagePath);
     try {
-      const res = await axios.post(
-        "http://localhost:4001/api/v1/products/add_product",
+      const res = await axios.put(
+        "http://localhost:4001/api/v1/products/update_product/" + productId,
         formData
       );
       Router.push({
@@ -175,7 +249,11 @@ function addproduct() {
                 />
               </div>
               <div className="flex flex-col justify-center items-center w-[50%]">
-                <ImageUpload onInput={mainImageHandler} main={true} />
+                <ImageUpload
+                  onInput={mainImageHandler}
+                  main={true}
+                  preview={mainImageUrl}
+                />
                 <div className="text-sm font-semibold">Product Main Image</div>
               </div>
             </div>
@@ -329,9 +407,18 @@ function addproduct() {
                 Product's other images
               </div>
               <div className="flex gap-[1rem] h-[7.5rem]">
-                <ImageUpload onInput={firstImageHandler} />
-                <ImageUpload onInput={secondImageHandler} />
-                <ImageUpload onInput={thirdImageHandler} />
+                <ImageUpload
+                  onInput={firstImageHandler}
+                  preview={firstImageUrl}
+                />
+                <ImageUpload
+                  onInput={secondImageHandler}
+                  preview={secondImageUrl}
+                />
+                <ImageUpload
+                  onInput={thirdImageHandler}
+                  preview={thirdImageUrl}
+                />
               </div>
             </div>
             <div className="flex flex-col">
@@ -347,9 +434,9 @@ function addproduct() {
             </div>
             <button
               className="bg-[#4e87af] uppercase text-[white] py-1 px-3 cursor-pointer rounded-2xl mt-[1.2rem] float-right"
-              onClick={addProductHandler}
+              onClick={updateProductHandler}
             >
-              Add Product
+              Update Product
             </button>
           </div>
         </div>
@@ -358,4 +445,4 @@ function addproduct() {
   );
 }
 
-export default addproduct;
+export default updateProduct;
