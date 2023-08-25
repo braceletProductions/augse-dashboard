@@ -72,12 +72,11 @@ const Categories = () => {
                 {categoryData.map((category) => (
                   <div
                     key={category.categoryId}
-                    className="text-blue-400 text-xl m-5 p-1 rounded-xl"
+                    className="text-blue-500 text-xl m-5 p-1 rounded-xl"
                   >
                     <Link href={`/category/category`} passHref>
-                      <p className="text-blue-700 hover:text-blue-900 gap-x-7 hover:underline">
-                        {category.category}{" "}
-                        <span className="gap-x-7">({category.count})</span>
+                      <p className=" hover:text-blue-800 hover:underline gap-x-7 ">
+                        {category.category} <span>({category.count})</span>
                       </p>
                     </Link>
                   </div>
