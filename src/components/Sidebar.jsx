@@ -9,7 +9,7 @@ const Sidebar = () => {
     { label: "Orders", link: "/orders/orders" },
     { label: "Products" },
     { label: "Customers", link: "/customers/customer" },
-    { label: "Payment" },
+    { label: "Payment", link: "/pay/pay" },
   ];
 
   return (
