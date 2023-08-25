@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Line, Doughnut } from "react-chartjs-2";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
-import categoryData from "@/tempData/categoryData";
 import salesData from "@/tempData/salesData";
 import {
   Chart,
@@ -37,7 +37,75 @@ const months = [
   "Dec",
 ];
 
+let categoryData = [
+  { categoryId: 0, category: "Pure Silk Saree", count: 0 },
+  { categoryId: 1, category: "Semi Silk Saree", count: 0 },
+  { categoryId: 2, category: "Cotton Saree", count: 0 },
+  { categoryId: 3, category: "Kanchivaram Saree", count: 0 },
+  { categoryId: 4, category: "Bandhani Saree", count: 0 },
+  { categoryId: 5, category: "Organza Saree", count: 0 },
+  { categoryId: 6, category: "Printed Saree", count: 0 },
+];
+
 const Dashboard = () => {
+  const [users, setUsers] = useState(0);
+  const [orders, setOrders] = useState(0);
+  const [products, setProducts] = useState(0);
+  const [reload, setReload] = useState(true);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await axios.get("http://localhost:4001/api/v1/user/counts");
+        setUsers(res.data.numbers);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchUsers();
+    const fetchOrders = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:4001/api/v1/orders/count"
+        );
+        setOrders(res.data.numbers);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchOrders();
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:4001/api/v1/products/count"
+        );
+        setProducts(res.data.numbers);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    let res;
+    const fetchProducts = async () => {
+      try {
+        for (let i = 0; i < categoryData.length; i++) {
+          res = await axios.get(
+            "http://localhost:4001/api/v1/products/category/" +
+              categoryData[i].category
+          );
+          categoryData[i].count = res.data.count;
+        }
+        setReload((prev) => !prev);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchProducts();
+  }, []);
+
   const salesChartData = {
     labels: months,
     datasets: [
@@ -78,31 +146,29 @@ const Dashboard = () => {
       <div>
         <Header />
       </div>
-
       <div className="flex-grow  lg:flex lg:mt-5 ">
         <Sidebar />
-
         <div className="flex-grow flex flex-col pl-4 pr-4  lg:w-3/4">
-          <MenuItems />
+          <MenuItems orders={orders} users={users} products={products} />
           <div className="flex gap-9 flex-grow  flex-col lg:flex-row">
-            <div className="bg-gray-100 lg:w-1/2 rounded-2xl lg:h-60 pt-1 pl-5 pr-5 mb-2 lg:mb-0 overflow-hidden relative">
+            <div className="bg-gray-100 lg:w-1/2 rounded-2xl lg:h-[18rem] pt-1 pl-5 pr-5 mb-2 lg:mb-0 overflow-hidden relative">
               <h1 className="text-blue-900 text-xl mb-3 lg:mb-4">
                 Total Product Count
               </h1>
               <table className="mt-1 w-full border border-collapse">
                 <thead>
                   <tr className="bg-blue-800 text-gray-100 text-center">
-                    <th className="font-semibold px-4 py-2">Category</th>
-                    <th className="font-semibold px-4 py-2">Count</th>
+                    <th className="font-semibold px-4 py-1">Category</th>
+                    <th className="font-semibold px-4 py-1">Count</th>
                   </tr>
                 </thead>
                 <tbody>
                   {categoryData.map((item, index) => (
                     <tr key={index} className="bg-blue-200 text-center">
-                      <td className="py-2 px-4 border-l-2 border-2">
+                      <td className="px-4 border-l-2 border-2">
                         {item.category}
                       </td>
-                      <td className="py-2 px-4 border-l-2 border-2">
+                      <td className="px-4 border-l-2 border-2">
                         {item.count}
                       </td>
                     </tr>
@@ -111,7 +177,7 @@ const Dashboard = () => {
               </table>
             </div>
 
-            <div className="bg-gray-100 w-1/2 rounded-2xl lg:h-60 mb-2 lg:mb-0">
+            <div className="bg-gray-100 w-1/2 lg:h-[18rem] rounded-2xl mb-2 lg:mb-0">
               <div className="flex justify-center items-center h-full">
                 <Doughnut data={doughnutChartData} />
               </div>
