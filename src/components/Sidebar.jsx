@@ -5,7 +5,7 @@ import logo from "../../public/logo.png";
 const Sidebar = () => {
   const menuItems = [
     { label: "Dashboard", link: "/dashboard/dashboard" },
-    { label: "Category", link: "/category/category" },
+    { label: "Category", link: "/category/categories" },
     { label: "Orders", link: "/orders/orders" },
     { label: "Products", link: "/products/products" },
     { label: "Customers", link: "/customers/customer" },
@@ -13,7 +13,6 @@ const Sidebar = () => {
     { label: "Payment" },
 
     { label: "Payment" },
-
   ];
 
   return (
