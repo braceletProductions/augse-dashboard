@@ -46,16 +46,14 @@ const Shipping = () => {
                       Product Detail
                     </div>
                   </Link>
-                  <div className="pr-7 flex flex-col mt-3 sm:flex-row sm:space-x-3">
-                    <Link
-                      href={`/track/[customerId]`}
-                      as={`/track/${customer.id}`}
-                    >
-                      <div className="bg-blue-900 text-white px-10 py-2 rounded-3xl cursor-pointer">
-                        Track
-                      </div>
-                    </Link>
-                  </div>
+                  <Link
+                    href={`/track/[customerId]`}
+                    as={`/track/${customer.id}`}
+                  >
+                    <div className="bg-blue-900 text-white px-10 py-2 rounded-3xl cursor-pointer">
+                      Track
+                    </div>
+                  </Link>
                 </div>
               </div>
             </div>
