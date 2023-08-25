@@ -10,8 +10,7 @@ const productData = [
       { status: "Out for Delivery", date: "2023-08-03" },
       { status: "Delivered", date: "2023-08-04" },
     ],
-    imageUrl:
-      "https://in.images.search.yahoo.com/search/images;_ylt=AwrKALLpQ.dkIWkSa.S7HAx.;_ylu=Y29sbwNzZzMEcG9zAzEEdnRpZAMEc2VjA3BpdnM-?p=saree+image&fr2=piv-web&type=E211IN826G0&fr=mcafee#id=0&iurl=https%3A%2F%2Fcdn.sareeka.com%2Fimage%2Fdata2020%2Fembroidered-silk-saree-141027.jpg&action=click",
+    imageUrl: "https://wallpapercave.com/wp/wp4180110.jpg",
   },
   {
     id: 102,
@@ -24,7 +23,7 @@ const productData = [
       { status: "out for delivery", date: "2023-08-03" },
       { status: "delivered", date: "2023-08-04" },
     ],
-    imageUrl: "https://example.com/semi-silk-saree.jpg",
+    imageUrl: "https://wallpapercave.com/wp/wp4180110.jpg",
   },
   // Add more products here
 ];

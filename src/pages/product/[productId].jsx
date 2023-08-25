@@ -35,6 +35,7 @@ const ProductDetail = () => {
       <p> {product.description}</p>
       <p> {product.price}</p>
       <p> {product.status}</p>
+      <p>{product.imageUrl}</p>
 
       {/* Display other customer details */}
     </div>
