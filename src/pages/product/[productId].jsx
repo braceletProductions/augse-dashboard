@@ -33,7 +33,8 @@ const ProductDetail = () => {
       <h1 className="text-blue-900 text-2xl"> Product Detail</h1>
       <p> {product.id}</p>
       <p> {product.description}</p>
-      <p>Price: {product.price}</p>
+      <p> {product.price}</p>
+      <p> {product.status}</p>
 
       {/* Display other customer details */}
     </div>
