@@ -1,4 +1,3 @@
-// pages/track/[customerId].js
 import { useRouter } from "next/router";
 import customerData from "@/tempData/customerData";
 import productData from "@/tempData/productData";
@@ -6,10 +5,12 @@ import productData from "@/tempData/productData";
 const TrackOrder = () => {
   const router = useRouter();
   const { customerId } = router.query;
+  console.log("customerId:", customerId);
 
   const selectedCustomer = customerData.find(
-    (customer) => customer.id === customerId
+    (customer) => customer.id === parseInt(customerId)
   );
+  console.log("selectedCustomer:", selectedCustomer);
 
   if (!selectedCustomer) {
     return <div>Customer not found.</div>;
@@ -18,6 +19,7 @@ const TrackOrder = () => {
   const selectedProduct = productData.find(
     (product) => product.id === selectedCustomer.productId
   );
+  console.log("selectedProduct:", selectedProduct);
 
   return (
     <div className="p-4">
