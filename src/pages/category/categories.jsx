@@ -36,6 +36,25 @@ const Categories = () => {
     ],
   };
 
+  // Custom tooltip to show category names and percentages
+  const tooltipCallback = (tooltipItem, data) => {
+    const dataset = data.datasets[tooltipItem.datasetIndex];
+    const total = dataset.data.reduce((sum, value) => sum + value, 0);
+    const currentValue = dataset.data[tooltipItem.index];
+    const percentage = ((currentValue / total) * 100).toFixed(2);
+    const categoryName = data.labels[tooltipItem.index];
+
+    return `${categoryName}: ${percentage}%`;
+  };
+
+  const pieChartOptions = {
+    tooltips: {
+      callbacks: {
+        label: tooltipCallback,
+      },
+    },
+  };
+
   return (
     <div className="flex mt-5">
       <Sidebar />
@@ -56,8 +75,9 @@ const Categories = () => {
                     className="text-blue-400 text-xl m-5 p-1 rounded-xl"
                   >
                     <Link href={`/category/category`} passHref>
-                      <p className="text-blue-600 hover:text-blue-900 underline">
-                        {category.category} ({category.count})
+                      <p className="text-blue-700 hover:text-blue-900 gap-x-7 hover:underline">
+                        {category.category}{" "}
+                        <span className="gap-x-7">({category.count})</span>
                       </p>
                     </Link>
                   </div>
@@ -66,7 +86,7 @@ const Categories = () => {
 
               {/* Display the pie chart */}
               <div className="text-blue-400 text-xl p-6 mt-6 rounded-xl mb-6">
-                <Pie data={pieChartData} />
+                <Pie data={pieChartData} options={pieChartOptions} />
               </div>
             </div>
           </div>
