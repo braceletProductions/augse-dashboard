@@ -5,11 +5,11 @@ import logo from "../../public/logo.png";
 const Sidebar = () => {
   const menuItems = [
     { label: "Dashboard", link: "/dashboard/dashboard" },
-    { label: "Category" },
+    { label: "Category", link: "/category/category" },
     { label: "Orders", link: "/orders/orders" },
-    { label: "Products" },
+    { label: "Products", link: "/products/products" },
     { label: "Customers", link: "/customers/customer" },
-    { label: "Payment" },
+    { label: "Payment", link: "/payment/payment" },
   ];
 
   return (
