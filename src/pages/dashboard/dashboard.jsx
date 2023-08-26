@@ -168,9 +168,7 @@ const Dashboard = () => {
                       <td className="px-4 border-l-2 border-2">
                         {item.category}
                       </td>
-                      <td className="px-4 border-l-2 border-2">
-                        {item.count}
-                      </td>
+                      <td className="px-4 border-l-2 border-2">{item.count}</td>
                     </tr>
                   ))}
                 </tbody>
