@@ -14,7 +14,7 @@ const menuItems = [
 const MenuItems = () => {
   return (
     <div className="flex-grow flex flex-col pl-4 pr-4 lg:w-full">
-      <div className="flex flex-col justify-center text-center bg-gray-100 rounded-3xl   pt-1 pb-1 mt-1 mb-1 lg:flex-row lg:justify-center lg:flex-wrap">
+      <div className="flex flex-col justify-center text-center bg-gray-100 rounded-3xl   pt-1 pb-1 mt-1 mb-1 lg:flex-row lg:justify-center lg:flex-wrap font-bold">
         {menuItems.map((item, index) => (
           <button
             key={index}

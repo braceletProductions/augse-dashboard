@@ -11,26 +11,24 @@ const Sidebar = () => {
     { label: "Customers", link: "/customers/customer" },
 
     { label: "Payment" },
-
-    { label: "Payment" },
   ];
 
   return (
     <div className="h-full sm:w-1/5 w-1/5  lg:w-2/12 bg-gray-100 flex flex-col lg:flex-row lg:flex-col  text-center">
       <div>
-        <div>
+        <div className=" lg:p-1 w-full  h-28  flex justify-center align-items  items-center">
           <a href="/dashboard/dashboard">
-            <Image src={logo} width={300} alt="Logo" />
+            <Image src={logo} width={150} height={40} alt="Logo" />
           </a>
         </div>
       </div>
-      <div>
+      <div className="flex-grow sm:w-full overflow-x-auto overflow-y-auto">
         <ul className="lg:w-full">
           {menuItems.map((item, index) => (
             <li key={index} className="mb-6 lg:mb-5">
               <a
                 href={item.link}
-                className="block lg:inline-block text-gray-900 font-medium hover:text-blue-400 pb-6 text-center "
+                className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
               >
                 {item.label}
               </a>
