@@ -1,5 +1,5 @@
 // totalData.js
-const totalOrderData = [
+const totalorderData = [
     {
         id: 1,
         name: "Liza D'Souza",
@@ -31,4 +31,4 @@ const totalOrderData = [
     // Add more customer data entries here
 ];
 
-export default customerData;
+export default totalorderData;

@@ -1,5 +1,6 @@
 import React from "react";
-import totalOrderData from "@/tempData/totalOrderData";   
+import totalorderData from "@/tempData/totalorderData";
+
 const totalOrder = () => {
     return (
         <div className="flex-1 flex-wrap">
@@ -7,7 +8,7 @@ const totalOrder = () => {
                 <h1 className=" font-bold  text-gray-100 pb-5 text-5xl">
                 Total Orders
                 </h1>
-                {totalOrderData.map((ele) => (
+                {totalorderData.map((ele) => (
                     <div
                         key={ele.id}
                         className="flex  gap-5 mb-10"
