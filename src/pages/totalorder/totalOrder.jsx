@@ -1,6 +1,5 @@
 import React from "react";
-import totalOrderData from "@/tempData/totalOrderData";
-
+import totalOrderData from "@/tempData/totalOrderData";   
 const totalOrder = () => {
     return (
         <div className="flex-1 flex-wrap">

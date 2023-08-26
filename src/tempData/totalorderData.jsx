@@ -1,5 +1,5 @@
-// customerData.js
-const customerData = [
+// totalData.js
+const totalOrderData = [
     {
         id: 1,
         name: "Liza D'Souza",
