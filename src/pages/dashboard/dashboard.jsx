@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { Line, Doughnut } from "react-chartjs-2";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
