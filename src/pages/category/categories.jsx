@@ -1,8 +1,7 @@
 import Sidebar from "@/components/Sidebar";
-import React from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { Pie } from "react-chartjs-2";
-import categoryData from "@/tempData/categoryData";
-
 import Link from "next/link";
 import {
   Chart as ChartJS,
@@ -23,7 +22,38 @@ ChartJS.register(
   BarElement
 );
 
+let categoryData = [
+  { categoryId: 0, category: "Pure Silk Saree", count: 0 },
+  { categoryId: 1, category: "Semi Silk Saree", count: 0 },
+  { categoryId: 2, category: "Cotton Saree", count: 0 },
+  { categoryId: 3, category: "Kanchivaram Saree", count: 0 },
+  { categoryId: 4, category: "Bandhani Saree", count: 0 },
+  { categoryId: 5, category: "Organza Saree", count: 0 },
+  { categoryId: 6, category: "Printed Saree", count: 0 },
+];
+
 const Categories = () => {
+  const [reload, setReload] = useState(true);
+
+  useEffect(() => {
+    let res;
+    const fetchProducts = async () => {
+      try {
+        for (let i = 0; i < categoryData.length; i++) {
+          res = await axios.get(
+            "http://localhost:4001/api/v1/products/category/" +
+              categoryData[i].category
+          );
+          categoryData[i].count = res.data.count;
+        }
+        setReload((prev) => !prev);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchProducts();
+  }, []);
+
   // Extracting category names and counts from categoryData
   const categoryNames = categoryData.map((category) => category.category);
   const categoryCounts = categoryData.map((category) => category.count);
@@ -78,7 +108,6 @@ const Categories = () => {
   return (
     <div className="flex mt-5">
       <Sidebar />
-
       <div className="flex flex-grow">
         <div className="w-full bg-gray-100 ml-2 rounded-2xl pr-10 pl-10 pt-10">
           <div className="flex flex-col h-full">
@@ -104,8 +133,8 @@ const Categories = () => {
               </div>
 
               {/* Display the pie chart */}
-              <div className="text-blue-400 text-xl p-6 mt-6 rounded-xl mb-6">
-                <Pie data={pieChartData} options={pieChartOptions} />
+              <div className="text-blue-400 text-xl rounded-xl mb-6">
+                <Pie className="h-[12rem]" data={pieChartData} options={pieChartOptions} />
               </div>
             </div>
           </div>

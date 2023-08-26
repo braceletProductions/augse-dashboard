@@ -21,6 +21,12 @@ const colorData = [
   { id: 4, name: "Navy", col: "navy" },
   { id: 5, name: "Green", col: "green" },
   { id: 6, name: "Red", col: "red" },
+  { id: 7, name: "Yellow", col: "yellow" },
+  { id: 8, name: "Indigo", col: "indigo" },
+  { id: 9, name: "Orange", col: "orange" },
+  { id: 10, name: "Purple", col: "purple" },
+  { id: 11, name: "Pink", col: "pink" },
+  { id: 12, name: "Gray", col: "gray" },
 ];
 
 const sizeData = [
@@ -46,6 +52,8 @@ const helperData = [
 function updateProduct() {
   const router = useRouter();
   const { productId } = router.query;
+  const [tagsOptions, setTagsOptions] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState([]);
   const [mainImageFile, setMainImageFile] = useState();
   const [firstImageFile, setFirstImageFile] = useState();
   const [secondImageFile, setSecondImageFile] = useState();
@@ -57,7 +65,6 @@ function updateProduct() {
   const nameRef = useRef();
   const descriptionRef = useRef();
   const categoryRef = useRef();
-  const tagRef = useRef();
   const taxRef = useRef();
   const quantityRef = useRef();
   const colorRef = useRef();
@@ -70,6 +77,18 @@ function updateProduct() {
   const detailRef = useRef();
 
   useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const res = await axios.get("http://localhost:4001/api/v1/tags/tags");
+        setTagsOptions(res.data.tags);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchTags();
+  }, []);
+
+  useEffect(() => {
     const fetchDetails = async () => {
       try {
         const res = await axios.get(
@@ -78,7 +97,7 @@ function updateProduct() {
         nameRef.current.value = res.data.productName;
         descriptionRef.current.value = res.data.shortDescription;
         categoryRef.current.value = res.data.category;
-        tagRef.current.value = res.data.tags;
+        setSelectedOptions(res.data.tags);
         taxRef.current.value = res.data.tax;
         quantityRef.current.value = res.data.quantity;
         colorRef.current.value = res.data.color;
@@ -116,6 +135,14 @@ function updateProduct() {
 
   const thirdImageHandler = (file) => {
     setThirdImageFile(file);
+  };
+
+  const handleOptionChange = (event) => {
+    const selectedValues = Array.from(
+      event.target.selectedOptions,
+      (option) => option.value
+    );
+    setSelectedOptions(selectedValues);
   };
 
   const updateProductHandler = async () => {
@@ -195,7 +222,7 @@ function updateProduct() {
     formData.append("shortDescription", descriptionRef.current.value);
     formData.append("size", sizeRef.current.value);
     formData.append("category", categoryRef.current.value);
-    formData.append("tags", tagRef.current.value);
+    formData.append("tags", selectedOptions);
     formData.append("tax", taxRef.current.value);
     formData.append("quantity", quantityRef.current.value);
     formData.append("color", colorRef.current.value);
@@ -290,11 +317,19 @@ function updateProduct() {
             <div className="lg:flex my-[1.5rem]">
               <div className="w-[50%]">
                 <div className="text-lg ml-[1rem] my-[0.5rem]">Tags</div>
-                <input
-                  type="text"
-                  ref={tagRef}
-                  className="border-b-2 border-[#4379a0]"
-                />
+                <select
+                  multiple
+                  name="tags"
+                  onChange={handleOptionChange}
+                  value={selectedOptions}
+                  className="border-2 border-[#4379a0]"
+                >
+                  {tagsOptions.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="w-[50%]">
                 <div className="text-lg ml-[1rem] my-[0.5rem]">Tax</div>

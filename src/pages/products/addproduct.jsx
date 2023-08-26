@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Router from "next/router";
 import Sidebar from "@/components/Sidebar";
@@ -21,6 +21,12 @@ const colorData = [
   { id: 4, name: "Navy", col: "navy" },
   { id: 5, name: "Green", col: "green" },
   { id: 6, name: "Red", col: "red" },
+  { id: 7, name: "Yellow", col: "yellow" },
+  { id: 8, name: "Indigo", col: "indigo" },
+  { id: 9, name: "Orange", col: "orange" },
+  { id: 10, name: "Purple", col: "purple" },
+  { id: 11, name: "Pink", col: "pink" },
+  { id: 12, name: "Gray", col: "gray" },
 ];
 
 const sizeData = [
@@ -44,6 +50,8 @@ const helperData = [
 ];
 
 function addproduct() {
+  const [tagsOptions, setTagsOptions] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState([]);
   const [mainImageFile, setMainImageFile] = useState();
   const [firstImageFile, setFirstImageFile] = useState();
   const [secondImageFile, setSecondImageFile] = useState();
@@ -51,7 +59,6 @@ function addproduct() {
   const nameRef = useRef();
   const descriptionRef = useRef();
   const categoryRef = useRef();
-  const tagRef = useRef();
   const taxRef = useRef();
   const quantityRef = useRef();
   const colorRef = useRef();
@@ -62,6 +69,18 @@ function addproduct() {
   const mrpRef = useRef();
   const offeredValueRef = useRef();
   const detailRef = useRef();
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const res = await axios.get("http://localhost:4001/api/v1/tags/tags");
+        setTagsOptions(res.data.tags);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchTags();
+  }, []);
 
   const mainImageHandler = (file) => {
     setMainImageFile(file);
@@ -79,49 +98,61 @@ function addproduct() {
     setThirdImageFile(file);
   };
 
+  const handleOptionChange = (event) => {
+    const selectedValues = Array.from(
+      event.target.selectedOptions,
+      (option) => option.value
+    );
+    setSelectedOptions(selectedValues);
+  };
+
   const addProductHandler = async () => {
     const mainformData = new FormData();
     mainformData.append("image", mainImageFile);
     let mainImagePath;
     try {
-      mainImagePath = await axios.post(
+      const res = await axios.post(
         "http://localhost:4001/api/v1/products/addimage",
         mainformData
       );
+      mainImagePath = res.data.path;
     } catch (error) {}
     const firstformData = new FormData();
     firstformData.append("image", firstImageFile);
     let firstImagePath;
     try {
-      firstImagePath = await axios.post(
+      const res = await axios.post(
         "http://localhost:4001/api/v1/products/addimage",
         firstformData
       );
+      firstImagePath = res.data.path;
     } catch (error) {}
     const secondformData = new FormData();
     secondformData.append("image", secondImageFile);
     let secondImagePath;
     try {
-      secondImagePath = await axios.post(
+      const res = await axios.post(
         "http://localhost:4001/api/v1/products/addimage",
         secondformData
       );
+      secondImagePath = res.data.path;
     } catch (error) {}
     const thirdformData = new FormData();
     thirdformData.append("image", thirdImageFile);
     let thirdImagePath;
     try {
-      thirdImagePath = await axios.post(
+      const res = await axios.post(
         "http://localhost:4001/api/v1/products/addimage",
         thirdformData
       );
+      thirdImagePath = res.data.path;
     } catch (error) {}
     const formData = new FormData();
     formData.append("productName", nameRef.current.value);
     formData.append("shortDescription", descriptionRef.current.value);
     formData.append("size", sizeRef.current.value);
     formData.append("category", categoryRef.current.value);
-    formData.append("tags", tagRef.current.value);
+    formData.append("tags", selectedOptions);
     formData.append("tax", taxRef.current.value);
     formData.append("quantity", quantityRef.current.value);
     formData.append("color", colorRef.current.value);
@@ -131,10 +162,10 @@ function addproduct() {
     formData.append("mrp", mrpRef.current.value);
     formData.append("offeredPrice", offeredValueRef.current.value);
     formData.append("detailedDescription", detailRef.current.value);
-    formData.append("mainImage", mainImagePath.data.path);
-    formData.append("firstImage", firstImagePath.data.path);
-    formData.append("secondImage", secondImagePath.data.path);
-    formData.append("thirdImage", thirdImagePath.data.path);
+    formData.append("mainImage", mainImagePath);
+    formData.append("firstImage", firstImagePath);
+    formData.append("secondImage", secondImagePath);
+    formData.append("thirdImage", thirdImagePath);
     try {
       const res = await axios.post(
         "http://localhost:4001/api/v1/products/add_product",
@@ -212,11 +243,19 @@ function addproduct() {
             <div className="lg:flex my-[1.5rem]">
               <div className="w-[50%]">
                 <div className="text-lg ml-[1rem] my-[0.5rem]">Tags</div>
-                <input
-                  type="text"
-                  ref={tagRef}
-                  className="border-b-2 border-[#4379a0]"
-                />
+                <select
+                  multiple
+                  name="tags"
+                  onChange={handleOptionChange}
+                  value={selectedOptions}
+                  className="border-2 border-[#4379a0] h-[4.5rem] w-[50%] overflow-y-auto"
+                >
+                  {tagsOptions.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="w-[50%]">
                 <div className="text-lg ml-[1rem] my-[0.5rem]">Tax</div>
