@@ -3,7 +3,7 @@ import deliveryorder from "@/tempData/deliveryorder";
 
 const DeliveryOrder = () => {
     return (
-        <div className="flex-1">
+        <div className="flex-1 flex-wrap">
             <div className="mt-10 mb-12 px-4">
                 <h1 className=" font-bold  text-gray-100 pb-5 text-5xl">
                     Delivered Orders

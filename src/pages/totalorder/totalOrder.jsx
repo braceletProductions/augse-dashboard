@@ -3,7 +3,7 @@ import totalOrderData from "@/tempData/totalOrderData";
 
 const totalOrder = () => {
     return (
-        <div className="flex-1">
+        <div className="flex-1 flex-wrap">
             <div className="mt-10 mb-12 px-4">
                 <h1 className=" font-bold  text-gray-100 pb-5 text-5xl">
                 Total Orders
@@ -30,7 +30,7 @@ const totalOrder = () => {
                                     {ele.desc}
                                 </p>
                             </div>
-                            <div className="flex w-2/5 h-20 justify-between">
+                            <div className="flex flex-wrap w-2/5 h-20 justify-between">
                                 <button className="bg-blue-900 text-white rounded-lg px-4 py-2 text-2xl" style={{width: "190px", height: "50px"}}>
                                     Product Detail
                                 </button>
