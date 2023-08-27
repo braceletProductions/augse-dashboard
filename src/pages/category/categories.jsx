@@ -134,7 +134,11 @@ const Categories = () => {
 
               {/* Display the pie chart */}
               <div className="text-blue-400 text-xl rounded-xl mb-6">
-                <Pie className="h-[12rem]" data={pieChartData} options={pieChartOptions} />
+                <Pie
+                  className="h-[12rem]"
+                  data={pieChartData}
+                  options={pieChartOptions}
+                />
               </div>
             </div>
           </div>

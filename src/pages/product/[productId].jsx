@@ -1,45 +1,43 @@
 // pages/product/[productId].js
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import customerData from "@/tempData/customerData";
-import productData from "@/tempData/productData";
+import axios from "axios";
+import BackButton from "@/components/BackButton";
+import Product from "@/components/Product";
 
 const ProductDetail = () => {
   const router = useRouter();
   const { productId } = router.query;
 
-  console.log("ProductId from URL:", productId);
+  const [product, setProduct] = useState({});
+  const [loading, setLoading] = useState(true);
 
-  const matchingCustomers = customerData.filter(
-    (customer) => parseInt(customer.productId) === parseInt(productId)
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      const apiUrl = `http://localhost:4001/api/v1/products/product/${router.query.productId}`;
 
-  const matchingProducts = productData.filter(
-    (product) => parseInt(product.id) === parseInt(productId)
-  );
+      try {
+        const response = await axios.get(apiUrl);
+        if (response.data) {
+          console.log(response.data);
+          setProduct(response.data);
 
-  console.log("Customers with matching productId:", matchingCustomers);
+          setLoading(false);
+        } else {
+          console.log("eroor");
+        }
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+        setLoading(false);
+      }
+    };
 
-  if (!matchingCustomers.length) {
-    console.log("Product not found");
-    return <div>Product not found</div>;
+    fetchData();
+  }, [productId]);
+
+  if (loading) {
+    return <div>{product._id ? <Product product={product} /> : null}</div>;
   }
-
-  const customer = matchingCustomers[0]; // Take the first matching customer
-  const product = matchingProducts[0]; // Take the first matching customer
-
-  return (
-    <div className="bg-gray-100 m-10 p-10 rounded-3xl text-xl text-blue-500">
-      <h1 className="text-blue-900 text-2xl"> Product Detail</h1>
-      <p> {product.id}</p>
-      <p> {product.description}</p>
-      <p> {product.price}</p>
-      <p> {product.status}</p>
-      <p>{product.imageUrl}</p>
-
-      {/* Display other customer details */}
-    </div>
-  );
 };
 
 export default ProductDetail;
