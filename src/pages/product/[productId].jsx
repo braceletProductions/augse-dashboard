@@ -36,7 +36,11 @@ const ProductDetail = () => {
   }, [productId]);
 
   if (loading) {
-    return <div>{product._id ? <Product product={product} /> : null}</div>;
+    return (
+      <div className="surendraSinghKamboj">
+        <h1 className="text-white">{product?._id}</h1>
+      </div>
+    );
   }
 };
 

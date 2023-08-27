@@ -1,14 +1,17 @@
+// import BackButton from "@/components/BackButton";
+// import Product from "@/components/Product";
 import React from "react";
 
 const Product = ({ product }) => {
+  console.log("Product :  ", product);
   return (
     <div>
       <div className="flex flex-col mt-14 ml-3 mr-3 h-screen sm:flex-row">
-        <BackButton />
+        {/* <BackButton /> */}
         <div className="relative bg-gray-100 gap-7 w-full sm:w-1/2 p-5">
           <div className="flex flex-col sm:flex-row">
             <div className="">
-              <p className="font-bold">{product.name}</p>
+              <p className="font-bold">{product.productName}</p>
               <p className="text-sm">{product.description}</p>
             </div>
             <div className="relative mt-4 border-8 sm:ml-20">
