@@ -15,16 +15,12 @@ const Product = ({ product }) => {
               <p className="text-sm">{product.description}</p>
             </div>
             <div className="relative mt-4 border-8 sm:ml-20">
-              <img
-                src={product.imageSrc}
-                alt={product.name}
-                className="w-32 h-32 "
-              />
+              {product.mainImage}
             </div>
           </div>
           <div className="flex flex-col mt-4 gap-2 sm:flex-row sm:gap-28">
             <h1>Category</h1>
-            <p>{product.name}</p>
+            <p>{product.category}</p>
           </div>
           <div className=" flex mt-4 gap-40 ">
             <h1>Tag</h1>
@@ -61,27 +57,35 @@ const Product = ({ product }) => {
               </div>
               <div className="">
                 <h1>Cancel Order</h1>
-                <h1 className="text-green-400">Yes</h1>
+                <h1 className="text-green-400">{product.isCancelAble}</h1>
               </div>
             </div>
             <div className="flex  gap-20 mt-20 ">
               <div className="flex gap-10">
                 <h1>MRP</h1>
-                <h1>1234</h1>
+                <h1>{product.mrp}</h1>
               </div>
               <div className="flex gap-10">
                 <h1>Offered Price</h1>
-                <h1>987</h1>
+                <h1>{product.offeredPrice}</h1>
               </div>
             </div>
             <div className="flex  gap-3 mt-16 ">
               <div>
                 <h1>Product's other Images</h1>
               </div>
-              <div className="flex gap-10 bg-gray-500 h-20 w-20">img1</div>
-              <div className="flex gap-10 bg-gray-500 h-20 w-20">img2</div>
-              <div className="flex gap-10 bg-gray-500 h-20 w-20">img3</div>
-              <div className="flex gap-10 bg-gray-500 h-20 w-20">img4</div>
+              <div className="flex gap-10 bg-gray-500 h-20 w-20">
+                {product.otherImages}
+              </div>
+              <div className="flex gap-10 bg-gray-500 h-20 w-20">
+                {product.otherImages}
+              </div>
+              <div className="flex gap-10 bg-gray-500 h-20 w-20">
+                {product.otherImages}
+              </div>
+              <div className="flex gap-10 bg-gray-500 h-20 w-20">
+                {product.otherImages}
+              </div>
             </div>
             <div className="mt-10 ">
               <h1>Detailed Description of the product</h1>
