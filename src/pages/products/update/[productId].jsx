@@ -79,7 +79,9 @@ function updateProduct() {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const res = await axios.get("http://localhost:4001/api/v1/tags/tags");
+        const res = await axios.get(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/tags/tags"
+        );
         setTagsOptions(res.data.tags);
       } catch (error) {
         console.log(error);
@@ -92,7 +94,7 @@ function updateProduct() {
     const fetchDetails = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:4001/api/v1/products/product/" + productId
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/product/" + productId
         );
         nameRef.current.value = res.data.productName;
         descriptionRef.current.value = res.data.shortDescription;
@@ -149,15 +151,18 @@ function updateProduct() {
     let mainImagePath;
     if (mainImageFile) {
       try {
-        await axios.post("http://localhost:4001/api/v1/products/deleteimage", {
-          path: mainImageUrl,
-        });
+        await axios.post(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/deleteimage",
+          {
+            path: mainImageUrl,
+          }
+        );
       } catch (error) {}
       const mainformData = new FormData();
       mainformData.append("image", mainImageFile);
       try {
         const response = await axios.post(
-          "http://localhost:4001/api/v1/products/addimage",
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/addimage",
           mainformData
         );
         mainImagePath = response.data.path;
@@ -168,15 +173,18 @@ function updateProduct() {
     let firstImagePath;
     if (firstImageFile) {
       try {
-        await axios.post("http://localhost:4001/api/v1/products/addimage", {
-          path: firstImageUrl,
-        });
+        await axios.post(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/addimage",
+          {
+            path: firstImageUrl,
+          }
+        );
       } catch (error) {}
       const firstformData = new FormData();
       firstformData.append("image", firstImageFile);
       try {
         const response = await axios.post(
-          "http://localhost:4001/api/v1/products/addimage",
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/addimage",
           firstformData
         );
         firstImagePath = response.data.path;
@@ -187,15 +195,18 @@ function updateProduct() {
     let secondImagePath;
     if (secondImageFile) {
       try {
-        await axios.post("http://localhost:4001/api/v1/products/addimage", {
-          path: secondImageUrl,
-        });
+        await axios.post(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/addimage",
+          {
+            path: secondImageUrl,
+          }
+        );
       } catch (error) {}
       const secondformData = new FormData();
       secondformData.append("image", secondImageFile);
       try {
         const response = await axios.post(
-          "http://localhost:4001/api/v1/products/addimage",
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/addimage",
           secondformData
         );
         secondImagePath = response.data.path;
@@ -209,7 +220,7 @@ function updateProduct() {
       thirdformData.append("image", thirdImageFile);
       try {
         const response = await axios.post(
-          "http://localhost:4001/api/v1/products/addimage",
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/addimage",
           thirdformData
         );
         thirdImagePath = response.data.path;
@@ -238,7 +249,9 @@ function updateProduct() {
     formData.append("thirdImage", thirdImagePath);
     try {
       const res = await axios.put(
-        "http://localhost:4001/api/v1/products/update_product/" + productId,
+        process.env.NEXT_PUBLIC_SERVER_URL +
+          "/products/update_product/" +
+          productId,
         formData
       );
       Router.push({

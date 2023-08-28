@@ -11,7 +11,7 @@ const Customer = () => {
     const fetchUsers = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:4001/api/v1/user/getusers/customer"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/user/getusers/customer"
         );
         setCustomers(res.data);
       } catch (error) {

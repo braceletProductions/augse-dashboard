@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import axios from "axios";
+import axios from "axios";
 import { Line, Doughnut } from "react-chartjs-2";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
@@ -56,7 +56,9 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await axios.get("http://localhost:4001/api/v1/user/counts");
+        const res = await axios.get(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/user/counts"
+        );
         setUsers(res.data.numbers);
       } catch (error) {
         console.log(error);
@@ -66,7 +68,7 @@ const Dashboard = () => {
     const fetchOrders = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:4001/api/v1/orders/count"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/orders/count"
         );
         setOrders(res.data.numbers);
       } catch (error) {
@@ -77,7 +79,7 @@ const Dashboard = () => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:4001/api/v1/products/count"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/count"
         );
         setProducts(res.data.numbers);
       } catch (error) {
@@ -93,7 +95,8 @@ const Dashboard = () => {
       try {
         for (let i = 0; i < categoryData.length; i++) {
           res = await axios.get(
-            "http://localhost:4001/api/v1/products/category/" +
+            process.env.NEXT_PUBLIC_SERVER_URL +
+              "/products/category/" +
               categoryData[i].category
           );
           categoryData[i].count = res.data.count;

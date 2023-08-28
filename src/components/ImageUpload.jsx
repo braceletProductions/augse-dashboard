@@ -52,7 +52,7 @@ function ImageUpload(props) {
             )}
             {!previewUrl && props.preview && (
               <img
-                src={"http://localhost:4001/files/" + props.preview}
+                src={process.env.NEXT_PUBLIC_IMAGE_URL + props.preview}
                 alt="Preview"
                 className={`${
                   props.main ? "h-[10rem]" : "max-h-[7.5rem] max-w-[12rem]"
