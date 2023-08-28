@@ -41,7 +41,8 @@ const Categories = () => {
       try {
         for (let i = 0; i < categoryData.length; i++) {
           res = await axios.get(
-            process.env.NEXT_PUBLIC_SERVER_URL + "/products/category/" +
+            process.env.NEXT_PUBLIC_SERVER_URL +
+              "/products/category/" +
               categoryData[i].category
           );
           categoryData[i].count = res.data.count;
@@ -134,7 +135,11 @@ const Categories = () => {
 
               {/* Display the pie chart */}
               <div className="text-blue-400 text-xl rounded-xl mb-6">
-                <Pie className="h-[12rem]" data={pieChartData} options={pieChartOptions} />
+                <Pie
+                  className="h-[12rem]"
+                  data={pieChartData}
+                  options={pieChartOptions}
+                />
               </div>
             </div>
           </div>
