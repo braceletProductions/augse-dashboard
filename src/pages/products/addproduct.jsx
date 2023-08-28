@@ -3,6 +3,7 @@ import axios from "axios";
 import Router from "next/router";
 import Sidebar from "@/components/Sidebar";
 import ImageUpload from "@/components/ImageUpload";
+import Backdrop from "@/components/Backdrop";
 
 const category = [
   { id: 1, name: "Pure Silk Saree" },
@@ -50,6 +51,7 @@ const helperData = [
 ];
 
 function addproduct() {
+  const [showTags, setShowTags] = useState(false);
   const [tagsOptions, setTagsOptions] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [mainImageFile, setMainImageFile] = useState();
@@ -100,12 +102,8 @@ function addproduct() {
     setThirdImageFile(file);
   };
 
-  const handleOptionChange = (event) => {
-    const selectedValues = Array.from(
-      event.target.selectedOptions,
-      (option) => option.value
-    );
-    setSelectedOptions(selectedValues);
+  const handleOptionChange = (value) => {
+    setSelectedOptions(value);
   };
 
   const addProductHandler = async () => {
@@ -181,6 +179,10 @@ function addproduct() {
     }
   };
 
+  const toggleShowtags = () => {
+    setShowTags((prev) => !prev);
+  };
+
   return (
     <div className="flex flex-col min-h-screen mt-[4rem]">
       <div className="flex-grow lg:flex lg:mt-5 ">
@@ -245,19 +247,19 @@ function addproduct() {
             <div className="lg:flex my-[1.5rem]">
               <div className="w-[50%]">
                 <div className="text-lg ml-[1rem] my-[0.5rem]">Tags</div>
-                <select
-                  multiple
-                  name="tags"
-                  onChange={handleOptionChange}
-                  value={selectedOptions}
-                  className="border-2 border-[#4379a0] h-[4.5rem] w-[50%] overflow-y-auto"
+                <button
+                  className="border-2 border-[#4379a0] w-[10rem]"
+                  onClick={toggleShowtags}
                 >
-                  {tagsOptions.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
+                  Select Tags
+                </button>
+                {showTags && (
+                  <Backdrop
+                    tags={tagsOptions}
+                    onClick={toggleShowtags}
+                    onSubmit={handleOptionChange}
+                  />
+                )}
               </div>
               <div className="w-[50%]">
                 <div className="text-lg ml-[1rem] my-[0.5rem]">Tax</div>
