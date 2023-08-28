@@ -7,7 +7,7 @@ const Sidebar = () => {
     { label: "Dashboard", link: "/dashboard/dashboard" },
     { label: "Category", link: "/category/categories" },
     { label: "Orders", link: "/orders/orders" },
-    { label: "Products", link: "/products/products" },
+    { label: "Products", link: "/product/[productId]" },
     { label: "Customers", link: "/customers/customer" },
 
     { label: "Payment" },
