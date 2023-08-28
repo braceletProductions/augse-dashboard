@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import Product from "../../../components/Product";
+import Product from "@/components/Product";
 
 const ProductPage = () => {
   const router = useRouter();

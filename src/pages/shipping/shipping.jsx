@@ -1,11 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+//import axios
+import axios from "axios";
+import { useRouter } from "next/router"; // Import the useRouter hook
 
-import customerData from "@/tempData/customerData";
 import categoryData from "@/tempData/categoryData";
 import productData from "@/tempData/productData";
 
 const Shipping = () => {
+  const router = useRouter(); // Initialize the router object
+
+  const [customerData, setCustomerData] = useState([]);
+
+  useEffect(() => {
+    const fetchCustomerData = async () => {
+      try {
+        const response = await axios(
+          `http://localhost:4001/api/v1/orders/orders`
+        );
+        console.log(response);
+        response ? setCustomerData(response.data) : null;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchCustomerData();
+  }, [router.query.customerData]);
+
   return (
     <div className="flex-1">
       <div className="mt-10 mb-12 px-4">
@@ -43,7 +65,7 @@ const Shipping = () => {
                     as={`/product/${customer.productId}`}
                   >
                     <div className="bg-blue-900 text-white px-10 py-2 rounded-3xl">
-                      Product Detail
+                      Order Detail
                     </div>
                   </Link>
                   <Link
