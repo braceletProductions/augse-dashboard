@@ -41,7 +41,7 @@ const Categories = () => {
       try {
         for (let i = 0; i < categoryData.length; i++) {
           res = await axios.get(
-            "http://localhost:4001/api/v1/products/category/" +
+            process.env.NEXT_PUBLIC_SERVER_URL + "/products/category/" +
               categoryData[i].category
           );
           categoryData[i].count = res.data.count;
