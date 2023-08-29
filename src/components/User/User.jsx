@@ -39,7 +39,7 @@ const User = ({ customer }) => {
               as={`/product/${customer.productId}`}
             >
               <div className="bg-blue-900 text-white px-10 py-2 rounded-3xl">
-                Product Detail
+                Order Detail
               </div>
             </Link>
             <Link href={`/track/[customerId]`} as={`/track/${customer.id}`}>
