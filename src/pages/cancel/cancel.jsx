@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import axios from "axios";
+import User from "@/components/User/User";
 
-import customerData from "@/tempData/customerData";
-import categoryData from "@/tempData/categoryData";
-import productData from "@/tempData/productData";
+const Cancel = () => {
+  const router = useState();
+  const [customerData, setCustomerData] = useState([]);
 
-const Shipping = () => {
+  useEffect(() => {
+    const fetchCustomerData = async () => {
+      try {
+        const response = await axios(
+          `http://localhost:4001/api/v1/orders/orders`
+        );
+        console.log(response);
+        response ? setCustomerData(response.data) : null;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCustomerData();
+  }, []);
+
   return (
     <div className="flex-1">
       <div className="mt-10 mb-12 px-4">
@@ -13,50 +30,8 @@ const Shipping = () => {
           Cancel Orders
         </h1>
         <div className="flex flex-col">
-          {customerData.map((customer) => (
-            <div
-              key={customer.id}
-              className="flex flex-col bg-gray-100 rounded-3xl pt-2 pb-2 mt-1 mb-1"
-            >
-              <div className="flex justify-between items-center pl-5 pr-7">
-                <div className="flex items-start flex-col">
-                  <h1 className="text-lg font-semibold text-blue-900">
-                    {customer.name}
-                  </h1>
-                  <p className="text-sm  text-blue-500">{customer.email}</p>
-                </div>
-                <div className="pl-5 pr-7 py-2 flex-col">
-                  <h2 className="text-base font-semibold text-xl text-blue-900">
-                    {categoryData.find(
-                      (category) => category.categoryId === customer.productId
-                    )?.category || "Unknown Category"}
-                  </h2>
-                  <p className="text-blue-500">
-                    {productData.find(
-                      (product) => product.id === customer.productId
-                    )?.description || "No description available"}
-                  </p>
-                </div>
-                <div className="pr-7 flex flex-col mt-3 sm:flex-row sm:space-x-3">
-                  <Link
-                    href={`/product/[productId]`}
-                    as={`/product/${customer.productId}`}
-                  >
-                    <div className="bg-blue-900 text-white px-10 py-2 rounded-3xl">
-                      Product Detail
-                    </div>
-                  </Link>
-                  <Link
-                    href={`/track/[customerId]`}
-                    as={`/track/${customer.id}`}
-                  >
-                    <div className="bg-blue-900 text-white px-10 py-2 rounded-3xl cursor-pointer">
-                      Track
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            </div>
+          {customerData.map((customer, index) => (
+            <User customer={customer} key={index} />
           ))}
         </div>
       </div>
@@ -64,4 +39,4 @@ const Shipping = () => {
   );
 };
 
-export default Shipping;
+export default Cancel;
