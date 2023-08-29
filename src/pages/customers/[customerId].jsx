@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import customerData from "@/tempData/customerData";
+import axios from "axios";
 const CustomerDetailPage = () => {
   const router = useRouter();
   const { customerId } = router.query;
@@ -23,13 +24,27 @@ const CustomerDetailPage = () => {
 
   const totalOrderAmt = orders.reduce(
     (total, order) => total + order.amount,
-    0
+    
   );
 
   const coinsAndCoupons = {
     totalCoins: 50,
     totalCoupons: 3,
   };
+
+  useEffect(() => {
+    const fetchCustomer = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4001/api/v1/user/me/${customerId}`);
+        setSelectedCustomer(response.data);
+      } catch (error) {
+        console.error("Error fetching customer data:", error);
+        setSelectedCustomer(null);
+      }
+    };
+
+    fetchCustomer();
+  }, [customerId]);
 
   return (
     <div className="text-gray-100 font-medium ">
