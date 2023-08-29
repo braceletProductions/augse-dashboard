@@ -1,13 +1,41 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import axios from "axios";
 
 const LoginForm = ({ onLogin }) => {
-  const [username, setUsername] = useState("");
+  const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onLogin(username, password);
+    //perform form validation
+    if (email === "" || password === "") {
+      setError("email and password are required");
+    } else if (password.length < 8) {
+      setError("Password must be at least 8 characters long.");
+    } else {
+      setError(""); //clear previous error
+
+      try {
+        const response = await axios.post(
+          `http://localhost:4001/api/v1/user/login_admin`,
+          {
+            email: email,
+            password: password,
+          }
+        );
+        if (response.status === 200) {
+          //successful login
+          onLogin(email, password);
+        } else {
+          setError("Login Failed. Please check your credentials");
+        }
+      } catch (error) {
+        console.log("error", error);
+        setError("An error occurred. Please try again later.");
+      }
+    }
   };
 
   return (
@@ -30,13 +58,13 @@ const LoginForm = ({ onLogin }) => {
           </div>
           <form onSubmit={handleSubmit}>
             <div className="mb-4 ">
-              <label htmlFor="username" className="block text-gray-700"></label>
+              <label htmlFor="email" className="block text-gray-700"></label>
               <input
                 type="text"
-                id="username"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                id="email"
+                placeholder="email"
+                value={email}
+                onChange={(e) => setemail(e.target.value)}
                 className=" w-full border border-gray-300 p-1 rounded-2xl mt-14"
               />
             </div>
@@ -66,6 +94,7 @@ const LoginForm = ({ onLogin }) => {
                 Login
               </button>
             </div>
+            {error && <p className="text-red-600  font-bold mt-1">{error}</p>}
           </form>
         </div>
       </div>
