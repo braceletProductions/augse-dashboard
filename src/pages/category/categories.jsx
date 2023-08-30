@@ -2,7 +2,6 @@ import Sidebar from "@/components/Sidebar";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Pie } from "react-chartjs-2";
-import Link from "next/link";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -22,43 +21,44 @@ ChartJS.register(
   BarElement
 );
 
-let categoryData = [
-  { categoryId: 0, category: "Pure Silk Saree", count: 0 },
-  { categoryId: 1, category: "Semi Silk Saree", count: 0 },
-  { categoryId: 2, category: "Cotton Saree", count: 0 },
-  { categoryId: 3, category: "Kanchivaram Saree", count: 0 },
-  { categoryId: 4, category: "Bandhani Saree", count: 0 },
-  { categoryId: 5, category: "Organza Saree", count: 0 },
-  { categoryId: 6, category: "Printed Saree", count: 0 },
-];
-
 const Categories = () => {
   const [reload, setReload] = useState(true);
+  const [categoryData, setCategoryData] = useState([]);
+  const [categoryNamesFromApi, setCategoryNamesFromApi] = useState([]);
 
   useEffect(() => {
-    let res;
-    const fetchProducts = async () => {
+    const fetchCategoryData = async () => {
       try {
-        for (let i = 0; i < categoryData.length; i++) {
-          res = await axios.get(
-            process.env.NEXT_PUBLIC_SERVER_URL +
-              "/products/category/" +
-              categoryData[i].category
-          );
-          categoryData[i].count = res.data.count;
-        }
-        setReload((prev) => !prev);
+        const response = await axios.get(
+          `http://localhost:4001/api/v1/products/get_all_Products`
+        );
+        setCategoryData(response.data);
+
+        const namesFromApi = response.data.map((category) => category.category);
+        setCategoryNamesFromApi(namesFromApi);
+        console.log("namesFromApi", namesFromApi[0]);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchProducts();
+    fetchCategoryData();
   }, []);
+  const filterCategories = (selectedCategories) => {
+    const filteredData = categoryData.filter((category) =>
+      selectedCategories.includes(category.category)
+    );
+    setCategoryData(filteredData);
+  };
 
   // Extracting category names and counts from categoryData
   const categoryNames = categoryData.map((category) => category.category);
-  const categoryCounts = categoryData.map((category) => category.count);
+  const categoryCounts = categoryData.map((category) => category.viewount);
 
+  // Calculate the category counts
+  const categoryCountsMap = categoryNamesFromApi.reduce((countMap, name) => {
+    countMap[name] = (countMap[name] || 0) + 1;
+    return countMap;
+  }, {});
   // Data for the pie chart
   const pieChartData = {
     labels: categoryNames,
@@ -109,38 +109,34 @@ const Categories = () => {
   return (
     <div className="flex mt-5">
       <Sidebar />
-      <div className="flex flex-grow">
+      <div className="flex flex-grow h-screen">
         <div className="w-full bg-gray-100 ml-2 rounded-2xl pr-10 pl-10 pt-10">
           <div className="flex flex-col h-full">
             <h1 className="text-blue-800 ml-10 font-bold text-3xl mb-4">
               Categories
             </h1>
 
-            {/* Display product names and counts */}
-            <div className="w-full h-full flex  p-10 mb-10">
-              <div className="w-1/2 mt-4 mr-10">
-                {categoryData.map((category) => (
-                  <div
-                    key={category.categoryId}
-                    className="text-blue-500 text-xl m-5 p-1 rounded-xl"
-                  >
-                    <Link href={`/category/category`} passHref>
-                      <p className=" hover:text-blue-800 hover:underline gap-x-7 ">
-                        {category.category} <span>({category.count})</span>
-                      </p>
-                    </Link>
-                  </div>
+            {/* Filtering dropdown */}
+            <div className="w-1/2 mt-4 mr-10 bg-gray-100">
+              <select
+                multiple
+                onChange={(e) => filterCategories(e.target.value)}
+              >
+                {categoryNamesFromApi.map((name) => (
+                  <option key={name} value={name}>
+                    {name}({categoryCountsMap[name]})
+                  </option>
                 ))}
-              </div>
+              </select>
+            </div>
 
-              {/* Display the pie chart */}
-              <div className="text-blue-400 text-xl rounded-xl mb-6">
-                <Pie
-                  className="h-[12rem]"
-                  data={pieChartData}
-                  options={pieChartOptions}
-                />
-              </div>
+            {/* Display the pie chart */}
+            <div className="text-blue-400 text-xl rounded-xl mb-6">
+              <Pie
+                className="h-[12rem]"
+                data={pieChartData}
+                options={pieChartOptions}
+              />
             </div>
           </div>
         </div>
