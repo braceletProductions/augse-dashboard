@@ -22,49 +22,41 @@ ChartJS.register(
 );
 
 const Categories = () => {
-  const [reload, setReload] = useState(true);
   const [categoryData, setCategoryData] = useState([]);
-  const [categoryNamesFromApi, setCategoryNamesFromApi] = useState([]);
+  const [categoryCountsMap, setCategoryCountsMap] = useState(new Map());
 
   useEffect(() => {
     const fetchCategoryData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4001/api/v1/products/get_all_Products`
+          "http://localhost:4001/api/v1/products/get_all_Products"
         );
         setCategoryData(response.data);
 
-        const namesFromApi = response.data.map((category) => category.category);
-        setCategoryNamesFromApi(namesFromApi);
-        console.log("namesFromApi", namesFromApi[0]);
+        const countsMap = new Map();
+        response.data.forEach((product) => {
+          if (countsMap.has(product.category)) {
+            countsMap.set(
+              product.category,
+              countsMap.get(product.category) + 1
+            );
+          } else {
+            countsMap.set(product.category, 1);
+          }
+        });
+        setCategoryCountsMap(countsMap);
       } catch (error) {
         console.log(error);
       }
     };
     fetchCategoryData();
   }, []);
-  const filterCategories = (selectedCategories) => {
-    const filteredData = categoryData.filter((category) =>
-      selectedCategories.includes(category.category)
-    );
-    setCategoryData(filteredData);
-  };
 
-  // Extracting category names and counts from categoryData
-  const categoryNames = categoryData.map((category) => category.category);
-  const categoryCounts = categoryData.map((category) => category.viewount);
-
-  // Calculate the category counts
-  const categoryCountsMap = categoryNamesFromApi.reduce((countMap, name) => {
-    countMap[name] = (countMap[name] || 0) + 1;
-    return countMap;
-  }, {});
-  // Data for the pie chart
   const pieChartData = {
-    labels: categoryNames,
+    labels: [...categoryCountsMap.keys()],
     datasets: [
       {
-        data: categoryCounts,
+        data: [...categoryCountsMap.values()],
         backgroundColor: [
           "#FF6384",
           "#36A2EB",
@@ -72,7 +64,7 @@ const Categories = () => {
           "#66BB6A",
           "#FF7043",
           "#9575CD",
-        ], // You can customize the colors here
+        ],
         hoverBackgroundColor: [
           "#FF6384",
           "#36A2EB",
@@ -85,58 +77,50 @@ const Categories = () => {
     ],
   };
 
-  // Custom tooltip to show category names and percentages
-  const tooltipCallback = (tooltipItem, data) => {
-    const dataset = data.datasets[tooltipItem.datasetIndex];
-    const total = dataset.data.reduce((sum, value) => sum + value, 0);
-    const currentValue = dataset.data[tooltipItem.index];
-    const percentage = ((currentValue / total) * 100).toFixed(2);
-    const categoryName = data.labels[tooltipItem.index];
-
-    return `${categoryName}: ${percentage}%`;
-  };
-
   const pieChartOptions = {
-    tooltips: {
-      callbacks: {
-        label: tooltipCallback,
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const dataset = context.dataset;
+            const value = dataset.data[context.dataIndex];
+            const total = dataset.data.reduce((acc, val) => acc + val, 0);
+            const percentage = ((value / total) * 100).toFixed(2);
+            return `${context.label}: ${percentage}%`;
+          },
+        },
       },
     },
-    coutout: "50%",
     responsive: true,
   };
 
   return (
     <div className="flex mt-5">
       <Sidebar />
-      <div className="flex flex-grow h-screen">
-        <div className="w-full bg-gray-100 ml-2 rounded-2xl pr-10 pl-10 pt-10">
-          <div className="flex flex-col h-full">
-            <h1 className="text-blue-800 ml-10 font-bold text-3xl mb-4">
-              Categories
-            </h1>
 
-            {/* Filtering dropdown */}
-            <div className="w-1/2 mt-4 mr-10 bg-gray-100">
-              <select
-                multiple
-                onChange={(e) => filterCategories(e.target.value)}
-              >
-                {categoryNamesFromApi.map((name) => (
-                  <option key={name} value={name}>
-                    {name}({categoryCountsMap[name]})
-                  </option>
-                ))}
-              </select>
+      <div className="flex flex-grow bg-gray-100 ml-2 rounded-2xl pr-10 pl-10 pt-10">
+        <div className="w-full p-10">
+          <h1
+            className="text-3xl font-bold"
+            style={{ color: "rgb(27,21,121)" }}
+          >
+            Category
+          </h1>
+
+          <div className="md:flex md:justify-between mt-10 ">
+            <div
+              className="text-2xl md:w-1/2 min-w-[100px] max-w-[600px] min-h-[100px] max-h-[400px] overflow-auto md:mr-2 p-10"
+              style={{ color: "rgb(27,21,172)" }}
+            >
+              {[...categoryCountsMap.keys()].map((name) => (
+                <p key={name} className="mb-2">
+                  {name} ({categoryCountsMap.get(name)})
+                </p>
+              ))}
             </div>
 
-            {/* Display the pie chart */}
-            <div className="text-blue-400 text-xl rounded-xl mb-6">
-              <Pie
-                className="h-[12rem]"
-                data={pieChartData}
-                options={pieChartOptions}
-              />
+            <div className="md:w-1/2 md:mr-20  md:mt-0 ml-0  text-blue-400  rounded-xl md:w-72 h-72 p-10">
+              <Pie data={pieChartData} options={pieChartOptions} />
             </div>
           </div>
         </div>
