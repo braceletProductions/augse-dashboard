@@ -53,6 +53,7 @@ const Dashboard = () => {
   const [products, setProducts] = useState(0);
   const [reload, setReload] = useState(true);
 
+  //Counting users
   useEffect(() => {
     const fetchUsers = async () => {
       try {
