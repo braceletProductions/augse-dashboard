@@ -1,10 +1,9 @@
 /* styles.css */
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 /* Your custom styles */
-
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -22,50 +21,55 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: rgb(27, 72, 121);
- 
+  background: rgb(34, 86, 141);
 }
 
 .link {
-  
-	letter-spacing: 0.1em;
-	width: full;
-	/* height: 1.5em; */
-	line-height: 1.5em;
-	position: relative;
-	overflow: hidden;
-	margin: 0.5em;
-	cursor: pointer;
+  letter-spacing: 0.1em;
+  width: full;
+  /* height: 1.5em; */
+  line-height: 1.5em;
+  position: relative;
+  overflow: hidden;
+  margin: 0.5em;
+  cursor: pointer;
 }
 
-.link  {
-	color: rgb(21, 23, 23);
+.link {
+  color: rgb(21, 23, 23);
 }
-
-
 
 .link :hover::before {
-	transform: scale(7);
+  transform: scale(7);
 }
-.link:hover{
-  background-color:rgb(27, 72, 121);
-  
+.link:hover {
+  background-color: rgb(27, 72, 121);
 }
 
 /* class for   paymentUI */
-.bgcolor{
+.bgcolor {
   background: white;
 }
-.rectangle1{
-  background-color: rgb(3, 191, 185);;
-
+.rectangle1 {
+  background-color: rgb(3, 191, 185);
 }
-.login{
-  background-color: #1383A6;
+.login {
+  background-color: #1383a6;
   backdrop-filter: blur(4px);
-
 }
-.login:hover{
+.login:hover {
   background-color: #47c1e6;
+}
 
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: white;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(37, 80, 129);
+  border-radius: 10px;
 }

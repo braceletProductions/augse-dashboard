@@ -29,7 +29,7 @@ const Categories = () => {
     const fetchCategoryData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4001/api/v1/products/get_all_Products"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/get_all_Products"
         );
         setCategoryData(response.data);
 
@@ -113,13 +113,13 @@ const Categories = () => {
               style={{ color: "rgb(27,21,172)" }}
             >
               {[...categoryCountsMap.keys()].map((name) => (
-                <p key={name} className="mb-2">
+                <p key={name} className="mb-2 cursor-pointer">
                   {name} ({categoryCountsMap.get(name)})
                 </p>
               ))}
             </div>
 
-            <div className="md:w-1/2 md:mr-20  md:mt-0 ml-0  text-blue-400  rounded-xl md:w-72 h-72 p-10">
+            <div className="md:w-1/2 md:mr-20  md:mt-0 ml-0  text-blue-400  rounded-xl h-[22rem] p-2">
               <Pie data={pieChartData} options={pieChartOptions} />
             </div>
           </div>

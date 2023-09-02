@@ -1,7 +1,6 @@
 import Sidebar from "@/components/Sidebar";
 import React from "react";
 import { Doughnut, Bar } from "react-chartjs-2";
-import categoryData from "@/tempData/categoryData";
 import orderData from "@/tempData/orderData";
 import doughnutData from "@/tempData/dougnutData";
 import barData from "@/tempData/barData";
@@ -78,7 +77,7 @@ const Orders = () => {
       <div className="flex-grow bg-gray-100 mt-0 ml-2 rounded-2xl pr-10 pl-10 pt-10 relative">
         <div className=" text-blue-400    text-xl p-6 rounded-xl mb-6 ">
           <h1 className="mb-3 gap-x-7 flex items-center">
-            <Link href="/total/total" passHref>
+            <Link href="/totalorder/totalOrder" passHref>
               <p className="text-blue-600 hover:text-blue-900 hover:underline">
                 Total Orders
               </p>

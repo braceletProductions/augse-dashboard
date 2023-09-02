@@ -13,7 +13,7 @@ const Return = () => {
     const fetchCustomerData = async () => {
       try {
         const response = await axios(
-          `http://localhost:4001/api/v1/orders/orders`
+          process.env.NEXT_PUBLIC_SERVER_URL + `/orders/orders`
         );
         console.log(response);
         response ? setCustomerData(response.data) : null;

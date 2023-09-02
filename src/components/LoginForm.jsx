@@ -19,7 +19,7 @@ const LoginForm = ({ onLogin }) => {
 
       try {
         const response = await axios.post(
-          `http://localhost:4001/api/v1/user/login_admin`,
+          process.env.NEXT_PUBLIC_SERVER_URL + `/user/login_admin`,
           {
             email: email,
             password: password,
