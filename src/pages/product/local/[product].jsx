@@ -10,7 +10,8 @@ const ProductPage = () => {
     const fetchData = async () => {
       try {
         const response = await axios(
-          `http://localhost:4001/api/v1/products/product/${router.query.product}`
+          process.env.NEXT_PUBLIC_SERVER_URL +
+            `/products/product/${router.query.product}`
         );
         response ? setProduct(response.data) : null;
       } catch (error) {

@@ -12,7 +12,7 @@ const User = ({ customer }) => {
     const fetchOrderData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4001/api/v1/user/me/${userId}`
+          process.env.NEXT_PUBLIC_SERVER_URL + `/user/me/${userId}`
         );
         console.log(response);
         response ? setOrderData(response.data) : null;

@@ -1,45 +1,40 @@
-import React from "react";
-
-import totalorderData from "@/tempData/totalorderData";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import OrderCard from "@/components/OrderCard";
+import BackButton from "@/components/BackButton";
 
 const totalOrder = () => {
+  const [orders, setOrders] = useState([]);
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/orders/orders"
+        );
+        setOrders(response.data);
+      } catch (error) {}
+    };
+    fetchOrders();
+  }, []);
+
   return (
     <div className="flex-1 flex-wrap">
-      <div className="mt-10 mb-12 px-4">
-        <h1 className=" font-bold  text-gray-100 pb-5 text-5xl">
+      <div className="mx-[1.5rem] mt-[1.3rem]">
+        <BackButton />
+      </div>
+      <div className="mt-8 mb-12 px-4">
+        <h1 className="font-bold  text-gray-100 pb-5 text-5xl">
           Total Orders
         </h1>
-        {totalorderData.map((ele) => (
-          <div key={ele.id} className="flex  gap-5 mb-10">
-            <div className="w-2/5 bg-white border-2  p-4 rounded-l-lg">
-              <h1 className="text-4xl font-semibold text-blue-900 mb-2">
-                {ele.name}
-              </h1>
-              <p className="text-2xl text-blue-500">{ele.email}</p>
-            </div>
-            <div className="w-3/5 bg-white border-2  p-4 rounded-r-lg flex justify-between">
-              <div className="mr-4">
-                <h2 className="text-4xl font-semibold text-blue-900">
-                  {ele.sareename}
-                </h2>
-                <p className="text-2xl text-blue-500">{ele.desc}</p>
-              </div>
-              <div className="flex flex-wrap w-2/5 h-20 justify-between">
-                <button
-                  className="bg-blue-900 text-white rounded-lg px-4 py-2 text-2xl"
-                  style={{ width: "190px", height: "50px" }}
-                >
-                  Order Detail
-                </button>
-                <button
-                  className="bg-blue-900 text-white rounded-lg px-4 py-2 text-2xl"
-                  style={{ width: "120px", height: "50px" }}
-                >
-                  Track
-                </button>
-              </div>
-            </div>
-          </div>
+        {orders.map((order) => (
+          <OrderCard
+            key={order._id}
+            id={order._id}
+            name={order.userId.name}
+            email={order.userId.email}
+            payment={order.payment_successful}
+            paymentMode={order.paymentMode}
+          />
         ))}
       </div>
     </div>

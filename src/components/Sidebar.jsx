@@ -1,20 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import logo from "../../public/logo.png";
 
-const Sidebar = () => {
-  const menuItems = [
-    { label: "Dashboard", link: "/dashboard/dashboard" },
-    { label: "Category", link: "/category/categories" },
-    { label: "Orders", link: "/orders/orders" },
-    { label: "Products", link: "/product/[productId]" },
-    { label: "Customers", link: "/customers/customer" },
+const optionsProducts = [
+  { label: "Add Product", link: "/products/addproduct" },
+  { label: "Out of Stock", link: "/products/addproduct" },
+  { label: "Less in Stock", link: "/products/addproduct" },
+];
 
-    { label: "Payment" },
-  ];
+const Sidebar = () => {
+  const [productOptions, setProductsOptions] = useState(false);
+
+  const showProductsOptions = () => {
+    setProductsOptions((prev) => !prev);
+  };
 
   return (
-    <div className="h-full sm:w-1/5 w-1/5  lg:w-2/12 bg-gray-100 flex flex-col lg:flex-row lg:flex-col  text-center">
+    <div className="min-h-screen sm:w-1/5 w-1/5  lg:w-2/12 bg-gray-100 flex flex-col lg:flex-row lg:flex-col  text-center">
       <div>
         <div className=" lg:p-1 w-full  h-28  flex justify-center align-items  items-center">
           <a href="/dashboard/dashboard">
@@ -24,16 +26,71 @@ const Sidebar = () => {
       </div>
       <div className="flex-grow sm:w-full overflow-x-auto overflow-y-auto">
         <ul className="lg:w-full">
-          {menuItems.map((item, index) => (
-            <li key={index} className="mb-6 lg:mb-5">
-              <a
-                href={item.link}
-                className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
+          <li className="mb-6 lg:mb-5">
+            <a
+              href={"/dashboard/dashboard"}
+              className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
+            >
+              Dashboard
+            </a>
+          </li>
+          <li className="mb-6 lg:mb-5">
+            <a
+              href={"/category/categories"}
+              className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
+            >
+              Category
+            </a>
+          </li>
+          <li className="mb-6 lg:mb-5">
+            <a
+              href={"/orders/orders"}
+              className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
+            >
+              Orders
+            </a>
+          </li>
+          <li className="lg:mb-5">
+            <div
+              className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link relative p-3 hover:rounded-xl justify-center align-items  items-center "
+              onClick={showProductsOptions}
+            >
+              Products
+            </div>
+            <div
+              className={`transition-all ${
+                productOptions ? "translate-x-0" : "-translate-x-[20rem]"
+              }`}
+            >
+              {productOptions &&
+                optionsProducts.map((option, index) => (
+                  <li className="">
+                    <a
+                      href={option.link}
+                      className="text-black font-medium hover:text-gray-100 p-1 px-2 link hover:rounded-xl justify-center"
+                    >
+                      {option.label}
+                    </a>
+                  </li>
+                ))}
+            </div>
+          </li>
+          <li className="my-6 lg:mb-5">
+            <a
+              href={"/customers/customer"}
+              className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
+            >
+              Customers
+            </a>
+          </li>
+          <li className="mb-6 lg:mb-5">
+            <a
+              href={"/dashboard/dashboard"}
+              className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
+            >
+              Payment
+            </a>
+          </li>
         </ul>
       </div>
     </div>
