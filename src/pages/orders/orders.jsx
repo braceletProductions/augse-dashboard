@@ -1,7 +1,6 @@
 import Sidebar from "@/components/Sidebar";
 import React from "react";
 import { Doughnut, Bar } from "react-chartjs-2";
-import orderData from "@/tempData/orderData";
 import doughnutData from "@/tempData/dougnutData";
 import barData from "@/tempData/barData";
 import Link from "next/link";
@@ -15,6 +14,7 @@ import {
   Legend,
   BarElement,
 } from "chart.js";
+import { useSelector } from "react-redux";
 
 ChartJS.register(
   CategoryScale,
@@ -29,12 +29,44 @@ const calculatePercentage = (value, total) =>
   ((value / total) * 100).toFixed(2);
 
 const Orders = () => {
-  const totalOrders =
-    orderData.canceled +
-    orderData.returned +
-    orderData.delivered +
-    orderData.shipped +
-    orderData.pending;
+  const totalOrders = useSelector((state) => state.orders.totalOrders.length);
+  const cancelledOrders = useSelector(
+    (state) => state.orders.cancelledOrders.length
+  );
+  const returnedOrders = useSelector(
+    (state) => state.orders.returnedOrders.length
+  );
+  const deliveredOrders = useSelector(
+    (state) => state.orders.deliveredOrders.length
+  );
+  const pendingOrders = useSelector(
+    (state) => state.orders.pendingOrders.length
+  );
+  const shippedOrders = useSelector(
+    (state) => state.orders.shippedOrders.length
+  );
+
+  const doughnutData = {
+    labels: ["Canceled", "Returned", "Delivered", "Pending", "Shipped"],
+    datasets: [
+      {
+        data: [
+          cancelledOrders,
+          returnedOrders,
+          deliveredOrders,
+          pendingOrders,
+          shippedOrders,
+        ],
+        backgroundColor: [
+          "#153e64",
+          "#03284a",
+          "#33f9f9",
+          "#08b7c2",
+          "#177cac",
+        ],
+      },
+    ],
+  };
 
   const doughnutOptions = {
     plugins: {
@@ -82,15 +114,15 @@ const Orders = () => {
                 Total Orders
               </p>
             </Link>{" "}
-            <span className="text-blue-600">({orderData.totalOrders})</span>
+            <span className="text-blue-600">{totalOrders}</span>
           </h1>
           <h1 className="mb-3 gap-x-7 flex items-center">
             <Link href="/cancel/cancel" passHref>
               <p className="text-blue-600 hover:text-blue-900">
-                Canceled Orders
+                Cancelled Orders
               </p>
             </Link>{" "}
-            <span className="text-blue-600">{orderData.canceled}</span>
+            <span className="text-blue-600">{cancelledOrders}</span>
           </h1>
 
           <h1 className="mb-3 gap-x-7 flex items-center">
@@ -99,7 +131,7 @@ const Orders = () => {
                 Return Orders
               </p>
             </Link>{" "}
-            <span className="text-blue-600">{orderData.returned}</span>
+            <span className="text-blue-600">{returnedOrders}</span>
           </h1>
           <h1 className="mb-3 gap-x-7 flex items-center">
             <Link href="/delivered/delivered" passHref>
@@ -107,7 +139,7 @@ const Orders = () => {
                 Delivered Orders
               </p>
             </Link>{" "}
-            <span className="text-blue-600">{orderData.delivered}</span>
+            <span className="text-blue-600">{deliveredOrders}</span>
           </h1>
           <h1 className="mb-3 gap-x-7 flex items-center">
             <Link href="/notDelivered/notdelivered" passHref>
@@ -115,7 +147,7 @@ const Orders = () => {
                 Shipped but not delivered
               </p>
             </Link>{" "}
-            <span className="text-blue-600">{orderData.shipped}</span>
+            <span className="text-blue-600">{shippedOrders}</span>
           </h1>
           <h1 className="mb-3 gap-x-7 flex items-center">
             <Link href="/shipping/shipping" passHref>
@@ -123,7 +155,7 @@ const Orders = () => {
                 Shipping is Pending
               </p>
             </Link>{" "}
-            <span className="text-blue-600">{orderData.pending}</span>
+            <span className="text-blue-600">{pendingOrders}</span>
           </h1>
           <div className="lg:absolute top-5 right-28 p-4 rounded-xl ">
             <Doughnut

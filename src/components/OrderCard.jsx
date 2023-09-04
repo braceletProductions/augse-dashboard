@@ -1,6 +1,13 @@
 import React from "react";
+import Router from "next/router";
 
 function OrderCard(props) {
+  const showOrderDetailHandler = () => {
+    Router.push({
+      pathname: "/track/" + props.id,
+    });
+  };
+
   return (
     <div className="mx-auto min-h-[5rem] my-[1rem] rounded-lg flex justify-between items-center p-[1rem] bg-white">
       <div className="">
@@ -18,6 +25,7 @@ function OrderCard(props) {
       <button
         className="bg-blue-900 text-white rounded-lg px-4 py-2 text-2xl"
         style={{ width: "190px", height: "50px" }}
+        onClick={showOrderDetailHandler}
       >
         Order Detail
       </button>

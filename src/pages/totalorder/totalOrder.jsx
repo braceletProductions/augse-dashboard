@@ -1,21 +1,10 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import OrderCard from "@/components/OrderCard";
 import BackButton from "@/components/BackButton";
+import { useSelector } from "react-redux";
 
 const totalOrder = () => {
-  const [orders, setOrders] = useState([]);
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/orders/orders"
-        );
-        setOrders(response.data);
-      } catch (error) {}
-    };
-    fetchOrders();
-  }, []);
+  const orders = useSelector((state) => state.orders.totalOrders);
 
   return (
     <div className="flex-1 flex-wrap">
@@ -23,9 +12,7 @@ const totalOrder = () => {
         <BackButton />
       </div>
       <div className="mt-8 mb-12 px-4">
-        <h1 className="font-bold  text-gray-100 pb-5 text-5xl">
-          Total Orders
-        </h1>
+        <h1 className="font-bold  text-gray-100 pb-5 text-5xl">Total Orders</h1>
         {orders.map((order) => (
           <OrderCard
             key={order._id}
