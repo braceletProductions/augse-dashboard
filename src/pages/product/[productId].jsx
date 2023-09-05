@@ -1,45 +1,30 @@
-// pages/product/[productId].js
-import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useRouter } from "next/router";
-import customerData from "@/tempData/customerData";
-import productData from "@/tempData/productData";
+import React, { useEffect, useState } from "react";
+import Product from "@/components/Product";
 
 const ProductDetail = () => {
   const router = useRouter();
   const { productId } = router.query;
+  const [product, setProduct] = useState({});
 
-  console.log("ProductId from URL:", productId);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios(
+          process.env.NEXT_PUBLIC_SERVER_URL + `/products/product/${productId}`
+        );
+        response ? setProduct(response.data) : null;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [productId]);
 
-  const matchingCustomers = customerData.filter(
-    (customer) => parseInt(customer.productId) === parseInt(productId)
-  );
+  if (!product._id) return <div className="">Loading...</div>;
 
-  const matchingProducts = productData.filter(
-    (product) => parseInt(product.id) === parseInt(productId)
-  );
-
-  console.log("Customers with matching productId:", matchingCustomers);
-
-  if (!matchingCustomers.length) {
-    console.log("Product not found");
-    return <div>Product not found</div>;
-  }
-
-  const customer = matchingCustomers[0]; // Take the first matching customer
-  const product = matchingProducts[0]; // Take the first matching customer
-
-  return (
-    <div className="bg-gray-100 m-10 p-10 rounded-3xl text-xl text-blue-500">
-      <h1 className="text-blue-900 text-2xl"> Product Detail</h1>
-      <p> {product.id}</p>
-      <p> {product.description}</p>
-      <p> {product.price}</p>
-      <p> {product.status}</p>
-      <p>{product.imageUrl}</p>
-
-      {/* Display other customer details */}
-    </div>
-  );
+  return <Product product={product} />;
 };
 
 export default ProductDetail;

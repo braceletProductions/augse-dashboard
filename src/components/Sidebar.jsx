@@ -4,8 +4,8 @@ import logo from "../../public/logo.png";
 
 const optionsProducts = [
   { label: "Add Product", link: "/products/addproduct" },
-  { label: "Out of Stock", link: "/products/addproduct" },
-  { label: "Less in Stock", link: "/products/addproduct" },
+  { label: "Out of Stock", link: "/products/status/outofstock" },
+  { label: "Less in Stock", link: "/products/status/lessinstock" },
 ];
 
 const Sidebar = () => {

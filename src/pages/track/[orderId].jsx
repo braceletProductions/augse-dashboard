@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -6,7 +6,6 @@ const TrackOrder = () => {
   const [order, setOrder] = useState({});
   const router = useRouter();
   const { orderId } = router.query;
-  console.log(order);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -20,6 +19,19 @@ const TrackOrder = () => {
     };
     fetchDetails();
   }, [orderId]);
+
+  const trackHandler = () => {
+    Router.push({
+      pathname: "/track/track",
+      query: { orderId },
+    });
+  };
+
+  const profileHandler = () => {
+    Router.push({
+      pathname: "/customers/" + order.userId._id,
+    });
+  };
 
   if (order && order.userId)
     return (
@@ -43,11 +55,11 @@ const TrackOrder = () => {
                 <p>Country: {order.addressId.country}</p>
               </div>
             </div>
-            <div className="flex w-full gap-[2rem] text-xl my-[2rem]">
+            <div className="lg:flex w-full gap-[2rem] text-xl my-[2rem]">
               <div className="flex-[5]">
                 <div className="flex gap-[2rem]">
                   <div className="w-[40%]">Products</div>
-                  <div className="w-[60%] flex justify-between border-l-4 border-blue-600 px-[2rem]">
+                  <div className="w-[60%] flex justify-between border-l-4 border-blue-600 md:px-[2rem]">
                     <div className="">Product Cost</div>
                     <div className="">Quantity</div>
                     <div className="">Total</div>
@@ -64,8 +76,10 @@ const TrackOrder = () => {
                     <div className="w-[60%] border-l-4 border-blue-600 px-[2rem]">
                       <div className="my-[1rem] grid grid-cols-3 gap-[2rem] text-center text-blue-400">
                         <div className="">{order.productCost[index]}</div>
-                        <div className="pl-[4rem]">{order.quantity[index]}</div>
-                        <div className="pl-[8rem]">
+                        <div className="xl:pl-[4rem] md:pl-[2rem]">
+                          {order.quantity[index]}
+                        </div>
+                        <div className="xl:pl-[8rem] md:pl-[4rem]">
                           {order.productCost[index] * order.quantity[index]}
                         </div>
                       </div>
@@ -126,13 +140,19 @@ const TrackOrder = () => {
               </span>
             </div>
             <div className="text-white flex my-[2rem] justify-center gap-[5rem]">
-              <div className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer">
+              <div className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer shadow-black shadow-md active:shadow-none">
                 Invoice
               </div>
-              <div className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer">
+              <div
+                className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer shadow-black shadow-md active:shadow-none"
+                onClick={profileHandler}
+              >
                 Profile
               </div>
-              <div className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer">
+              <div
+                className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer shadow-black shadow-md active:shadow-none"
+                onClick={trackHandler}
+              >
                 Track
               </div>
             </div>
