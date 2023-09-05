@@ -16,15 +16,14 @@ function OrderCard(props) {
         </h1>
         <p className="text-2xl text-blue-500">{props.email}</p>
       </div>
-      <div className="flex flex-col text-center">
+      <div className="flex sm:block hidden flex-col text-center">
         <h1 className="text-4xl font-semibold text-blue-900 mb-2">Payment</h1>
         <p className="text-2xl text-blue-500">
           {props.paymentMode} ({props.payment ? "Successful" : "Pending"})
         </p>
       </div>
       <button
-        className="bg-blue-900 text-white rounded-lg px-4 py-2 text-2xl"
-        style={{ width: "190px", height: "50px" }}
+        className="bg-blue-900 text-white rounded-lg px-4 py-2 sm:text-2xl cursor-pointer shadow-black shadow-md active:shadow-none"
         onClick={showOrderDetailHandler}
       >
         Order Detail

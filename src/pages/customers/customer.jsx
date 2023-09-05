@@ -26,7 +26,7 @@ const Customer = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen mt-5 lg:mt-5">
+    <div className="flex flex-col sm:flex-row min-h-screen mt-5 lg:mt-5">
       <Sidebar />
       <div className="flex-1">
         <div className="mt-10 mb-12 px-4">
@@ -47,10 +47,10 @@ const Customer = () => {
                 </div>
                 <div className="pr-7">
                   <button
-                    className="bg-blue-900 text-white px-14 py-2 rounded-3xl lg:mt-0 sm:mt-3"
+                    className="bg-blue-900 font-semibold text-white sm:px-6 px-4 py-2 rounded-3xl lg:mt-0 sm:mt-3 cursor-pointer shadow-black shadow-md active:shadow-none"
                     onClick={() => handleProfileClick(customer._id)}
                   >
-                    Profile
+                    View Profile
                   </button>
                 </div>
               </div>

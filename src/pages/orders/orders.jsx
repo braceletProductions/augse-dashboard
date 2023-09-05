@@ -1,7 +1,6 @@
 import Sidebar from "@/components/Sidebar";
 import React from "react";
 import { Doughnut, Bar } from "react-chartjs-2";
-import doughnutData from "@/tempData/dougnutData";
 import barData from "@/tempData/barData";
 import Link from "next/link";
 
@@ -114,7 +113,7 @@ const Orders = () => {
                 Total Orders
               </p>
             </Link>{" "}
-            <span className="text-blue-600">{totalOrders}</span>
+            <span className="text-blue-600">({totalOrders})</span>
           </h1>
           <h1 className="mb-3 gap-x-7 flex items-center">
             <Link href="/cancel/cancel" passHref>
@@ -122,7 +121,7 @@ const Orders = () => {
                 Cancelled Orders
               </p>
             </Link>{" "}
-            <span className="text-blue-600">{cancelledOrders}</span>
+            <span className="text-blue-600">({cancelledOrders})</span>
           </h1>
 
           <h1 className="mb-3 gap-x-7 flex items-center">
@@ -131,7 +130,7 @@ const Orders = () => {
                 Return Orders
               </p>
             </Link>{" "}
-            <span className="text-blue-600">{returnedOrders}</span>
+            <span className="text-blue-600">({returnedOrders})</span>
           </h1>
           <h1 className="mb-3 gap-x-7 flex items-center">
             <Link href="/delivered/delivered" passHref>
@@ -139,7 +138,7 @@ const Orders = () => {
                 Delivered Orders
               </p>
             </Link>{" "}
-            <span className="text-blue-600">{deliveredOrders}</span>
+            <span className="text-blue-600">({deliveredOrders})</span>
           </h1>
           <h1 className="mb-3 gap-x-7 flex items-center">
             <Link href="/notDelivered/notdelivered" passHref>
@@ -147,7 +146,7 @@ const Orders = () => {
                 Shipped but not delivered
               </p>
             </Link>{" "}
-            <span className="text-blue-600">{shippedOrders}</span>
+            <span className="text-blue-600">({shippedOrders})</span>
           </h1>
           <h1 className="mb-3 gap-x-7 flex items-center">
             <Link href="/shipping/shipping" passHref>
@@ -155,7 +154,7 @@ const Orders = () => {
                 Shipping is Pending
               </p>
             </Link>{" "}
-            <span className="text-blue-600">{pendingOrders}</span>
+            <span className="text-blue-600">({pendingOrders})</span>
           </h1>
           <div className="lg:absolute top-5 right-28 p-4 rounded-xl ">
             <Doughnut

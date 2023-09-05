@@ -14,7 +14,6 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     setOrders: (state, action) => {
-      console.log(action.payload);
       state.totalOrders = action.payload;
       state.cancelledOrders = action.payload.filter(
         (order) => order.cancelled == true
