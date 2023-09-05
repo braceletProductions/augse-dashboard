@@ -25,9 +25,10 @@ const LoginForm = ({ onLogin }) => {
             password: password,
           }
         );
+        console.log(response);
         if (response.status === 200) {
           //successful login
-          onLogin(email, password);
+          onLogin(email, password, response.data.path);
         } else {
           setError("Login Failed. Please check your credentials");
         }
@@ -89,7 +90,7 @@ const LoginForm = ({ onLogin }) => {
               {/* Center the button */}
               <button
                 type="submit"
-                className="login text-white pl-6 pr-6 pt-2 pb-2 rounded-xl font-bold"
+                className="login text-white pl-6 pr-6 pt-2 pb-2 rounded-xl font-bold shadow-md shadow-black"
               >
                 Login
               </button>
