@@ -51,14 +51,14 @@ body {
   background: white;
 }
 .rectangle1 {
-  background-color: rgb(3, 191, 185);
+  background-color: rgb(45, 171, 186);
 }
 .login {
   background-color: #1383a6;
   backdrop-filter: blur(4px);
 }
 .login:hover {
-  background-color: #47c1e6;
+  background-color: rgb(62, 181, 217);
 }
 
 *::-webkit-scrollbar {

@@ -6,13 +6,11 @@ const BackButton = () => {
   const router = useRouter();
 
   return (
-    <button
+    <img
+      src="https://cdn-icons-png.flaticon.com/512/7168/7168657.png"
       onClick={() => router.back()}
-      className="rounded-2xl font-bold texl-xl"
-      style={{ backgroundColor: "rgb(27,72,121)", color: "white" }}
-    >
-      Back
-    </button>
+      className="rounded-full bg-white cursor-pointer hover:scale-105 shadow-sm active:shadow-none shadow-black h-[2rem]"
+    />
   );
 };
 
