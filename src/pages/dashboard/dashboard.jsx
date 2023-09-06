@@ -185,21 +185,20 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-grow gap-2 lg:gap-9 lg:w-full lg:flex-row">
+          <div className="lg:flex flex-grow gap-2 lg:gap-9 lg:w-full lg:flex-row">
             <div className="flex bg-gray-100 w-4/5 rounded-2xl lg:h-60 mb-1 lg:mb-0">
               <h1 className="text-blue-900 text-xl  mb-10 lg:mb-4">Sales</h1>
               <Line data={salesChartData} />
             </div>
 
-            <div className=" w-1/5  lg:h-70 mb-2 lg:mb-0">
-              {/* Content for the second column */}
-              <button className="bg-gray-100 rounded-2xl px-16 pt-2 pb-2 mt-5 ">
+            <div className="w-1/5 mb-2 lg:mb-0">
+              <button className="bg-gray-100 w-[10rem] lg:mb-[1rem] rounded-2xl text-center lg:py-3 py-1 mt-5 ">
                 Amount
               </button>
-              <button className="bg-gray-100 rounded-2xl px-20 pt-2 pb-2 mt-5">
+              <button className="bg-gray-100 w-[10rem] lg:mb-[1rem]  rounded-2xl text-center lg:py-3 py-1 mt-5">
                 GST
               </button>
-              <button className="bg-gray-100 rounded-2xl px-16 pl-10 pr-10 pt-2 pb-2 mt-5">
+              <button className="bg-gray-100 w-[10rem] rounded-2xl text-center lg:py-3 py-1 mt-5">
                 Total revenue
               </button>
             </div>

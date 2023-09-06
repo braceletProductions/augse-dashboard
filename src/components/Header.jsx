@@ -12,15 +12,11 @@ const Header = () => {
     <div className="  top-0 right-0 left-0 z-30 p-2">
       <header className="flex justify-end items-center">
         <div className="flex items-center space-x-4 ">
-          {/* Icons */}
-          <AiOutlineEye className="text-white text-xl" />
-          <AiOutlineBell className="text-white text-xl" />
-          <AiOutlineSetting className="text-white text-xl" />
-          <AiOutlineUser className="text-white text-xl" />
-        </div>
-        <div>
-          {/* Hamburger Menu */}
-          <AiOutlineMenu className="text-white text-2xl" />
+          <AiOutlineEye className="text-white text-xl cursor-pointer" />
+          <AiOutlineBell className="text-white text-xl cursor-pointer" />
+          <AiOutlineSetting className="text-white text-xl cursor-pointer" />
+          <AiOutlineUser className="text-white text-xl cursor-pointer" />
+          <AiOutlineMenu className="text-white text-2xl cursor-pointer block lg:hidden" />
         </div>
       </header>
     </div>

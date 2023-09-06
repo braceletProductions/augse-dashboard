@@ -16,7 +16,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="min-h-screen sm:w-1/5 w-1/5  lg:w-2/12 bg-gray-100 flex flex-col lg:flex-row lg:flex-col  text-center">
+    <div className="min-h-screen sm:w-1/5 w-[10rem]  lg:w-2/12 bg-gray-100 flex flex-col lg:flex-row lg:flex-col  text-center">
       <div>
         <div className=" lg:p-1 w-full  h-28  flex justify-center align-items  items-center">
           <a href="/dashboard/dashboard">

@@ -1,6 +1,7 @@
 import Router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import BackButton from "@/components/BackButton";
 
 const TrackOrder = () => {
   const [order, setOrder] = useState({});
@@ -36,6 +37,9 @@ const TrackOrder = () => {
   if (order && order.userId)
     return (
       <div className="w-full font-medium">
+        <div className="mt-[1.5rem] ml-[1.5rem]">
+          <BackButton />
+        </div>
         <div className="max-w-screen-2xl mx-auto p-[1.5rem]">
           <div className="bg-white min-h-screen rounded-3xl p-[2rem]">
             <div className="text-lg">
