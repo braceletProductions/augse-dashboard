@@ -69,7 +69,7 @@ const LoginForm = ({ onLogin }) => {
                 <input
                   type="text"
                   id="email"
-                  placeholder="email"
+                  placeholder="Email"
                   value={email}
                   onChange={(e) => setemail(e.target.value)}
                   className="w-full border border-gray-300 p-1 h-[2rem] rounded-2xl px-[1rem] mt-14"

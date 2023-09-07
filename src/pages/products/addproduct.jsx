@@ -5,16 +5,6 @@ import Sidebar from "@/components/Sidebar";
 import ImageUpload from "@/components/ImageUpload";
 import Backdrop from "@/components/Backdrop";
 
-const category = [
-  { id: 1, name: "Pure Silk Saree" },
-  { id: 2, name: "Semi Silk Saree" },
-  { id: 3, name: "Cotton Saree" },
-  { id: 4, name: "Kanchivaram Saree" },
-  { id: 5, name: "Bandhani Saree" },
-  { id: 6, name: "Organga Saree" },
-  { id: 7, name: "Printed Saree" },
-];
-
 const colorData = [
   { id: 1, name: "Black", col: "black" },
   { id: 2, name: "Blue", col: "blue" },
@@ -31,11 +21,13 @@ const colorData = [
 ];
 
 const sizeData = [
-  { id: 1, name: "M" },
-  { id: 2, name: "L" },
-  { id: 3, name: "XL" },
-  { id: 4, name: "XXL" },
-  { id: 5, name: "XXXL" },
+  { id: 1, name: "N/A", value: null },
+  { id: 2, name: "S", value: "S" },
+  { id: 3, name: "M", value: "M" },
+  { id: 4, name: "L", value: "L" },
+  { id: 5, name: "XL", value: "XL" },
+  { id: 6, name: "XXL", value: "XXL" },
+  { id: 7, name: "XXXL", value: "XXXL" },
 ];
 
 const taxData = [
@@ -52,6 +44,7 @@ const helperData = [
 
 function addproduct() {
   const [showTags, setShowTags] = useState(false);
+  const [category, setCategory] = useState([]);
   const [tagsOptions, setTagsOptions] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [mainImageFile, setMainImageFile] = useState();
@@ -73,17 +66,21 @@ function addproduct() {
   const detailRef = useRef();
 
   useEffect(() => {
-    const fetchTags = async () => {
+    const fetchDetails = async () => {
       try {
         const res = await axios.get(
           process.env.NEXT_PUBLIC_SERVER_URL + "/tags/tags"
         );
         setTagsOptions(res.data.tags);
+        const response = await axios.get(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/category/category"
+        );
+        setCategory(response.data.category);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchTags();
+    fetchDetails();
   }, []);
 
   const mainImageHandler = (file) => {
@@ -222,9 +219,9 @@ function addproduct() {
                   ref={sizeRef}
                   className="border-2 border-[#4379a0] w-[10rem]"
                 >
-                  {sizeData.map((color) => (
-                    <option key={color.id} value={color.name}>
-                      {color.name}
+                  {sizeData.map((size) => (
+                    <option key={size.id} value={size.value}>
+                      {size.name}
                     </option>
                   ))}
                 </select>
@@ -236,9 +233,9 @@ function addproduct() {
                   ref={categoryRef}
                   className="border-2 border-[#4379a0]"
                 >
-                  {category.map((cat) => (
-                    <option key={cat.id} value={cat.name}>
-                      {cat.name}
+                  {category.map((cat, index) => (
+                    <option key={index} value={cat}>
+                      {cat}
                     </option>
                   ))}
                 </select>
@@ -248,10 +245,14 @@ function addproduct() {
               <div className="w-[50%]">
                 <div className="text-lg ml-[1rem] my-[0.5rem]">Tags</div>
                 <button
-                  className="border-2 border-[#4379a0] w-[10rem]"
+                  className="border-2 border-[#4379a0] w-[10rem] truncate"
                   onClick={toggleShowtags}
                 >
-                  Select Tags
+                  {selectedOptions.length === 0
+                    ? "Select Tags"
+                    : selectedOptions.map((tag, index) => (
+                        <span key={index}>{tag},</span>
+                      ))}
                 </button>
                 {showTags && (
                   <Backdrop
@@ -262,7 +263,7 @@ function addproduct() {
                 )}
               </div>
               <div className="w-[50%]">
-                <div className="text-lg ml-[1rem] my-[0.5rem]">Tax</div>
+                <div className="text-lg ml-[1rem] my-[0.5rem]">GST</div>
                 <select
                   name="tax"
                   className="border-2 border-[#4379a0] w-[10rem]"
@@ -389,7 +390,7 @@ function addproduct() {
               />
             </div>
             <button
-              className="bg-[#4e87af] uppercase text-[white] py-1 px-3 cursor-pointer rounded-2xl mt-[1.2rem] float-right"
+              className="hover:bg-[#4e87af] bg-[#467fa8] uppercase text-[white] py-1 px-3 cursor-pointer rounded-2xl mt-[1.2rem] float-right shadow-md shadow-black active:shadow-none"
               onClick={addProductHandler}
             >
               Add Product

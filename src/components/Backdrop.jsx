@@ -43,13 +43,14 @@ function Backdrop(props) {
               <input
                 type="checkbox"
                 checked={tagIndices.has(index)}
+                className="cursor-pointer scale-125"
                 onChange={() => toggleTagIndex(index)}
               />
             </label>
           ))}
         </div>
         <button
-          className="float-right mr-[2rem] bg-[#3b8aca] text-white px-[1rem] py-[0.3rem] rounded-xl"
+          className="float-right mr-[2rem] bg-[#3b8aca] hover:bg-[#4179a7] text-white px-[1rem] py-[0.3rem] rounded-xl shadow-sm shadow-black active:shadow-none"
           onClick={tagsSubmitHandler}
         >
           Add Tags

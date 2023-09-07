@@ -9,7 +9,7 @@ function ProductCard(props) {
         className="max-h-[10rem] mx-[auto]"
         alt=""
       />
-      <div className="text-center font-medium">{props.name}</div>
+      <div className="text-center font-medium truncate px-1">{props.name}</div>
       {props.status ? (
         <div className="text-center font-medium text-red-500">Out of stock</div>
       ) : (

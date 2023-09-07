@@ -8,7 +8,7 @@ const Product = ({ product }) => {
       <div className="mt-[2rem] ml-[4rem]">
         <BackButton />
       </div>
-      <div className="flex flex-col gap-[1rem] mt-14 mx-[4rem] h-screen sm:flex-row">
+      <div className="flex flex-col gap-[1rem] mt-8 mx-[4rem] h-screen sm:flex-row">
         <div className="relative bg-gray-100 gap-7 w-full sm:w-1/2 rounded-l-2xl py-[2rem] px-[4rem]">
           <div className="flex flex-col justify-between sm:flex-row">
             <div className="">
@@ -41,7 +41,7 @@ const Product = ({ product }) => {
           </div>
         </div>
 
-        <div className="bg-gray-100 w-full sm:w-1/2 p-[2rem]">
+        <div className="bg-gray-100 rounded-e-2xl w-full sm:w-1/2 p-[2rem]">
           <div className="flex flex-col gap-2">
             {/* Content for the second div */}
             <div className="md:flex gap-10 justify-center sm:justify-start text-center sm:text-left">

@@ -140,7 +140,8 @@ const TrackOrder = () => {
               Payment Status :
               <span className="text-green-600">
                 {" "}
-                {order.payment_successful ? "Successful" : "Pending"}
+                {order.paymentMode} (
+                {order.payment_successful ? "Successful" : "Pending"})
               </span>
             </div>
             <div className="text-white flex my-[2rem] justify-center gap-[5rem]">
