@@ -106,57 +106,53 @@ const Orders = () => {
     <div className="flex mt-5">
       <Sidebar />
       <div className="flex-grow bg-gray-100 mt-0 ml-2 rounded-2xl pr-10 pl-10 pt-10 relative">
-        <div className=" text-blue-400    text-xl p-6 rounded-xl mb-6 ">
-          <h1 className="mb-3 gap-x-7 flex items-center">
-            <Link href="/totalorder/totalOrder" passHref>
-              <p className="text-blue-600 hover:text-blue-900 hover:underline">
-                Total Orders
-              </p>
-            </Link>{" "}
-            <span className="text-blue-600">({totalOrders})</span>
-          </h1>
-          <h1 className="mb-3 gap-x-7 flex items-center">
-            <Link href="/cancel/cancel" passHref>
-              <p className="text-blue-600 hover:text-blue-900">
-                Cancelled Orders
-              </p>
-            </Link>{" "}
-            <span className="text-blue-600">({cancelledOrders})</span>
-          </h1>
+        <div className="xl:flex justify-between">
+          <div className=" text-blue-400 text-xl p-6 rounded-xl mb-6 ">
+            <h1 className="mb-3 gap-x-7 flex items-center">
+              <Link href="/totalorder/totalOrder" passHref>
+                <p className="text-blue-600 hover:text-blue-900 hover:underline">
+                  Total Orders ({totalOrders})
+                </p>
+              </Link>
+            </h1>
+            <h1 className="mb-3 gap-x-7 flex items-center">
+              <Link href="/cancel/cancel" passHref>
+                <p className="text-blue-600 hover:text-blue-900 hover:underline">
+                  Cancelled Orders ({cancelledOrders})
+                </p>
+              </Link>
+            </h1>
 
-          <h1 className="mb-3 gap-x-7 flex items-center">
-            <Link href="/return/return" passHref>
-              <p className="text-blue-600 hover:text-blue-900  ">
-                Return Orders
-              </p>
-            </Link>{" "}
-            <span className="text-blue-600">({returnedOrders})</span>
-          </h1>
-          <h1 className="mb-3 gap-x-7 flex items-center">
-            <Link href="/delivered/delivered" passHref>
-              <p className="text-blue-600 hover:text-blue-900  ">
-                Delivered Orders
-              </p>
-            </Link>{" "}
-            <span className="text-blue-600">({deliveredOrders})</span>
-          </h1>
-          <h1 className="mb-3 gap-x-7 flex items-center">
-            <Link href="/notDelivered/notdelivered" passHref>
-              <p className="text-blue-600 hover:text-blue-900  ">
-                Shipped but not delivered
-              </p>
-            </Link>{" "}
-            <span className="text-blue-600">({shippedOrders})</span>
-          </h1>
-          <h1 className="mb-3 gap-x-7 flex items-center">
-            <Link href="/shipping/shipping" passHref>
-              <p className="text-blue-600 hover:text-blue-900  ">
-                Shipping is Pending
-              </p>
-            </Link>{" "}
-            <span className="text-blue-600">({pendingOrders})</span>
-          </h1>
-          <div className="lg:absolute top-5 right-28 p-4 rounded-xl ">
+            <h1 className="mb-3 gap-x-7 flex items-center">
+              <Link href="/return/return" passHref>
+                <p className="text-blue-600 hover:text-blue-900 hover:underline">
+                  Returned Orders ({returnedOrders})
+                </p>
+              </Link>
+            </h1>
+            <h1 className="mb-3 gap-x-7 flex items-center">
+              <Link href="/delivered/delivered" passHref>
+                <p className="text-blue-600 hover:text-blue-900 hover:underline">
+                  Delivered Orders ({deliveredOrders})
+                </p>
+              </Link>
+            </h1>
+            <h1 className="mb-3 gap-x-7 flex items-center">
+              <Link href="/notDelivered/notdelivered" passHref>
+                <p className="text-blue-600 hover:text-blue-900 hover:underline">
+                  Shipped but not delivered ({shippedOrders})
+                </p>
+              </Link>
+            </h1>
+            <h1 className="mb-3 gap-x-7 flex items-center">
+              <Link href="/shipping/shipping" passHref>
+                <p className="text-blue-600 hover:text-blue-900 hover:underline">
+                  Shipping is Pending ({pendingOrders})
+                </p>
+              </Link>
+            </h1>
+          </div>
+          <div className="w-[40rem] max-h-[20rem] rounded-xl flex justify-center">
             <Doughnut
               data={doughnutData}
               options={doughnutOptions}

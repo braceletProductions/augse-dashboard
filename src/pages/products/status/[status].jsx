@@ -136,7 +136,7 @@ function status() {
             </div>
           </div>
           <div className="flex-[1] my-[2rem] mx-auto">
-            <div className="text-[white] rounded-xl h-[22rem] p-2">
+            <div className="text-[white] flex justify-center rounded-xl h-[22rem] p-2">
               <Pie data={pieChartData} options={pieChartOptions} />
             </div>
             <div className="text-white text-3xl text-center">
