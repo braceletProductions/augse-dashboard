@@ -43,7 +43,6 @@ const Dashboard = () => {
   const [products, setProducts] = useState(0);
   const [categoryData, setCategoryData] = useState([]);
   const [category, setCategory] = useState([]);
-  const [showCategoryTable, setShowCategoryTable] = useState(false);
 
   //Counting users
   useEffect(() => {
