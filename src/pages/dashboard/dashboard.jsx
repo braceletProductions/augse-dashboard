@@ -37,21 +37,12 @@ const months = [
   "Dec",
 ];
 
-let categoryData = [
-  { categoryId: 0, category: "Pure Silk Saree", count: 0 },
-  { categoryId: 1, category: "Semi Silk Saree", count: 0 },
-  { categoryId: 2, category: "Cotton Saree", count: 0 },
-  { categoryId: 3, category: "Kanchivaram Saree", count: 0 },
-  { categoryId: 4, category: "Bandhani Saree", count: 0 },
-  { categoryId: 5, category: "Organza Saree", count: 0 },
-  { categoryId: 6, category: "Printed Saree", count: 0 },
-];
-
 const Dashboard = () => {
   const [users, setUsers] = useState(0);
   const [orders, setOrders] = useState(0);
   const [products, setProducts] = useState(0);
-  const [reload, setReload] = useState(true);
+  const [categoryData, setCategoryData] = useState([]);
+  const [category, setCategory] = useState([]);
 
   //Counting users
   useEffect(() => {
@@ -88,27 +79,38 @@ const Dashboard = () => {
       }
     };
     fetchProducts();
+    const fetchCategory = async () => {
+      try {
+        const res = await axios.get(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/category/category"
+        );
+        setCategoryData(res.data.category);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCategory();
   }, []);
 
   useEffect(() => {
-    let res;
+    let res = [];
     const fetchProducts = async () => {
       try {
         for (let i = 0; i < categoryData.length; i++) {
-          res = await axios.get(
+          const response = await axios.get(
             process.env.NEXT_PUBLIC_SERVER_URL +
               "/products/category/" +
-              categoryData[i].category
+              categoryData[i]
           );
-          categoryData[i].count = res.data.count;
+          res[i] = response.data.count;
         }
-        setReload((prev) => !prev);
+        setCategory(res);
       } catch (error) {
         console.log(error);
       }
     };
     fetchProducts();
-  }, []);
+  }, [categoryData]);
 
   const salesChartData = {
     labels: months,
@@ -134,11 +136,12 @@ const Dashboard = () => {
       },
     },
   };
+
   const doughnutChartData = {
-    labels: categoryData.map((item) => item.category),
+    labels: categoryData,
     datasets: [
       {
-        data: categoryData.map((item) => item.count),
+        data: category,
         backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"], // Add more colors if needed
         hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
       },
@@ -155,11 +158,15 @@ const Dashboard = () => {
         <div className="flex-grow flex flex-col pl-4 pr-4  lg:w-3/4">
           <MenuItems orders={orders} users={users} products={products} />
           <div className="flex gap-9 flex-grow  flex-col lg:flex-row">
-            <div className="bg-gray-100 lg:w-1/2 rounded-2xl lg:h-[18rem] pt-1 pl-5 pr-5 mb-2 lg:mb-0 overflow-hidden relative">
-              <h1 className="text-blue-900 text-xl mb-3 lg:mb-4">
-                Total Product Count
-              </h1>
-              <table className="mt-1 w-full border border-collapse">
+            <div className="bg-gray-100 lg:w-1/2 overflow-y-scroll rounded-2xl lg:h-[18rem] pt-1 pl-5 pr-5 mb-2 lg:mb-0 overflow-hidden relative">
+              <div className="flex justify-between items-center mb-3 lg:mb-4">
+                <h1 className="text-blue-900 text-xl">Total Product Count</h1>
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/151/151926.png"
+                  className="h-[2rem] hover:bg-slate-300 p-1 hover:scale-110 transition-colors cursor-pointer"
+                />
+              </div>
+              <table className="my-4 w-full border border-collapse">
                 <thead>
                   <tr className="bg-blue-800 text-gray-100 text-center">
                     <th className="font-semibold px-4 py-1">Category</th>
@@ -167,12 +174,12 @@ const Dashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {categoryData.map((item, index) => (
+                  {category.map((item, index) => (
                     <tr key={index} className="bg-blue-200 text-center">
                       <td className="px-4 border-l-2 border-2">
-                        {item.category}
+                        {categoryData[index]}
                       </td>
-                      <td className="px-4 border-l-2 border-2">{item.count}</td>
+                      <td className="px-4 border-l-2 border-2">{item}</td>
                     </tr>
                   ))}
                 </tbody>
