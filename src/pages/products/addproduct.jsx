@@ -4,21 +4,7 @@ import Router from "next/router";
 import Sidebar from "@/components/Sidebar";
 import ImageUpload from "@/components/ImageUpload";
 import Backdrop from "@/components/Backdrop";
-
-const colorData = [
-  { id: 1, name: "Black", col: "black" },
-  { id: 2, name: "Blue", col: "blue" },
-  { id: 3, name: "White", col: "white" },
-  { id: 4, name: "Navy", col: "navy" },
-  { id: 5, name: "Green", col: "green" },
-  { id: 6, name: "Red", col: "red" },
-  { id: 7, name: "Yellow", col: "yellow" },
-  { id: 8, name: "Indigo", col: "indigo" },
-  { id: 9, name: "Orange", col: "orange" },
-  { id: 10, name: "Purple", col: "purple" },
-  { id: 11, name: "Pink", col: "pink" },
-  { id: 12, name: "Gray", col: "gray" },
-];
+import AddAttributes from "@/components/AddAttributes";
 
 const sizeData = [
   { id: 1, name: "N/A", value: null },
@@ -44,6 +30,8 @@ const helperData = [
 
 function addproduct() {
   const [showTags, setShowTags] = useState(false);
+  const [showAddTags, setShowAddTags] = useState(false);
+  const [showAddCategory, setShowAddCategory] = useState(false);
   const [category, setCategory] = useState([]);
   const [tagsOptions, setTagsOptions] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -101,6 +89,14 @@ function addproduct() {
 
   const handleOptionChange = (value) => {
     setSelectedOptions(value);
+  };
+
+  const categoryAddHandler = (value) => {
+    setCategory((prev) => [...prev, value]);
+  };
+
+  const tagAddHandler = (value) => {
+    setTagsOptions((prev) => [...prev, value]);
   };
 
   const addProductHandler = async () => {
@@ -227,42 +223,6 @@ function addproduct() {
                 </select>
               </div>
               <div className="w-[50%]">
-                <div className="text-lg ml-[1rem] my-[0.5rem]">Category</div>
-                <select
-                  name="category"
-                  ref={categoryRef}
-                  className="border-2 border-[#4379a0]"
-                >
-                  {category.map((cat, index) => (
-                    <option key={index} value={cat}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div className="lg:flex my-[1.5rem]">
-              <div className="w-[50%]">
-                <div className="text-lg ml-[1rem] my-[0.5rem]">Tags</div>
-                <button
-                  className="border-2 border-[#4379a0] w-[10rem] truncate"
-                  onClick={toggleShowtags}
-                >
-                  {selectedOptions.length === 0
-                    ? "Select Tags"
-                    : selectedOptions.map((tag, index) => (
-                        <span key={index}>{tag},</span>
-                      ))}
-                </button>
-                {showTags && (
-                  <Backdrop
-                    tags={tagsOptions}
-                    onClick={toggleShowtags}
-                    onSubmit={handleOptionChange}
-                  />
-                )}
-              </div>
-              <div className="w-[50%]">
                 <div className="text-lg ml-[1rem] my-[0.5rem]">GST</div>
                 <select
                   name="tax"
@@ -278,6 +238,74 @@ function addproduct() {
                 </select>
               </div>
             </div>
+            <div className="lg:flex my-[1.5rem]">
+              <div className="w-[50%]">
+                <div className="text-lg ml-[1rem] my-[0.5rem]">Tags</div>
+                <button
+                  className="border-2 border-[#4379a0] w-[10rem] truncate shadow-sm active:shadow-none shadow-[#4379a0] hover:text-white hover:bg-[#4379a0]"
+                  onClick={toggleShowtags}
+                >
+                  {selectedOptions.length === 0
+                    ? "Select Tags"
+                    : selectedOptions.map((tag, index) => (
+                        <span key={index}>{tag},</span>
+                      ))}
+                </button>
+                {showTags && (
+                  <Backdrop
+                    tags={tagsOptions}
+                    onClick={toggleShowtags}
+                    onSubmit={handleOptionChange}
+                  />
+                )}
+                <div
+                  className="w-[10rem] cursor-pointer text-center border-2 border-black hover:bg-black hover:text-white"
+                  onClick={() => setShowAddTags(true)}
+                >
+                  Add more
+                </div>
+                {showAddTags && (
+                  <AddAttributes
+                    onSubmit={tagAddHandler}
+                    onClick={() => {
+                      setShowAddTags(false);
+                    }}
+                    for="Tag"
+                    path="/tags/tags"
+                  />
+                )}
+              </div>
+              <div className="w-[50%]">
+                <div className="text-lg ml-[1rem] my-[0.5rem]">Category</div>
+                <select
+                  name="category"
+                  ref={categoryRef}
+                  className="border-2 border-[#4379a0]"
+                >
+                  {category.map((cat, index) => (
+                    <option key={index} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+                <div
+                  className="w-[9.9rem] cursor-pointer text-center border-2 border-black hover:bg-black hover:text-white"
+                  onClick={() => setShowAddCategory(true)}
+                >
+                  Add more
+                </div>
+                {showAddCategory && (
+                  <AddAttributes
+                    onSubmit={categoryAddHandler}
+                    onClick={() => {
+                      setShowAddCategory(false);
+                    }}
+                    for="Category"
+                    path="/category/category"
+                  />
+                )}
+              </div>
+            </div>
             <div className="lg:flex my-[1rem]">
               <div className="w-[50%]">
                 <div className="text-lg ml-[1rem] my-[0.5rem]">Quantity</div>
@@ -289,17 +317,12 @@ function addproduct() {
               </div>
               <div className="w-[50%]">
                 <div className="text-lg ml-[1rem] my-[0.5rem]">Color</div>
-                <select
+                <input
+                  type="color"
                   name="color"
                   ref={colorRef}
-                  className="border-2 border-[#4379a0] w-[10rem]"
-                >
-                  {colorData.map((color) => (
-                    <option key={color.id} value={color.name}>
-                      {color.name}
-                    </option>
-                  ))}
-                </select>
+                  className="w-[10rem]"
+                ></input>
               </div>
             </div>
           </div>

@@ -53,7 +53,7 @@ function Backdrop(props) {
           className="float-right mr-[2rem] bg-[#3b8aca] hover:bg-[#4179a7] text-white px-[1rem] py-[0.3rem] rounded-xl shadow-sm shadow-black active:shadow-none"
           onClick={tagsSubmitHandler}
         >
-          Add Tags
+          Save Tags
         </button>
       </div>
     </Fragment>
