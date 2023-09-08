@@ -44,7 +44,10 @@ function table() {
     <div className="w-full">
       <div className="max-w-screen-2xl mx-auto px-[2rem] py-[1.5rem]">
         <BackButton />
-        <div className="bg-white my-[1rem] rounded-3xl px-[5rem] py-[1rem]">
+        <div className="bg-white my-[1rem] rounded-3xl lg:px-[5rem] sm:px-[2rem] px-[1rem] py-[1rem]">
+          <div className="text-[2rem] font-medium">
+            Categorywise Products Count
+          </div>
           <table className="my-4 w-full border border-collapse">
             <thead>
               <tr className="bg-blue-800 text-gray-100 text-center">
