@@ -4,6 +4,7 @@ import logo from "../../public/logo.png";
 
 const optionsProducts = [
   { label: "Add Product", link: "/products/addproduct" },
+  { label: "All Products", link: "/products/allproducts" },
   { label: "Out of Stock", link: "/products/status/outofstock" },
   { label: "Less in Stock", link: "/products/status/lessinstock" },
 ];
@@ -64,14 +65,14 @@ const Sidebar = () => {
             >
               {productOptions &&
                 optionsProducts.map((option, index) => (
-                  <li className="">
+                  <div className="">
                     <a
                       href={option.link}
                       className="text-black font-medium hover:text-gray-100 p-1 px-2 link hover:rounded-xl justify-center"
                     >
                       {option.label}
                     </a>
-                  </li>
+                  </div>
                 ))}
             </div>
           </li>

@@ -6,7 +6,7 @@ const menuItems = [
   {
     label: "Orders",
     icon: <FaShoppingCart className="text-2xl" />,
-    href: "/orders/orders",
+    href: "/totalorder/totalOrder",
   },
   {
     label: "Users",
@@ -16,7 +16,7 @@ const menuItems = [
   {
     label: "Products",
     icon: <FaBox className="text-2xl" />,
-    href: "/category/categories",
+    href: "/products/allproducts",
   },
   {
     label: "New Orders",

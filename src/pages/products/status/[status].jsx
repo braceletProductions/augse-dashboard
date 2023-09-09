@@ -121,7 +121,7 @@ function status() {
         <div className="text-5xl text-white font-semibold">
           Products {outofstock ? "Out of" : "Less in"} Stock
         </div>
-        <div className="flex lg:flex-row flex-col my-[2rem]">
+        <div className="flex lg:flex-row flex-col-reverse my-[2rem]">
           <div className="flex-[2] p-[1rem]">
             <div className="sm:grid 2xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 flex flex-col justify-center items-center gap-[2rem]">
               {filteredProducts.map((data) => (
