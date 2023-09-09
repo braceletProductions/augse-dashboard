@@ -2,6 +2,7 @@ import React from "react";
 import OrderCard from "@/components/OrderCard";
 import BackButton from "@/components/BackButton";
 import { useSelector } from "react-redux";
+import SortableTable from "@/components/SortableTable";
 
 const Shipping = () => {
   const orders = useSelector((state) => state.orders.deliveredOrders);
@@ -15,16 +16,7 @@ const Shipping = () => {
         <h1 className="font-bold  text-gray-100 pb-5 text-5xl">
           Delivered Orders
         </h1>
-        {orders.map((order) => (
-          <OrderCard
-            key={order._id}
-            id={order._id}
-            name={order.userId.name}
-            email={order.userId.email}
-            payment={order.payment_successful}
-            paymentMode={order.paymentMode}
-          />
-        ))}
+        <SortableTable data={orders} />
       </div>
     </div>
   );
