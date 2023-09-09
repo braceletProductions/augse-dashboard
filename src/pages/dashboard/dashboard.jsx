@@ -8,6 +8,7 @@ import {
   Chart,
   CategoryScale,
   LinearScale,
+  Tooltip,
   LineElement,
   PointElement,
   ArcElement,
@@ -19,6 +20,7 @@ Chart.register(
   CategoryScale,
   LinearScale,
   LineElement,
+  Tooltip,
   PointElement,
   ArcElement
 ); // Register the CategoryScale
