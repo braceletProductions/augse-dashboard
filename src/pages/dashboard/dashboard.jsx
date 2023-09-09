@@ -151,6 +151,24 @@ const Dashboard = () => {
     ],
   };
 
+  const doughnutChartOptions = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            const label = context.label || "";
+            const value = context.parsed || 0;
+
+            return `${label}: ${value}`;
+          },
+        },
+      },
+    },
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <div>
@@ -193,7 +211,10 @@ const Dashboard = () => {
 
             <div className="bg-gray-100 w-1/2 lg:h-[18rem] rounded-2xl mb-2 lg:mb-0">
               <div className="flex justify-center items-center h-full">
-                <Doughnut data={doughnutChartData} />
+                <Doughnut
+                  data={doughnutChartData}
+                  options={doughnutChartOptions}
+                />
               </div>
             </div>
           </div>

@@ -1,0 +1,62 @@
+import React from "react";
+import BackButton from "@/components/BackButton";
+import Router from "next/router";
+import formatToINR from "../../../utils/currencyFormatter";
+import { useSelector } from "react-redux";
+
+function allproducts() {
+  const products = useSelector((state) => state.products.totalProducts);
+  console.log(products);
+
+  const showOrderDetailHandler = (id) => {
+    Router.push({
+      pathname: "/product/" + id,
+    });
+  };
+
+  return (
+    <div className="w-full">
+      <div className="max-w-screen-2xl mx-auto px-[2rem] py-[1.5rem]">
+        <BackButton />
+        <div className="text-[2.45rem] text-white my-[1rem] font-medium">
+          All Products
+        </div>
+        <table className="my-4 w-full border border-collapse">
+          <thead>
+            <tr className="bg-blue-800 text-gray-100 text-center">
+              <th className="font-semibold lg:px-4 py-1">S.No.</th>
+              <th className="font-semibold lg:px-4 py-1">Product Name</th>
+              <th className="font-semibold lg:px-4 py-1">Quantity</th>
+              <th className="font-semibold lg:px-4 py-1">Sold</th>
+              <th className="font-semibold lg:px-4 py-1">Offered Price</th>
+              <th className="font-semibold lg:px-4 py-1">View Count</th>
+              <th className="font-semibold lg:px-4 py-1">Product Detail</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((item, index) => (
+              <tr key={index} className="bg-blue-200 text-center">
+                <td className="px-4 border-l-2 border-2">{index + 1}</td>
+                <td className="px-4 border-l-2 border-2">{item.productName}</td>
+                <td className="px-4 border-l-2 border-2">{item.quantity}</td>
+                <td className="px-4 border-l-2 border-2">{item.sold}</td>
+                <td className="px-4 border-l-2 border-2">
+                  {formatToINR(item.offeredPrice)}
+                </td>
+                <td className="px-4 border-l-2 border-2">{item.viewCount}</td>
+                <td
+                  className="px-4 border-l-2 border-2 underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white"
+                  onClick={() => showOrderDetailHandler(item._id)}
+                >
+                  View Detail
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+export default allproducts;
