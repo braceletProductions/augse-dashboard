@@ -1,7 +1,6 @@
 import Sidebar from "@/components/Sidebar";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Doughnut, Bar } from "react-chartjs-2";
-import barData from "@/tempData/barData";
 import Link from "next/link";
 
 import {
@@ -14,6 +13,7 @@ import {
   BarElement,
 } from "chart.js";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 ChartJS.register(
   CategoryScale,
@@ -28,6 +28,7 @@ const calculatePercentage = (value, total) =>
   ((value / total) * 100).toFixed(2);
 
 const Orders = () => {
+  const [categoryCountsMap, setCategoryCountsMap] = useState(new Map());
   const totalOrders = useSelector((state) => state.orders.totalOrders.length);
   const cancelledOrders = useSelector(
     (state) => state.orders.cancelledOrders.length
@@ -44,6 +45,18 @@ const Orders = () => {
   const shippedOrders = useSelector(
     (state) => state.orders.shippedOrders.length
   );
+
+  useEffect(() => {
+    const fetchCategoryData = async () => {
+      try {
+        const response = await axios.get(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/sales/daily/category"
+        );
+        setCategoryCountsMap(response.data.sales);
+      } catch (error) {}
+    };
+    fetchCategoryData();
+  }, []);
 
   const doughnutData = {
     labels: ["Canceled", "Returned", "Delivered", "Pending", "Shipped"],
@@ -85,6 +98,17 @@ const Orders = () => {
     responsive: true,
   };
 
+  const barData = {
+    labels: Object.keys(categoryCountsMap),
+    datasets: [
+      {
+        label: "Order segregated based on category",
+        data: Object.values(categoryCountsMap),
+        backgroundColor: ["#153e64"],
+      },
+    ],
+  };
+
   const barOptions = {
     scales: {
       x: {
@@ -94,7 +118,7 @@ const Orders = () => {
       },
       y: {
         beginAtZero: true,
-        suggestedMax: 25,
+        suggestedMax: 10,
         tricks: {
           stepSize: 5,
         },
@@ -164,7 +188,7 @@ const Orders = () => {
 
         <div className=" text-blue-400  text-center   text-xl  rounded-xl "></div>
         <div
-          className="mt-6 ml-5 p-3 text-center justify-center"
+          className="mt-6 ml-5 p-3 text-center justify-center h-[20rem]"
           style={{ width: "80%", display: "flex", justifyContent: "center" }}
         >
           <Bar data={barData} options={barOptions} />
