@@ -1,8 +1,8 @@
 import Sidebar from "@/components/Sidebar";
-import React, { useState, useEffect } from "react";
-import { Doughnut, Bar } from "react-chartjs-2";
+import React from "react";
+import { Doughnut } from "react-chartjs-2";
 import Link from "next/link";
-
+import CategoryOrderChart from "@/components/CategoryOrderChart";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,7 +13,6 @@ import {
   BarElement,
 } from "chart.js";
 import { useSelector } from "react-redux";
-import axios from "axios";
 
 ChartJS.register(
   CategoryScale,
@@ -28,7 +27,6 @@ const calculatePercentage = (value, total) =>
   ((value / total) * 100).toFixed(2);
 
 const Orders = () => {
-  const [categoryCountsMap, setCategoryCountsMap] = useState(new Map());
   const totalOrders = useSelector((state) => state.orders.totalOrders.length);
   const cancelledOrders = useSelector(
     (state) => state.orders.cancelledOrders.length
@@ -45,18 +43,6 @@ const Orders = () => {
   const shippedOrders = useSelector(
     (state) => state.orders.shippedOrders.length
   );
-
-  useEffect(() => {
-    const fetchCategoryData = async () => {
-      try {
-        const response = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/sales/daily/category"
-        );
-        setCategoryCountsMap(response.data.sales);
-      } catch (error) {}
-    };
-    fetchCategoryData();
-  }, []);
 
   const doughnutData = {
     labels: ["Canceled", "Returned", "Delivered", "Pending", "Shipped"],
@@ -98,38 +84,10 @@ const Orders = () => {
     responsive: true,
   };
 
-  const barData = {
-    labels: Object.keys(categoryCountsMap),
-    datasets: [
-      {
-        label: "Order segregated based on category",
-        data: Object.values(categoryCountsMap),
-        backgroundColor: ["#153e64"],
-      },
-    ],
-  };
-
-  const barOptions = {
-    scales: {
-      x: {
-        grid: {
-          display: false,
-        },
-      },
-      y: {
-        beginAtZero: true,
-        suggestedMax: 10,
-        tricks: {
-          stepSize: 5,
-        },
-      },
-    },
-  };
-
   return (
     <div className="flex mt-5">
       <Sidebar />
-      <div className="flex-grow bg-gray-100 mt-0 ml-2 rounded-2xl pr-10 pl-10 pt-10 relative">
+      <div className="flex-grow bg-white mt-0 ml-2 rounded-2xl pr-10 pl-10 pt-10 relative">
         <div className="xl:flex justify-between">
           <div className=" text-blue-400 text-xl p-6 rounded-xl mb-6 ">
             <h1 className="mb-3 gap-x-7 flex items-center">
@@ -185,14 +143,7 @@ const Orders = () => {
             />
           </div>
         </div>
-
-        <div className=" text-blue-400  text-center   text-xl  rounded-xl "></div>
-        <div
-          className="mt-6 ml-5 p-3 text-center justify-center h-[20rem]"
-          style={{ width: "80%", display: "flex", justifyContent: "center" }}
-        >
-          <Bar data={barData} options={barOptions} />
-        </div>
+        <CategoryOrderChart />
       </div>
     </div>
   );
