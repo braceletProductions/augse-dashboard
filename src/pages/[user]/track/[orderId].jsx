@@ -6,7 +6,7 @@ import BackButton from "@/components/BackButton";
 const TrackOrder = () => {
   const [order, setOrder] = useState({});
   const router = useRouter();
-  const { orderId } = router.query;
+  const { user, orderId } = router.query;
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -23,14 +23,14 @@ const TrackOrder = () => {
 
   const trackHandler = () => {
     Router.push({
-      pathname: "/track/track",
+      pathname: "/" + user + "/track/track",
       query: { orderId },
     });
   };
 
   const profileHandler = () => {
     Router.push({
-      pathname: "/customers/" + order.userId._id,
+      pathname: "/" + user + "/customers/" + order.userId._id,
     });
   };
 

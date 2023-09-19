@@ -1,5 +1,4 @@
 import "@/styles/globals.css";
-import Dashboard from "./dashboard/dashboard";
 import { Provider } from "react-redux";
 import ReduxData from "@/components/ReduxData";
 import store from "../../store/store";

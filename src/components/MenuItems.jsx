@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { FaShoppingCart, FaUser, FaBox, FaClipboardList } from "react-icons/fa";
 
@@ -26,12 +27,15 @@ const menuItems = [
 ];
 
 const MenuItems = (props) => {
+  const router = useRouter();
+  const { user } = router.query;
+
   return (
     <div className="flex-grow flex flex-col pl-4 pr-4 mb-[1rem] lg:w-full">
       <div className="bg-gray-100 rounded-3xl py-[0.5rem] px-[2rem] xl:flex xl:flex-row sm:grid xl:justify-between gap-[1rem] sm:grid-cols-2 flex flex-col justify-center items-center">
         {menuItems.map((item, index) => (
           <Link
-            href={item.href}
+            href={"/" + user + item.href}
             key={index}
             className="bg-blue-500 text-lg text-white flex justify-center gap-1 w-[12rem] py-2 px-4 font-semibold"
           >

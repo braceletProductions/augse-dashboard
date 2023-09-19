@@ -1,14 +1,24 @@
 import React from "react";
 import currencyFormatter from "../../utils/currencyFormatter";
 import BackButton from "./BackButton";
+import { useRouter } from "next/router";
 
 const Product = ({ product }) => {
+  const router = useRouter();
+  const { user, productId } = router.query;
+
+  const updateProduct = () => {
+    router.push({
+      pathname: `/${user}/products/update/${productId}`,
+    });
+  };
+
   return (
     <div>
       <div className="mt-[2rem] ml-[4rem]">
         <BackButton />
       </div>
-      <div className="flex flex-col gap-[1rem] mt-8 mx-[4rem] h-screen sm:flex-row">
+      <div className="flex flex-col gap-[1rem] mt-8 mx-[4rem] min-h-screen sm:flex-row">
         <div className="relative bg-gray-100 gap-7 w-full sm:w-1/2 rounded-l-2xl py-[2rem] px-[4rem]">
           <div className="flex flex-col justify-between sm:flex-row">
             <div className="">
@@ -26,22 +36,31 @@ const Product = ({ product }) => {
             <p>{product.category}</p>
             <h1>Tag</h1>
             <h1 className="flex flex-col">
-              {product.tags.map((tag) => (
-                <span>{tag}</span>
+              {product.tags.map((tag, index) => (
+                <span key={index}>{tag}</span>
               ))}
             </h1>
             <h1>Tax</h1>
             <h1>{product.tax}%</h1>
             <h1>Color</h1>
-            <div className="">{product.color}</div>
+            <div
+              className={`w-[1.5rem] h-[1.5rem] rounded-full`}
+              style={{ backgroundColor: product.color }}
+            ></div>
             <h1 className="text-[green]">In Stock</h1>
-            <h1>12</h1>
+            <h1>{product.quantity}</h1>
             <h1 className="text-[red]">Sold Out</h1>
-            <h1>8</h1>
+            <h1>{product.sold}</h1>
           </div>
         </div>
 
         <div className="bg-gray-100 rounded-e-2xl w-full sm:w-1/2 p-[2rem]">
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded float-right"
+            onClick={updateProduct}
+          >
+            Update
+          </button>
           <div className="flex flex-col gap-2">
             {/* Content for the second div */}
             <div className="md:flex gap-10 justify-center sm:justify-start text-center sm:text-left">

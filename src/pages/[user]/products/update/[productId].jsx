@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import Sidebar from "@/components/Sidebar";
 import ImageUpload from "@/components/ImageUpload";
 import Backdrop from "@/components/Backdrop";
@@ -28,7 +28,9 @@ const helperData = [
   { id: 2, name: "Not Applicable", value: false },
 ];
 
-function addproduct() {
+function updateProduct() {
+  const router = useRouter();
+  const { user, productId } = router.query;
   const [showTags, setShowTags] = useState(false);
   const [showAddTags, setShowAddTags] = useState(false);
   const [showAddCategory, setShowAddCategory] = useState(false);
@@ -39,6 +41,10 @@ function addproduct() {
   const [firstImageFile, setFirstImageFile] = useState();
   const [secondImageFile, setSecondImageFile] = useState();
   const [thirdImageFile, setThirdImageFile] = useState();
+  const [mainImageUrl, setMainImageUrl] = useState();
+  const [firstImageUrl, setFirstImageUrl] = useState();
+  const [secondImageUrl, setSecondImageUrl] = useState();
+  const [thirdImageUrl, setThirdImageUrl] = useState();
   const nameRef = useRef();
   const descriptionRef = useRef();
   const categoryRef = useRef();
@@ -71,6 +77,39 @@ function addproduct() {
     fetchDetails();
   }, []);
 
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const res = await axios.get(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/product/" + productId
+        );
+        nameRef.current.value = res.data.productName;
+        descriptionRef.current.value = res.data.shortDescription;
+        categoryRef.current.value = res.data.category;
+        setSelectedOptions(res.data.tags);
+        taxRef.current.value = res.data.tax;
+        quantityRef.current.value = res.data.quantity;
+        colorRef.current.value = res.data.color;
+        sizeRef.current.value = res.data.size;
+        codRef.current.value = res.data.isCodAllowed;
+        returnRef.current.value = res.data.isReturnAble;
+        cancelOrderRef.current.value = res.data.isCancelAble;
+        mrpRef.current.value = res.data.mrp;
+        offeredValueRef.current.value = res.data.offeredPrice;
+        detailRef.current.value = res.data.detailedDescription;
+        setMainImageUrl(res.data.mainImage);
+        if (res.data.otherImages) {
+          setFirstImageUrl(res.data.otherImages[0]);
+          setSecondImageUrl(res.data.otherImages[1]);
+          setThirdImageUrl(res.data.otherImages[2]);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (productId) fetchDetails();
+  }, [productId]);
+
   const mainImageHandler = (file) => {
     setMainImageFile(file);
   };
@@ -99,47 +138,87 @@ function addproduct() {
     setTagsOptions((prev) => [...prev, value]);
   };
 
-  const addProductHandler = async () => {
-    const mainformData = new FormData();
-    mainformData.append("image", mainImageFile);
+  const updateProductHandler = async () => {
     let mainImagePath;
-    try {
-      const res = await axios.post(
-        process.env.NEXT_PUBLIC_SERVER_URL + "/products/addimage",
-        mainformData
-      );
-      mainImagePath = res.data.path;
-    } catch (error) {}
-    const firstformData = new FormData();
-    firstformData.append("image", firstImageFile);
+    if (mainImageFile) {
+      try {
+        await axios.post(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/deleteimage",
+          {
+            path: mainImageUrl,
+          }
+        );
+      } catch (error) {}
+      const mainformData = new FormData();
+      mainformData.append("image", mainImageFile);
+      try {
+        const response = await axios.post(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/addimage",
+          mainformData
+        );
+        mainImagePath = response.data.path;
+      } catch (error) {}
+    } else {
+      mainImagePath = mainImageUrl;
+    }
     let firstImagePath;
-    try {
-      const res = await axios.post(
-        process.env.NEXT_PUBLIC_SERVER_URL + "/products/addimage",
-        firstformData
-      );
-      firstImagePath = res.data.path;
-    } catch (error) {}
-    const secondformData = new FormData();
-    secondformData.append("image", secondImageFile);
+    if (firstImageFile) {
+      try {
+        await axios.post(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/addimage",
+          {
+            path: firstImageUrl,
+          }
+        );
+      } catch (error) {}
+      const firstformData = new FormData();
+      firstformData.append("image", firstImageFile);
+      try {
+        const response = await axios.post(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/addimage",
+          firstformData
+        );
+        firstImagePath = response.data.path;
+      } catch (error) {}
+    } else {
+      firstImagePath = firstImageUrl;
+    }
     let secondImagePath;
-    try {
-      const res = await axios.post(
-        process.env.NEXT_PUBLIC_SERVER_URL + "/products/addimage",
-        secondformData
-      );
-      secondImagePath = res.data.path;
-    } catch (error) {}
-    const thirdformData = new FormData();
-    thirdformData.append("image", thirdImageFile);
+    if (secondImageFile) {
+      try {
+        await axios.post(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/addimage",
+          {
+            path: secondImageUrl,
+          }
+        );
+      } catch (error) {}
+      const secondformData = new FormData();
+      secondformData.append("image", secondImageFile);
+      try {
+        const response = await axios.post(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/addimage",
+          secondformData
+        );
+        secondImagePath = response.data.path;
+      } catch (error) {}
+    } else {
+      secondImagePath = secondImageUrl;
+    }
     let thirdImagePath;
-    try {
-      const res = await axios.post(
-        process.env.NEXT_PUBLIC_SERVER_URL + "/products/addimage",
-        thirdformData
-      );
-      thirdImagePath = res.data.path;
-    } catch (error) {}
+    if (thirdImageFile) {
+      const thirdformData = new FormData();
+      thirdformData.append("image", thirdImageFile);
+      try {
+        const response = await axios.post(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/addimage",
+          thirdformData
+        );
+        thirdImagePath = response.data.path;
+      } catch (error) {}
+    } else {
+      thirdImagePath = thirdImageUrl;
+    }
     const formData = new FormData();
     formData.append("productName", nameRef.current.value);
     formData.append("shortDescription", descriptionRef.current.value);
@@ -160,12 +239,14 @@ function addproduct() {
     formData.append("secondImage", secondImagePath);
     formData.append("thirdImage", thirdImagePath);
     try {
-      const res = await axios.post(
-        process.env.NEXT_PUBLIC_SERVER_URL + "/products/add_product",
+      await axios.put(
+        process.env.NEXT_PUBLIC_SERVER_URL +
+          "/products/update_product/" +
+          productId,
         formData
       );
       Router.push({
-        pathname: "/dashboard/dashboard",
+        pathname: `/${user}/dashboard/dashboard`,
       });
     } catch (error) {
       console.log(error);
@@ -203,7 +284,11 @@ function addproduct() {
                 />
               </div>
               <div className="flex flex-col justify-center items-center w-[50%]">
-                <ImageUpload onInput={mainImageHandler} main={true} />
+                <ImageUpload
+                  onInput={mainImageHandler}
+                  main={true}
+                  preview={mainImageUrl}
+                />
                 <div className="text-sm font-semibold">Product Main Image</div>
               </div>
             </div>
@@ -215,15 +300,15 @@ function addproduct() {
                   ref={sizeRef}
                   className="border-2 border-[#4379a0] w-[10rem]"
                 >
-                  {sizeData.map((size) => (
-                    <option key={size.id} value={size.value}>
-                      {size.name}
+                  {sizeData.map((color) => (
+                    <option key={color.id} value={color.name}>
+                      {color.name}
                     </option>
                   ))}
                 </select>
               </div>
               <div className="w-[50%]">
-                <div className="text-lg ml-[1rem] my-[0.5rem]">GST</div>
+                <div className="text-lg ml-[1rem] my-[0.5rem]">Tax</div>
                 <select
                   name="tax"
                   className="border-2 border-[#4379a0] w-[10rem]"
@@ -317,6 +402,7 @@ function addproduct() {
               </div>
               <div className="w-[50%]">
                 <div className="text-lg ml-[1rem] my-[0.5rem]">Color</div>
+
                 <input
                   type="color"
                   name="color"
@@ -396,9 +482,18 @@ function addproduct() {
                 Product's other images
               </div>
               <div className="flex gap-[1rem] h-[7.5rem]">
-                <ImageUpload onInput={firstImageHandler} />
-                <ImageUpload onInput={secondImageHandler} />
-                <ImageUpload onInput={thirdImageHandler} />
+                <ImageUpload
+                  onInput={firstImageHandler}
+                  preview={firstImageUrl}
+                />
+                <ImageUpload
+                  onInput={secondImageHandler}
+                  preview={secondImageUrl}
+                />
+                <ImageUpload
+                  onInput={thirdImageHandler}
+                  preview={thirdImageUrl}
+                />
               </div>
             </div>
             <div className="flex flex-col">
@@ -413,10 +508,10 @@ function addproduct() {
               />
             </div>
             <button
-              className="hover:bg-[#4e87af] bg-[#467fa8] uppercase text-[white] py-1 px-3 cursor-pointer rounded-2xl mt-[1.2rem] float-right shadow-md shadow-black active:shadow-none"
-              onClick={addProductHandler}
+              className="bg-[#4e87af] uppercase text-[white] py-1 px-3 cursor-pointer rounded-2xl mt-[1.2rem] float-right"
+              onClick={updateProductHandler}
             >
-              Add Product
+              Update Product
             </button>
           </div>
         </div>
@@ -425,4 +520,4 @@ function addproduct() {
   );
 }
 
-export default addproduct;
+export default updateProduct;

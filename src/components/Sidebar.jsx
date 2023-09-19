@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import logo from "../../public/logo.png";
+import { useRouter } from "next/router";
 
 const optionsProducts = [
   { label: "Add Product", link: "/products/addproduct" },
@@ -11,6 +12,8 @@ const optionsProducts = [
 
 const Sidebar = () => {
   const [productOptions, setProductsOptions] = useState(false);
+  const router = useRouter();
+  const { user } = router.query;
 
   const showProductsOptions = () => {
     setProductsOptions((prev) => !prev);
@@ -20,7 +23,7 @@ const Sidebar = () => {
     <div className="min-h-screen sm:w-1/5 w-[10rem]  lg:w-2/12 bg-gray-100 flex flex-col lg:flex-row lg:flex-col  text-center">
       <div>
         <div className=" lg:p-1 w-full  h-28  flex justify-center align-items  items-center">
-          <a href="/dashboard/dashboard">
+          <a href={`/${user}/dashboard/dashboard`}>
             <Image src={logo} width={150} height={40} alt="Logo" />
           </a>
         </div>
@@ -29,7 +32,7 @@ const Sidebar = () => {
         <ul className="lg:w-full">
           <li className="mb-6 lg:mb-5">
             <a
-              href={"/dashboard/dashboard"}
+              href={`/${user}/dashboard/dashboard`}
               className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
             >
               Dashboard
@@ -37,7 +40,7 @@ const Sidebar = () => {
           </li>
           <li className="mb-6 lg:mb-5">
             <a
-              href={"/category/categories"}
+              href={`/${user}/category/categories`}
               className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
             >
               Category
@@ -45,7 +48,7 @@ const Sidebar = () => {
           </li>
           <li className="mb-6 lg:mb-5">
             <a
-              href={"/orders/orders"}
+              href={`/${user}/orders/orders`}
               className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
             >
               Orders
@@ -65,9 +68,9 @@ const Sidebar = () => {
             >
               {productOptions &&
                 optionsProducts.map((option, index) => (
-                  <div className="">
+                  <div className="" key={index}>
                     <a
-                      href={option.link}
+                      href={"/" + user + option.link}
                       className="text-black font-medium hover:text-gray-100 p-1 px-2 link hover:rounded-xl justify-center"
                     >
                       {option.label}
@@ -78,7 +81,7 @@ const Sidebar = () => {
           </li>
           <li className="my-6 lg:mb-5">
             <a
-              href={"/customers/customer"}
+              href={`/${user}/customers/customer`}
               className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
             >
               Customers
@@ -86,7 +89,7 @@ const Sidebar = () => {
           </li>
           <li className="mb-6 lg:mb-5">
             <a
-              href={"/dashboard/dashboard"}
+              href={`/${user}/dashboard/dashboard`}
               className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
             >
               Payment

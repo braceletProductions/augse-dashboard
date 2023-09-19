@@ -15,6 +15,7 @@ import {
 } from "chart.js"; // Import Chart and CategoryScale
 import MenuItems from "@/components/MenuItems";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 Chart.register(
   CategoryScale,
@@ -41,6 +42,8 @@ const months = [
 ];
 
 const Dashboard = () => {
+  const router = useRouter();
+  const { user } = router.query;
   const [users, setUsers] = useState(0);
   const [orders, setOrders] = useState(0);
   const [products, setProducts] = useState(0);
@@ -182,7 +185,7 @@ const Dashboard = () => {
             <div className="bg-gray-100 lg:w-1/2 overflow-y-scroll rounded-2xl lg:h-[18rem] pt-1 pl-5 pr-5 mb-2 lg:mb-0 overflow-hidden relative">
               <div className="flex justify-between items-center mb-3 lg:mb-4">
                 <h1 className="text-blue-900 text-xl">Total Product Count</h1>
-                <Link href={"/category/table"}>
+                <Link href={`/${user}/category/table`}>
                   <img
                     src="https://cdn-icons-png.flaticon.com/512/151/151926.png"
                     className="h-[2rem] hover:bg-slate-300 p-1 hover:scale-110 transition-colors cursor-pointer"

@@ -3,26 +3,30 @@ import React, { useState, useEffect } from "react";
 import { Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
   Title,
   Tooltip,
   Legend,
+  CategoryScale,
+  LinearScale,
   BarElement,
+  ArcElement,
 } from "chart.js";
 import { useSelector } from "react-redux";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 ChartJS.register(
-  CategoryScale,
-  LinearScale,
   Title,
   Tooltip,
   Legend,
-  BarElement
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement
 );
 
 const Categories = () => {
+  const router = useRouter();
+  const { user } = router.query;
   const [categoryCountsMap, setCategoryCountsMap] = useState(new Map());
   const products = useSelector((state) => state.products.totalProducts);
 
@@ -92,7 +96,7 @@ const Categories = () => {
 
   const openCategoryPage = (name) => {
     Router.push({
-      pathname: "/category/category",
+      pathname: `/${user}/category/category`,
       query: { categoryName: name },
     });
   };

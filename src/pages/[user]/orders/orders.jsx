@@ -11,8 +11,10 @@ import {
   Tooltip,
   Legend,
   BarElement,
+  ArcElement,
 } from "chart.js";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 ChartJS.register(
   CategoryScale,
@@ -20,13 +22,16 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  BarElement
+  BarElement,
+  ArcElement
 );
 
 const calculatePercentage = (value, total) =>
   ((value / total) * 100).toFixed(2);
 
 const Orders = () => {
+  const router = useRouter();
+  const { user } = router.query;
   const totalOrders = useSelector((state) => state.orders.totalOrders.length);
   const cancelledOrders = useSelector(
     (state) => state.orders.cancelledOrders.length
@@ -91,14 +96,35 @@ const Orders = () => {
         <div className="xl:flex justify-between">
           <div className=" text-blue-400 text-xl p-6 rounded-xl mb-6 ">
             <h1 className="mb-3 gap-x-7 flex items-center">
-              <Link href="/totalorder/totalOrder" passHref>
+              <Link href={`/${user}/totalorder/totalOrder`} passHref>
                 <p className="text-blue-600 hover:text-blue-900 hover:underline">
                   Total Orders ({totalOrders})
                 </p>
               </Link>
             </h1>
             <h1 className="mb-3 gap-x-7 flex items-center">
-              <Link href="/cancel/cancel" passHref>
+              <Link href={`/${user}/shipping/shipping`} passHref>
+                <p className="text-blue-600 hover:text-blue-900 hover:underline">
+                  Pending Orders ({pendingOrders})
+                </p>
+              </Link>
+            </h1>
+            <h1 className="mb-3 gap-x-7 flex items-center">
+              <Link href={`/${user}/notDelivered/notdelivered`} passHref>
+                <p className="text-blue-600 hover:text-blue-900 hover:underline">
+                  Shipped but not delivered ({shippedOrders})
+                </p>
+              </Link>
+            </h1>
+            <h1 className="mb-3 gap-x-7 flex items-center">
+              <Link href={`/${user}/delivered/delivered`} passHref>
+                <p className="text-blue-600 hover:text-blue-900 hover:underline">
+                  Delivered Orders ({deliveredOrders})
+                </p>
+              </Link>
+            </h1>
+            <h1 className="mb-3 gap-x-7 flex items-center">
+              <Link href={`/${user}/cancel/cancel`} passHref>
                 <p className="text-blue-600 hover:text-blue-900 hover:underline">
                   Cancelled Orders ({cancelledOrders})
                 </p>
@@ -106,30 +132,9 @@ const Orders = () => {
             </h1>
 
             <h1 className="mb-3 gap-x-7 flex items-center">
-              <Link href="/return/return" passHref>
+              <Link href={`/${user}/return/return`} passHref>
                 <p className="text-blue-600 hover:text-blue-900 hover:underline">
                   Returned Orders ({returnedOrders})
-                </p>
-              </Link>
-            </h1>
-            <h1 className="mb-3 gap-x-7 flex items-center">
-              <Link href="/delivered/delivered" passHref>
-                <p className="text-blue-600 hover:text-blue-900 hover:underline">
-                  Delivered Orders ({deliveredOrders})
-                </p>
-              </Link>
-            </h1>
-            <h1 className="mb-3 gap-x-7 flex items-center">
-              <Link href="/notDelivered/notdelivered" passHref>
-                <p className="text-blue-600 hover:text-blue-900 hover:underline">
-                  Shipped but not delivered ({shippedOrders})
-                </p>
-              </Link>
-            </h1>
-            <h1 className="mb-3 gap-x-7 flex items-center">
-              <Link href="/shipping/shipping" passHref>
-                <p className="text-blue-600 hover:text-blue-900 hover:underline">
-                  Shipping is Pending ({pendingOrders})
                 </p>
               </Link>
             </h1>

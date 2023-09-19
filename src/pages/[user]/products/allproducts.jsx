@@ -1,16 +1,17 @@
 import React from "react";
 import BackButton from "@/components/BackButton";
-import Router from "next/router";
-import formatToINR from "../../../utils/currencyFormatter";
+import Router, { useRouter } from "next/router";
+import formatToINR from "../../../../utils/currencyFormatter";
 import { useSelector } from "react-redux";
 
 function allproducts() {
+  const router = useRouter();
+  const { user } = router.query;
   const products = useSelector((state) => state.products.totalProducts);
-  console.log(products);
 
   const showOrderDetailHandler = (id) => {
     Router.push({
-      pathname: "/product/" + id,
+      pathname: "/" + user + "/product/" + id,
     });
   };
 
@@ -26,7 +27,7 @@ function allproducts() {
             <tr className="bg-blue-800 text-gray-100 text-center">
               <th className="font-semibold lg:px-4 py-1">S.No.</th>
               <th className="font-semibold lg:px-4 py-1">Product Name</th>
-              <th className="font-semibold lg:px-4 py-1">Quantity</th>
+              <th className="font-semibold lg:px-4 py-1">In Stock</th>
               <th className="font-semibold lg:px-4 py-1">Sold</th>
               <th className="font-semibold lg:px-4 py-1">Offered Price</th>
               <th className="font-semibold lg:px-4 py-1">View Count</th>

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import formatToINR from "../../utils/currencyFormatter";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 function SortableTable({ data }) {
+  const router = useRouter();
+  const { user } = router.query;
   const [sortedData, setSortedData] = useState(data);
   const [sortBy, setSortBy] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
@@ -40,7 +42,7 @@ function SortableTable({ data }) {
 
   const showOrderDetailHandler = (id) => {
     Router.push({
-      pathname: "/track/" + id,
+      pathname: "/" + user + "/track/" + id,
     });
   };
 

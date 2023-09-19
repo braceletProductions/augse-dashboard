@@ -6,7 +6,7 @@ const Home = () => {
   const handleLogin = (email, password, path) => {
     if (path == "dashboard") {
       Router.push({
-        pathname: "/dashboard/dashboard",
+        pathname: "admin/dashboard/dashboard",
       });
     }
   };
