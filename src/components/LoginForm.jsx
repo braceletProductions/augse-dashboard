@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import axios from "axios";
+import axios, { post } from "axios";
 import Link from "next/link";
 
 const LoginForm = ({ onLogin }) => {
@@ -26,10 +26,10 @@ const LoginForm = ({ onLogin }) => {
             password: password,
           }
         );
-        console.log(response);
         if (response.status === 200) {
+          await axios.post("/api/setCookie", { token: response.data.token });
           //successful login
-          onLogin(email, password, response.data.path);
+          onLogin(email, password, response.data.userType);
         } else {
           setError("Login Failed. Please check your credentials");
         }
