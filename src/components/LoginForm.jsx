@@ -8,8 +8,7 @@ const LoginForm = ({ onLogin }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     //perform form validation
     if (email === "" || password === "") {
       setError("email and password are required");
@@ -79,7 +78,7 @@ const LoginForm = ({ onLogin }) => {
             <div className="text-center text-white font-bold text-[3rem]">
               Login
             </div>
-            <form onSubmit={handleSubmit}>
+            <div>
               <div className="mb-6 ">
                 <label htmlFor="email" className="block text-gray-700"></label>
                 <input
@@ -117,13 +116,14 @@ const LoginForm = ({ onLogin }) => {
               )}
               <div className="flex justify-center mt-[2rem]">
                 <button
+                  onClick={handleSubmit}
                   type="submit"
                   className="bg-[#1383A6] text-white pl-6 pr-6 pt-2 pb-2 rounded-xl font-bold shadow-md shadow-black active:shadow-none active:translate-y-1"
                 >
                   Login
                 </button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
