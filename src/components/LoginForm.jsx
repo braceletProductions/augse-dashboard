@@ -27,9 +27,13 @@ const LoginForm = ({ onLogin }) => {
           }
         );
         if (response.status === 200) {
-          await axios.post("/api/setCookie", { token: response.data.token });
+          const res = await axios.post("/api/setCookie", {
+            token: response.data.token,
+          });
           //successful login
-          onLogin(email, password, response.data.userType);
+          if (res) {
+            onLogin(email, password, response.data.userType);
+          }
         } else {
           setError("Login Failed. Please check your credentials");
         }
