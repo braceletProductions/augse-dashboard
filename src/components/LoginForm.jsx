@@ -19,7 +19,6 @@ const LoginForm = ({ onLogin }) => {
       setError(""); //clear previous error
 
       try {
-        console.log("first");
         const response = await axios.post(
           process.env.NEXT_PUBLIC_SERVER_URL + `/user/login_admin`,
           {
@@ -27,7 +26,6 @@ const LoginForm = ({ onLogin }) => {
             password: password,
           }
         );
-        console.log("second");
         if (response.status === 200) {
           const res = await fetch("/api/setCookie", {
             method: "POST",
