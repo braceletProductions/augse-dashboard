@@ -9,6 +9,7 @@ const LoginForm = ({ onLogin }) => {
   const [error, setError] = useState("");
 
   const handleSubmit = async () => {
+    console.log("fuction running");
     //perform form validation
     if (email === "" || password === "") {
       setError("email and password are required");
@@ -116,7 +117,7 @@ const LoginForm = ({ onLogin }) => {
               )}
               <div className="flex justify-center mt-[2rem]">
                 <button
-                  onClick={handleSubmit}
+                  onClick={() => handleSubmit()}
                   type="submit"
                   className="bg-[#1383A6] text-white pl-6 pr-6 pt-2 pb-2 rounded-xl font-bold shadow-md shadow-black active:shadow-none active:translate-y-1"
                 >
