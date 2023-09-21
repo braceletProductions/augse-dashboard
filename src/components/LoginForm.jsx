@@ -27,12 +27,22 @@ const LoginForm = ({ onLogin }) => {
           }
         );
         if (response.status === 200) {
-          const res = await axios.post("/api/setCookie", {
-            token: response.data.token,
+          const res = await fetch("/api/setCookie", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              token: response.data.token,
+            }),
           });
-          //successful login
-          if (res) {
+
+          if (res.ok) {
+            // Handle the success response here
             onLogin(email, password, response.data.userType);
+          } else {
+            // Handle any errors here
+            console.log("failed to save auth token");
           }
         } else {
           setError("Login Failed. Please check your credentials");
