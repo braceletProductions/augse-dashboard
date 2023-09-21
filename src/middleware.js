@@ -4,51 +4,28 @@ import { verifier } from "../utils/user/tester";
 export default async function middleware(req) {
   const { pathname } = req.nextUrl;
   const auth = req.cookies.get("auth")?.value;
+  let response;
+  if (pathname === "/" || pathname === "/error") {
+    return NextResponse.next();
+  } else {
+    try {
+      response = await verifier(auth);
+      console.log(response);
+      // path matcher
 
-  if (
-    pathname === "/admin" ||
-    pathname === "/accountant" ||
-    pathname === "/seller" ||
-    (pathname === "/procurement" && !auth)
-  ) {
-    return NextResponse.redirect(process.env.NEXT_PUBLIC_DOMAIN_NAME);
-  }
-
-  
-  try {
-    if (pathname.startsWith("/admin")) {
-      const adminRes = await verifier(auth);
-      if (adminRes === "admin") {
+      if (pathname.startsWith("/admin") && response === "admin") {
+        return NextResponse.next();
+      } else if (pathname.startsWith("/accountant") && response === "accountant") {
+        return NextResponse.next();
+      } else if (pathname.startsWith("/seller") && response === "seller") {
+        return NextResponse.next();
+      } else if (pathname.startsWith("/procurement") && response === "procurement") {
         return NextResponse.next();
       } else {
         return NextResponse.redirect(process.env.NEXT_PUBLIC_DOMAIN_NAME);
       }
-    } else if (pathname.startsWith("/accountant")) {
-      const accountantRes = await verifier(auth);
-      if (accountantRes === "accountant") {
-        return NextResponse.next();
-      } else {
-        return NextResponse.redirect(process.env.NEXT_PUBLIC_DOMAIN_NAME);
-      }
-    } else if (pathname.startsWith("/seller")) {
-      const sellerRes = await verifier(auth);
-      if (sellerRes === "seller") {
-        return NextResponse.next();
-      } else {
-        return NextResponse.redirect(process.env.NEXT_PUBLIC_DOMAIN_NAME);
-      }
-    } else if (pathname.startsWith("/procurement")) {
-      const procurementRes = await verifier(auth);
-      if (procurementRes === "procurement") {
-        return NextResponse.next();
-      } else {
-        return NextResponse.redirect(process.env.NEXT_PUBLIC_DOMAIN_NAME);
-      }
-    } else {
-      return NextResponse.redirect("https://augse.in");
+    } catch (error) {
+      return NextResponse.redirect(`${process.env.NEXT_PUBLIC_DOMAIN_NAME}/error`);
     }
-  } catch (error) {
-    console.error("An error occurred:", error);
-    return NextResponse.redirect("/error");
   }
 }
