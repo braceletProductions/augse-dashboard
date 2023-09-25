@@ -16,6 +16,7 @@ import {
 import MenuItems from "@/components/MenuItems";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Accountent from "@/components/dashboards/Accountent";
 
 Chart.register(
   CategoryScale,
@@ -179,67 +180,7 @@ const Dashboard = () => {
       </div>
       <div className="flex-grow  lg:flex lg:mt-5 ">
         <Sidebar />
-        <div className="flex-grow flex flex-col pl-4 pr-4  lg:w-3/4">
-          <MenuItems orders={orders} users={users} products={products} />
-          <div className="flex gap-9 flex-grow  flex-col lg:flex-row">
-            <div className="bg-gray-100 lg:w-1/2 overflow-y-scroll rounded-2xl lg:h-[18rem] pt-1 pl-5 pr-5 mb-2 lg:mb-0 overflow-hidden relative">
-              <div className="flex justify-between items-center mb-3 lg:mb-4">
-                <h1 className="text-blue-900 text-xl">Total Product Count</h1>
-                <Link href={`/${user}/category/table`}>
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/512/151/151926.png"
-                    className="h-[2rem] hover:bg-slate-300 p-1 hover:scale-110 transition-colors cursor-pointer"
-                  />
-                </Link>
-              </div>
-              <table className="my-4 w-full border border-collapse">
-                <thead>
-                  <tr className="bg-blue-800 text-gray-100 text-center">
-                    <th className="font-semibold px-4 py-1">Category</th>
-                    <th className="font-semibold px-4 py-1">Count</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {category.map((item, index) => (
-                    <tr key={index} className="bg-blue-200 text-center">
-                      <td className="px-4 border-l-2 border-2">
-                        {categoryData[index]}
-                      </td>
-                      <td className="px-4 border-l-2 border-2">{item}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <div className="bg-gray-100 w-1/2 lg:h-[18rem] rounded-2xl mb-2 lg:mb-0">
-              <div className="flex justify-center items-center h-full">
-                <Doughnut
-                  data={doughnutChartData}
-                  options={doughnutChartOptions}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="lg:flex flex-grow gap-2 lg:gap-9 lg:w-full lg:flex-row">
-            <div className="flex bg-gray-100 w-4/5 rounded-2xl lg:h-60 mb-1 lg:mb-0">
-              <h1 className="text-blue-900 text-xl  mb-10 lg:mb-4">Sales</h1>
-              <Line data={salesChartData} />
-            </div>
-
-            <div className="w-1/5 mb-2 lg:mb-0">
-              <button className="bg-gray-100 w-[10rem] lg:mb-[1rem] rounded-2xl text-center lg:py-3 py-1 mt-5 ">
-                Amount
-              </button>
-              <button className="bg-gray-100 w-[10rem] lg:mb-[1rem]  rounded-2xl text-center lg:py-3 py-1 mt-5">
-                GST
-              </button>
-              <button className="bg-gray-100 w-[10rem] rounded-2xl text-center lg:py-3 py-1 mt-5">
-                Total revenue
-              </button>
-            </div>
-          </div>
-        </div>
+        <Accountent />
       </div>
     </div>
   );
