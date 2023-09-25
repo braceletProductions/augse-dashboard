@@ -3,7 +3,6 @@ import axios from "axios";
 import { Line, Doughnut } from "react-chartjs-2";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
-import salesData from "@/tempData/salesData";
 import {
   Chart,
   CategoryScale,
@@ -49,6 +48,18 @@ const Dashboard = () => {
   const [products, setProducts] = useState(0);
   const [categoryData, setCategoryData] = useState([]);
   const [category, setCategory] = useState([]);
+  const [salesData, setSalesData] = useState([]);
+  const [year, setYear] = useState(new Date().getFullYear());
+
+  const handleYearChange = (e) => {
+    setYear(e.target.value);
+  };
+
+  const currentYear = new Date().getFullYear();
+  const yearOptions = [];
+  for (let year = currentYear; year >= currentYear - 10; year--) {
+    yearOptions.push(year);
+  }
 
   //Counting users
   useEffect(() => {
@@ -118,6 +129,18 @@ const Dashboard = () => {
     fetchProducts();
   }, [categoryData]);
 
+  useEffect(() => {
+    const fetchSales = async () => {
+      try {
+        const res = await axios.get(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/sales/monthlySales/" + year
+        );
+        setSalesData(res.data.monthlySales);
+      } catch (error) {}
+    };
+    fetchSales();
+  }, [year]);
+
   const salesChartData = {
     labels: months,
     datasets: [
@@ -131,10 +154,10 @@ const Dashboard = () => {
     ],
     scales: {
       x: {
-        type: "category", // Use the "category" scale for x-axis
+        type: "Months",
         labels: months,
         grid: {
-          display: false, // Remove vertical grid lines
+          display: false,
         },
       },
       y: {
@@ -222,8 +245,30 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="lg:flex flex-grow gap-2 lg:gap-9 lg:w-full lg:flex-row">
-            <div className="flex bg-gray-100 w-4/5 rounded-2xl lg:h-60 mb-1 lg:mb-0">
-              <h1 className="text-blue-900 text-xl  mb-10 lg:mb-4">Sales</h1>
+            <div className="flex gap-[4rem] px-[1.5rem] bg-white w-4/5 rounded-2xl lg:h-72 mb-1 lg:mb-0">
+              <form>
+                <label
+                  htmlFor="yearSelect"
+                  className="block font-semibold text-gray-700 text-[1.25rem]"
+                >
+                  Sales
+                </label>
+                <select
+                  id="yearSelect"
+                  name="year"
+                  value={year}
+                  onChange={handleYearChange}
+                  className="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                  defaultValue={2023}
+                >
+                  <option value="">-- Select Year --</option>
+                  {yearOptions.map((year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
+              </form>
               <Line data={salesChartData} />
             </div>
 

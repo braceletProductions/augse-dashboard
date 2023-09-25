@@ -77,24 +77,35 @@ function CategoryOrderChart() {
       }}
     >
       <form className="flex gap-[2rem] justify-center" onSubmit={searchSales}>
-        <input
-          type="date"
-          ref={startDateRef}
-          min="2023-01-01"
-          max={today}
-          className="hover:scale-105 cursor-pointer"
-        ></input>
-        To
-        <input
-          type="date"
-          ref={endDateRef}
-          min="2023-01-01"
-          className="hover:scale-105 cursor-pointer"
-          max={today}
-        ></input>
+        <div className="flex items-center space-x-2">
+          <label htmlFor="startDate" className="text-black">
+            From:
+          </label>
+          <input
+            id="startDate"
+            type="date"
+            ref={startDateRef}
+            min="2023-01-01"
+            max={today}
+            className="border-2 border-indigo-500 hover:scale-105 px-2 py-1 rounded-lg cursor-pointer focus:outline-none"
+          ></input>
+        </div>
+        <div className="flex items-center space-x-2">
+          <label htmlFor="endDate" className="text-black">
+            To:
+          </label>
+          <input
+            id="endDate"
+            type="date"
+            ref={endDateRef}
+            min="2023-01-01"
+            max={today}
+            className="border-2 border-indigo-500 hover:scale-105 px-2 py-1 rounded-lg cursor-pointer focus:outline-none"
+          ></input>
+        </div>
         <button
           type="submit"
-          className="border-2 px-[2px] hover:scale-110 border-black"
+          className="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:scale-110 focus:outline-none"
         >
           <AiOutlineSearch />
         </button>
