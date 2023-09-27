@@ -9,12 +9,20 @@ const CustomerDetailPage = () => {
   const [returned, setReturned] = useState(0);
   const router = useRouter();
   const { customerId } = router.query;
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const currentTimestamp = Math.floor(
+    Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
+  );
 
   useEffect(() => {
     const fetchDetails = async () => {
       try {
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/user/detail/" + customerId
+          process.env.NEXT_PUBLIC_SERVER_URL + "/user/detail/" + customerId,{
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         const canceledOrders = response.data.orders.filter(
           (order) => order.cancelled === true

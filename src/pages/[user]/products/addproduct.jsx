@@ -54,12 +54,20 @@ function addproduct() {
   const mrpRef = useRef();
   const offeredValueRef = useRef();
   const detailRef = useRef();
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const currentTimestamp = Math.floor(
+    Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
+  );
 
   useEffect(() => {
     const fetchDetails = async () => {
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/tags/tags"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/tags/tags",{
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         setTagsOptions(res.data.tags);
         const response = await axios.get(

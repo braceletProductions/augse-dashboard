@@ -15,17 +15,21 @@ function ReduxData() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        
         const response = await axios.get(
           process.env.NEXT_PUBLIC_SERVER_URL + "/orders/orders",
-          
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         dispatch(setOrders(response.data));
       } catch (error) {}
 
       try {
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/products/get_all_Products",{
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/get_all_Products",
+          {
             params: {
               timestamp: currentTimestamp,
             },

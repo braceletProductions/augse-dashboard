@@ -7,13 +7,21 @@ const TrackOrder = () => {
   const [order, setOrder] = useState({});
   const router = useRouter();
   const { user, orderId } = router.query;
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const currentTimestamp = Math.floor(
+    Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
+  );
 
   useEffect(() => {
     const fetchDetails = async () => {
       if (!orderId) return;
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/orders/orders/" + orderId
+          process.env.NEXT_PUBLIC_SERVER_URL + "/orders/orders/" + orderId,{
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         setOrder(res.data);
       } catch (error) {}

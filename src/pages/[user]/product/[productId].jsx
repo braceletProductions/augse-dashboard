@@ -7,12 +7,20 @@ const ProductDetail = () => {
   const router = useRouter();
   const { productId } = router.query;
   const [product, setProduct] = useState({});
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const currentTimestamp = Math.floor(
+    Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
+  );
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios(
-          process.env.NEXT_PUBLIC_SERVER_URL + `/products/product/${productId}`
+          process.env.NEXT_PUBLIC_SERVER_URL + `/products/product/${productId}`,{
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         response ? setProduct(response.data) : null;
       } catch (error) {

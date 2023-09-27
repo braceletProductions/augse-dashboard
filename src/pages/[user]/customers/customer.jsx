@@ -7,12 +7,20 @@ const Customer = () => {
   const router = useRouter();
   const { user } = router.query;
   const [customers, setCustomers] = useState([]);
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const currentTimestamp = Math.floor(
+    Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
+  );
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/user/getusers/customer"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/user/getusers/customer",{
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         setCustomers(res.data);
       } catch (error) {

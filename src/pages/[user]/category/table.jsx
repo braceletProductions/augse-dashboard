@@ -6,6 +6,11 @@ function table() {
   const [categoryData, setCategoryData] = useState([]);
   const [category, setCategory] = useState([]);
 
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const currentTimestamp = Math.floor(
+    Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
+  );
+
   useEffect(() => {
     const fetchCategory = async () => {
       try {
@@ -28,7 +33,12 @@ function table() {
           const response = await axios.get(
             process.env.NEXT_PUBLIC_SERVER_URL +
               "/products/category/" +
-              categoryData[i]
+              categoryData[i],
+            {
+              params: {
+                timestamp: currentTimestamp,
+              },
+            }
           );
           res[i] = response.data.count;
         }
