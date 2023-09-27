@@ -15,6 +15,7 @@ import {
 import MenuItems from "@/components/MenuItems";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Accountent from "@/components/dashboards/Accountent";
 
 Chart.register(
   CategoryScale,
@@ -285,6 +286,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+
       </div>
     </div>
   );
