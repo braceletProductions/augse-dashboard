@@ -5,6 +5,7 @@ import Sidebar from "@/components/Sidebar";
 
 const Customer = () => {
   const router = useRouter();
+  const { user } = router.query;
   const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const Customer = () => {
   }, []);
 
   const handleProfileClick = (customerId) => {
-    router.push(`/customers/${customerId}`); // Navigate to customer detail page
+    router.push(`/${user}/customers/${customerId}`); // Navigate to customer detail page
   };
 
   return (

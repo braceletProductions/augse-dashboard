@@ -11,6 +11,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  ArcElement,
   BarElement,
 } from "chart.js";
 
@@ -19,6 +20,7 @@ ChartJS.register(
   LinearScale,
   Title,
   Tooltip,
+  ArcElement,
   Legend,
   BarElement
 );
