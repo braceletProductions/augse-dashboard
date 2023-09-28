@@ -15,7 +15,6 @@ import {
 import MenuItems from "@/components/MenuItems";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Accountent from "@/components/dashboards/Accountent";
 
 Chart.register(
   CategoryScale,
@@ -51,10 +50,6 @@ const Dashboard = () => {
   const [category, setCategory] = useState([]);
   const [salesData, setSalesData] = useState([]);
   const [year, setYear] = useState(new Date().getFullYear());
-  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
-  const currentTimestamp = Math.floor(
-    Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
-  );
 
   const handleYearChange = (e) => {
     setYear(e.target.value);
@@ -71,11 +66,7 @@ const Dashboard = () => {
     const fetchUsers = async () => {
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/user/counts",{
-            params: {
-              timestamp: currentTimestamp,
-            },
-          }
+          process.env.NEXT_PUBLIC_SERVER_URL + "/user/counts"
         );
         setUsers(res.data.numbers);
       } catch (error) {
@@ -86,11 +77,7 @@ const Dashboard = () => {
     const fetchOrders = async () => {
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/orders/count",{
-            params: {
-              timestamp: currentTimestamp,
-            },
-          }
+          process.env.NEXT_PUBLIC_SERVER_URL + "/orders/count"
         );
         setOrders(res.data.numbers);
       } catch (error) {
@@ -101,11 +88,7 @@ const Dashboard = () => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/products/count",{
-            params: {
-              timestamp: currentTimestamp,
-            },
-          }
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/count"
         );
         setProducts(res.data.numbers);
       } catch (error) {
@@ -116,11 +99,7 @@ const Dashboard = () => {
     const fetchCategory = async () => {
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/category/category",{
-            params: {
-              timestamp: currentTimestamp,
-            },
-          }
+          process.env.NEXT_PUBLIC_SERVER_URL + "/category/category"
         );
         setCategoryData(res.data.category);
       } catch (error) {
@@ -138,11 +117,7 @@ const Dashboard = () => {
           const response = await axios.get(
             process.env.NEXT_PUBLIC_SERVER_URL +
               "/products/category/" +
-              categoryData[i],{
-                params: {
-                  timestamp: currentTimestamp,
-                },
-              }
+              categoryData[i]
           );
           res[i] = response.data.count;
         }
@@ -158,11 +133,7 @@ const Dashboard = () => {
     const fetchSales = async () => {
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/sales/monthlySales/" + year,{
-            params: {
-              timestamp: currentTimestamp,
-            },
-          }
+          process.env.NEXT_PUBLIC_SERVER_URL + "/sales/monthlySales/" + year
         );
         setSalesData(res.data.monthlySales);
       } catch (error) {}
@@ -314,10 +285,9 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default Dashboard;
