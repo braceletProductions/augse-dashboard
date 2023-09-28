@@ -16,7 +16,8 @@ const ProductDetail = () => {
     const fetchData = async () => {
       try {
         const response = await axios(
-          process.env.NEXT_PUBLIC_SERVER_URL + `/products/product/${productId}`,{
+          process.env.NEXT_PUBLIC_SERVER_URL + `/products/product/${productId}`,
+          {
             params: {
               timestamp: currentTimestamp,
             },
@@ -32,7 +33,11 @@ const ProductDetail = () => {
 
   if (!product._id) return <div className="">Loading...</div>;
 
-  return <Product product={product} />;
+  return (
+    <div className="mx-auto max-w-screen-2xl">
+      <Product product={product} />;
+    </div>
+  );
 };
 
 export default ProductDetail;

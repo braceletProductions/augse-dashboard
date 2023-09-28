@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import axios, { post } from "axios";
+import axios from "axios";
 import Link from "next/link";
 
 const LoginForm = ({ onLogin }) => {
@@ -9,8 +9,6 @@ const LoginForm = ({ onLogin }) => {
   const [error, setError] = useState("");
 
   const handleSubmit = async () => {
-    console.log("fuction running");
-    //perform form validation
     if (email === "" || password === "") {
       setError("email and password are required");
     } else if (password.length < 8) {
@@ -104,7 +102,10 @@ const LoginForm = ({ onLogin }) => {
                 />
               </div>
               <div className="mt-4 mb-6 text-sm text-gray-600">
-                <Link href="/" className="text-gray-100 px-[0.8rem]  text-sm">
+                <Link
+                  href="/"
+                  className="text-gray-100 px-[0.8rem] hover:underline"
+                >
                   Forgot Password?
                 </Link>
               </div>
@@ -117,7 +118,7 @@ const LoginForm = ({ onLogin }) => {
                 <button
                   onClick={() => handleSubmit()}
                   type="submit"
-                  className="bg-[#1383A6] text-white pl-6 pr-6 pt-2 pb-2 rounded-xl font-bold shadow-md shadow-black active:shadow-none active:translate-y-1"
+                  className="bg-[#1383A6] text-white pl-6 pr-6 pt-2 pb-2 rounded-xl font-bold shadow-sm shadow-black active:shadow-none"
                 >
                   Login
                 </button>

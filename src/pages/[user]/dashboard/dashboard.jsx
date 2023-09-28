@@ -207,7 +207,7 @@ const Dashboard = () => {
           <div className="flex gap-9 flex-grow  flex-col lg:flex-row">
             <div className="bg-gray-100 lg:w-1/2 overflow-y-scroll rounded-2xl lg:h-[18rem] pt-1 pl-5 pr-5 mb-2 lg:mb-0 overflow-hidden relative">
               <div className="flex justify-between items-center mb-3 lg:mb-4">
-                <h1 className="text-blue-900 text-xl">Total Product Count</h1>
+                <h1 className="font-semibold text-gray-700 text-[1.25rem]">Total Product Count</h1>
                 <Link href={`/${user}/category/table`}>
                   <img
                     src="https://cdn-icons-png.flaticon.com/512/151/151926.png"
@@ -259,7 +259,6 @@ const Dashboard = () => {
                   value={year}
                   onChange={handleYearChange}
                   className="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-                  defaultValue={2023}
                 >
                   <option value="">-- Select Year --</option>
                   {yearOptions.map((year) => (

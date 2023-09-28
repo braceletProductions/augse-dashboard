@@ -12,9 +12,7 @@ const Shipping = () => {
         <BackButton />
       </div>
       <div className="mt-8 mb-12 px-4">
-        <h1 className="font-bold  text-gray-100 pb-5 text-5xl">
-          Shipping is Pending Orders
-        </h1>
+        <h1 className="font-bold  text-gray-100 pb-5 text-5xl">New Orders</h1>
         <SortableTable data={orders} />
       </div>
     </div>
