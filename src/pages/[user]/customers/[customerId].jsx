@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import BackButton from "@/components/BackButton";
+import AddressCard from "@/components/AddressCard";
 
 const CustomerDetailPage = () => {
   const [customer, setCustomer] = useState({});
@@ -18,7 +19,8 @@ const CustomerDetailPage = () => {
     const fetchDetails = async () => {
       try {
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/user/detail/" + customerId,{
+          process.env.NEXT_PUBLIC_SERVER_URL + "/user/detail/" + customerId,
+          {
             params: {
               timestamp: currentTimestamp,
             },
@@ -62,21 +64,7 @@ const CustomerDetailPage = () => {
           <p className="text-blue-600 text-lg">Phone: {customer.phone}</p>
 
           {customer.address.map((address, index) => (
-            <div className="text-black mt-6 lg:mt-10" key={index}>
-              <h1 className="text-blue-300 text-xl font-semibold underline">
-                Address {index + 1}
-              </h1>
-              <p className="text-black">{address.name}</p>
-              <p className="text-black">
-                Street: {address.houseNumber} {address.street}
-              </p>
-              <p>Landmark: {address.landmark}</p>
-              <p>City: {address.city}</p>
-              <p>State/Province/Area: {address.state}</p>
-              <p>Phone: {address.phone}</p>
-              <p>Zip code: {address.pinCode}</p>
-              <p>Country: {address.country}</p>
-            </div>
+            <AddressCard key={index} index={index} val={address} />
           ))}
         </div>
         {/* Right side */}

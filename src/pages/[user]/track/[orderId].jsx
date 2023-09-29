@@ -2,6 +2,7 @@ import Router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import BackButton from "@/components/BackButton";
+import AddressCard from "@/components/AddressCard";
 
 const TrackOrder = () => {
   const [order, setOrder] = useState({});
@@ -77,39 +78,7 @@ const TrackOrder = () => {
               <div className="text-2xl">{order.userId.name}</div>
               <div className="">{order.userId.email}</div>
               <div className="">{order.userId.phone}</div>
-              <div className="">Address:</div>
-              <div className="font-normal">
-                <div>
-                  <span class="font-semibold mr-2">Street:</span>
-                  <span class="text-black">
-                    {order.addressId.houseNumber} {order.addressId.street}
-                  </span>
-                </div>
-                <div>
-                  <span class="font-semibold mr-2">Landmark:</span>
-                  <span>{order.addressId.landmark}</span>
-                </div>
-                <div>
-                  <span class="font-semibold mr-2">City:</span>
-                  <span>{order.addressId.city}</span>
-                </div>
-                <div>
-                  <span class="font-semibold mr-2">State/Province/Area:</span>
-                  <span>{order.addressId.state}</span>
-                </div>
-                <div>
-                  <span class="font-semibold mr-2">Phone:</span>
-                  <span>{order.addressId.phone}</span>
-                </div>
-                <div>
-                  <span class="font-semibold mr-2">Pin code:</span>
-                  <span>{order.addressId.pinCode}</span>
-                </div>
-                <div>
-                  <span class="font-semibold mr-2">Country:</span>
-                  <span>{order.addressId.country}</span>
-                </div>
-              </div>
+              <AddressCard val={order.addressId} />
             </div>
             <div className="lg:flex w-full gap-[2rem] text-xl my-[2rem]">
               <div className="flex-[5]">
