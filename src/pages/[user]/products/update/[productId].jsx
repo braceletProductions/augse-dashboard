@@ -139,6 +139,11 @@ function updateProduct() {
   };
 
   const updateProductHandler = async () => {
+    if (
+      parseInt(offeredValueRef.current.value) > parseInt(mrpRef.current.value)
+    ) {
+      return;
+    }
     let mainImagePath;
     if (mainImageFile) {
       try {

@@ -68,7 +68,7 @@ const Sidebar = () => {
             >
               {productOptions &&
                 optionsProducts.map((option, index) => (
-                  <div className="" key={index}>
+                  <div className="m-1" key={index}>
                     <a
                       href={"/" + user + option.link}
                       className="text-black font-medium hover:text-gray-100 p-1 px-2 link hover:rounded-xl justify-center"

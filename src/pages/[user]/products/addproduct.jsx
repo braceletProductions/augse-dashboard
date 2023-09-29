@@ -63,7 +63,8 @@ function addproduct() {
     const fetchDetails = async () => {
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/tags/tags",{
+          process.env.NEXT_PUBLIC_SERVER_URL + "/tags/tags",
+          {
             params: {
               timestamp: currentTimestamp,
             },
@@ -110,6 +111,11 @@ function addproduct() {
   };
 
   const addProductHandler = async () => {
+    if (
+      parseInt(offeredValueRef.current.value) > parseInt(mrpRef.current.value)
+    ) {
+      return;
+    }
     const mainformData = new FormData();
     mainformData.append("image", mainImageFile);
     let mainImagePath;

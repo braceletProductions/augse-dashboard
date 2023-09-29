@@ -82,27 +82,27 @@ const Product = ({ product }) => {
           <div className="flex gap-[2rem] mt-[2rem]">
             {visibility ? (
               <button
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded float-right disabled:cursor-not-allowed"
+                className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded float-right disabled:cursor-not-allowed"
                 onClick={hideproduct}
                 disabled={disability}
               >
-                Hide
+                Hide for Customers
               </button>
             ) : (
               <button
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded float-right disabled:cursor-not-allowed"
+                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded float-right disabled:cursor-not-allowed"
                 onClick={showproduct}
                 disabled={disability}
               >
-                Show
+                Show for Customers
               </button>
             )}
             <button
-              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded float-right disabled:cursor-not-allowed"
+              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded float-right disabled:cursor-not-allowed"
               onClick={updateProduct}
               disabled={disability}
             >
-              Update
+              Update Product
             </button>
           </div>
         </div>
@@ -114,19 +114,19 @@ const Product = ({ product }) => {
               <div className="text-xl">
                 <h1 className="text-xl font-semibold">Cash On Delivery</h1>
                 <h1 className="text-green-400">
-                  {product.isCodAllowed && "Yes"}
+                  {product.isCodAllowed ? "Yes" : "No"}
                 </h1>
               </div>
               <div className="text-xl">
                 <h1 className="text-xl font-semibold">Return Policy</h1>
                 <h1 className="text-green-400">
-                  {product.isReturnAble && "Yes"}
+                  {product.isReturnAble ? "Yes" : "No"}
                 </h1>
               </div>
               <div className="text-xl">
                 <h1 className="text-xl font-semibold">Cancel Order</h1>
                 <h1 className="text-green-400">
-                  {product.isCancelAble && "Yes"}
+                  {product.isCancelAble ? "Yes" : "No"}
                 </h1>
               </div>
             </div>

@@ -17,7 +17,8 @@ const TrackOrder = () => {
       if (!orderId) return;
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/orders/orders/" + orderId,{
+          process.env.NEXT_PUBLIC_SERVER_URL + "/orders/orders/" + orderId,
+          {
             params: {
               timestamp: currentTimestamp,
             },
@@ -42,6 +43,28 @@ const TrackOrder = () => {
     });
   };
 
+  const downloadInvoice = async () => {
+    try {
+      const url =
+        process.env.NEXT_PUBLIC_SERVER_URL +
+        "/invoice/download_Invoice/" +
+        orderId;
+      const response = await axios.get(url, {
+        params: {
+          timestamp: currentTimestamp,
+        },
+        responseType: "blob",
+      });
+      const downloadLink = document.createElement("a");
+      downloadLink.href = window.URL.createObjectURL(new Blob([response.data]));
+      downloadLink.download = "invoice.pdf";
+      downloadLink.click();
+      window.URL.revokeObjectURL(downloadLink.href);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (order && order.userId)
     return (
       <div className="w-full font-medium">
@@ -56,15 +79,36 @@ const TrackOrder = () => {
               <div className="">{order.userId.phone}</div>
               <div className="">Address:</div>
               <div className="font-normal">
-                <p className="text-black">
-                  Street: {order.addressId.houseNumber} {order.addressId.street}
-                </p>
-                <p>Landmark: {order.addressId.landmark}</p>
-                <p>City: {order.addressId.city}</p>
-                <p>State/Province/Area: {order.addressId.state}</p>
-                <p>Phone: {order.addressId.phone}</p>
-                <p>Pin code: {order.addressId.pinCode}</p>
-                <p>Country: {order.addressId.country}</p>
+                <div>
+                  <span class="font-semibold mr-2">Street:</span>
+                  <span class="text-black">
+                    {order.addressId.houseNumber} {order.addressId.street}
+                  </span>
+                </div>
+                <div>
+                  <span class="font-semibold mr-2">Landmark:</span>
+                  <span>{order.addressId.landmark}</span>
+                </div>
+                <div>
+                  <span class="font-semibold mr-2">City:</span>
+                  <span>{order.addressId.city}</span>
+                </div>
+                <div>
+                  <span class="font-semibold mr-2">State/Province/Area:</span>
+                  <span>{order.addressId.state}</span>
+                </div>
+                <div>
+                  <span class="font-semibold mr-2">Phone:</span>
+                  <span>{order.addressId.phone}</span>
+                </div>
+                <div>
+                  <span class="font-semibold mr-2">Pin code:</span>
+                  <span>{order.addressId.pinCode}</span>
+                </div>
+                <div>
+                  <span class="font-semibold mr-2">Country:</span>
+                  <span>{order.addressId.country}</span>
+                </div>
               </div>
             </div>
             <div className="lg:flex w-full gap-[2rem] text-xl my-[2rem]">
@@ -153,17 +197,20 @@ const TrackOrder = () => {
               </span>
             </div>
             <div className="text-white flex my-[2rem] justify-center gap-[5rem]">
-              <div className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer shadow-black shadow-md active:shadow-none">
+              <div
+                className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer shadow-black shadow-sm active:shadow-none"
+                onClick={downloadInvoice}
+              >
                 Invoice
               </div>
               <div
-                className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer shadow-black shadow-md active:shadow-none"
+                className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer shadow-black shadow-sm active:shadow-none"
                 onClick={profileHandler}
               >
                 Profile
               </div>
               <div
-                className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer shadow-black shadow-md active:shadow-none"
+                className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer shadow-black shadow-sm active:shadow-none"
                 onClick={trackHandler}
               >
                 Track
