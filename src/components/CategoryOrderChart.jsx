@@ -71,14 +71,21 @@ function CategoryOrderChart() {
 
   return (
     <div
-      className="mt-6 ml-5 p-3 text-center max-h-[20rem] flex flex-col justify-center items-center"
+      className="mx-auto my-8 rounded-md mt-6 ml-5 p-5 text-center max-h-[20rem] flex gap-[5rem] items-center"
       style={{
         width: "80%",
       }}
     >
-      <form className="flex gap-[2rem] justify-center" onSubmit={searchSales}>
-        <div className="flex items-center space-x-2">
-          <label htmlFor="startDate" className="text-black">
+      <form
+        className="min-w-[10rem] flex flex-col gap-[1rem]"
+        onSubmit={searchSales}
+      >
+        <h2 className="text-xl font-bold">Date Range</h2>
+        <div className="text-left">
+          <label
+            htmlFor="startDate"
+            className="block text-sm font-semibold text-gray-600 mb-2"
+          >
             From:
           </label>
           <input
@@ -87,10 +94,10 @@ function CategoryOrderChart() {
             ref={startDateRef}
             min="2023-01-01"
             max={today}
-            className="border-2 border-indigo-500 hover:scale-105 px-2 py-1 rounded-lg cursor-pointer focus:outline-none"
+            className="w-full p-2 border border-gray-300 rounded cursor-pointer"
           ></input>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="text-left">
           <label htmlFor="endDate" className="text-black">
             To:
           </label>
@@ -100,14 +107,20 @@ function CategoryOrderChart() {
             ref={endDateRef}
             min="2023-01-01"
             max={today}
-            className="border-2 border-indigo-500 hover:scale-105 px-2 py-1 rounded-lg cursor-pointer focus:outline-none"
+            className="w-full p-2 border border-gray-300 rounded cursor-pointer"
           ></input>
         </div>
-        <button
+        {/* <button
           type="submit"
-          className="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:scale-110 focus:outline-none"
+          className="bg-blue-500 mx-auto w-[3rem] pl-[1rem] text-white py-2 rounded-lg hover:scale-110 focus:outline-none"
         >
           <AiOutlineSearch />
+        </button> */}
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          Search
         </button>
       </form>
       <Bar data={barData} options={barOptions} />

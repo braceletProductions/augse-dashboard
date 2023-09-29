@@ -15,6 +15,7 @@ import {
 import MenuItems from "@/components/MenuItems";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import SalesDateRangeForm from "@/components/SalesDateRangeForm";
 
 Chart.register(
   CategoryScale,
@@ -207,7 +208,9 @@ const Dashboard = () => {
           <div className="flex gap-9 flex-grow  flex-col lg:flex-row">
             <div className="bg-gray-100 lg:w-1/2 overflow-y-scroll rounded-2xl lg:h-[18rem] pt-1 pl-5 pr-5 mb-2 lg:mb-0 overflow-hidden relative">
               <div className="flex justify-between items-center mb-3 lg:mb-4">
-                <h1 className="font-semibold text-gray-700 text-[1.25rem]">Total Product Count</h1>
+                <h1 className="font-semibold text-gray-700 text-[1.25rem]">
+                  Total Product Count
+                </h1>
                 <Link href={`/${user}/category/table`}>
                   <img
                     src="https://cdn-icons-png.flaticon.com/512/151/151926.png"
@@ -270,18 +273,7 @@ const Dashboard = () => {
               </form>
               <Line data={salesChartData} />
             </div>
-
-            <div className="w-1/5 mb-2 lg:mb-0">
-              <button className="bg-gray-100 w-[10rem] lg:mb-[1rem] rounded-2xl text-center lg:py-3 py-1 mt-5 ">
-                Amount
-              </button>
-              <button className="bg-gray-100 w-[10rem] lg:mb-[1rem]  rounded-2xl text-center lg:py-3 py-1 mt-5">
-                GST
-              </button>
-              <button className="bg-gray-100 w-[10rem] rounded-2xl text-center lg:py-3 py-1 mt-5">
-                Total revenue
-              </button>
-            </div>
+            <SalesDateRangeForm />
           </div>
         </div>
       </div>
@@ -289,4 +281,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Dashboard;

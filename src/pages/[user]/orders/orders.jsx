@@ -92,7 +92,7 @@ const Orders = () => {
   return (
     <div className="flex mt-5">
       <Sidebar />
-      <div className="flex-grow bg-white mt-0 ml-2 rounded-2xl pr-10 pl-10 pt-10 relative">
+      <div className="flex-grow bg-white mt-0 ml-2 rounded-2xl px-10 py-10 relative">
         <div className="xl:flex justify-between">
           <div className=" text-blue-400 text-xl p-6 rounded-xl mb-6 ">
             <h1 className="mb-3 gap-x-7 flex items-center">
