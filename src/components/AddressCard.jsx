@@ -5,7 +5,9 @@ function AddressCard(props) {
         <div className="my-2 text-[1.25rem] text-blue-300 font-semibold underline">
           Address {props.index && props.index + 1}
         </div>
-        <div className="sm:w-96 text-black font-normal px-5">
+        <div
+          className={`sm:w-96 text-black font-normal ${props.index && "px-5"}`}
+        >
           <span className="font-semibold">{props.val.name}</span>
           <p className="">
             <span className="font-semibold">House/Street:</span>{" "}
