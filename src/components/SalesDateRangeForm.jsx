@@ -1,18 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import formatToINR from "../../utils/currencyFormatter";
+import axios from "axios";
 
 const SalesDateRangeForm = () => {
-  const [selectedRange, setSelectedRange] = useState("last1year");
+  const [selectedRange, setSelectedRange] = useState("today");
   const [sales, setSales] = useState(0);
+  const [gst, setGst] = useState(0);
 
   const handleRangeChange = (e) => {
     setSelectedRange(e.target.value);
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     try {
-    } catch (error) {}
+      const response = await axios.get(
+        process.env.NEXT_PUBLIC_SERVER_URL + "/sales/sales/" + selectedRange
+      );
+      setSales(response.data.totalSales);
+      setGst(response.data.totalGst);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, []);
 
   return (
     <div className="flex w-[20rem] lg:w-[30rem] flex-col items-center gap-4">
@@ -25,6 +38,7 @@ const SalesDateRangeForm = () => {
           onChange={handleRangeChange}
           className="border p-1 rounded"
         >
+          <option value="today">Today</option>
           <option value="last7days">Last 7 Days</option>
           <option value="last14days">Last 14 Days</option>
           <option value="last1month">Last 1 Month</option>
@@ -39,10 +53,10 @@ const SalesDateRangeForm = () => {
         Search
       </button>
       <button className="bg-gray-100 w-full lg:w-[15rem] rounded-full py-2 mt-3">
-        Amount: {formatToINR(sales)}
+        Amount: {formatToINR(sales + gst)}
       </button>
       <button className="bg-gray-100 w-full lg:w-[15rem] rounded-full py-2">
-        GST: {formatToINR(sales)}
+        GST: {formatToINR(gst)}
       </button>
       <button className="bg-gray-100 w-full lg:w-[15rem] rounded-full py-2">
         Total Revenue: {formatToINR(sales)}

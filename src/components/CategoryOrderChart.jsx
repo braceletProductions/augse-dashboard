@@ -94,7 +94,7 @@ function CategoryOrderChart() {
             ref={startDateRef}
             min="2023-01-01"
             max={today}
-            className="w-full p-2 border border-gray-300 rounded cursor-pointer"
+            className="w-full p-2 border-2 border-blue-800 rounded cursor-pointer"
           ></input>
         </div>
         <div className="text-left">
@@ -107,18 +107,12 @@ function CategoryOrderChart() {
             ref={endDateRef}
             min="2023-01-01"
             max={today}
-            className="w-full p-2 border border-gray-300 rounded cursor-pointer"
+            className="w-full p-2 border-2 border-blue-800 rounded cursor-pointer"
           ></input>
         </div>
-        {/* <button
-          type="submit"
-          className="bg-blue-500 mx-auto w-[3rem] pl-[1rem] text-white py-2 rounded-lg hover:scale-110 focus:outline-none"
-        >
-          <AiOutlineSearch />
-        </button> */}
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className="bg-blue-800 text-white px-4 py-2 rounded shadow-sm shadow-black active:shadow-none hover:bg-blue-900"
         >
           Search
         </button>
