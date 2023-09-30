@@ -27,9 +27,6 @@ Chart.register(
 ); // Register the CategoryScale
 
 const months = [
-  "Jan",
-  "Feb",
-  "Mar",
   "Apr",
   "May",
   "Jun",
@@ -39,6 +36,9 @@ const months = [
   "Oct",
   "Nov",
   "Dec",
+  "Jan",
+  "Feb",
+  "Mar",
 ];
 
 const Dashboard = () => {
@@ -58,11 +58,10 @@ const Dashboard = () => {
 
   const currentYear = new Date().getFullYear();
   const yearOptions = [];
-  for (let year = currentYear; year >= currentYear - 10; year--) {
-    yearOptions.push(year);
+  for (let year = currentYear; year >= 2022; year--) {
+    yearOptions.push(year + " - " + (year + 1));
   }
 
-  //Counting users
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -263,7 +262,6 @@ const Dashboard = () => {
                   onChange={handleYearChange}
                   className="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                 >
-                  <option value="">-- Select Year --</option>
                   {yearOptions.map((year) => (
                     <option key={year} value={year}>
                       {year}
