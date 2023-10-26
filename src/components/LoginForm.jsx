@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import axios from "axios";
+import axios, { post } from "axios";
 import Link from "next/link";
+import { GoDot } from "react-icons/go";
 
 const LoginForm = ({ onLogin }) => {
+  const [loading, setLoading] = useState(false);
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async () => {
+    setLoading(true);
+    //perform form validation
     if (email === "" || password === "") {
-      setError("email and password are required");
-    } else if (password.length < 8) {
-      setError("Password must be at least 8 characters long.");
+      setError("Email and password are required");
+    } else if (password.length < 6) {
+      setError("Password must be at least 6 characters long.");
     } else {
       setError(""); //clear previous error
 
@@ -37,16 +41,20 @@ const LoginForm = ({ onLogin }) => {
 
           if (res.ok) {
             // Handle the success response here
+            setLoading(false);
             onLogin(email, password, response.data.userType);
           } else {
             // Handle any errors here
-            console.log("failed to save auth token");
+            setLoading(false);
+            // console.log("failed to save auth token");
           }
         } else {
+          setLoading(false);
           setError("Login Failed. Please check your credentials");
         }
       } catch (error) {
-        console.log("error", error);
+        // console.log("error", error);
+        setLoading(false);
         setError("An error occurred. Please try again later.");
       }
     }
@@ -102,10 +110,7 @@ const LoginForm = ({ onLogin }) => {
                 />
               </div>
               <div className="mt-4 mb-6 text-sm text-gray-600">
-                <Link
-                  href="/"
-                  className="text-gray-100 px-[0.8rem] hover:underline"
-                >
+                <Link href="/" className="text-gray-100 px-[0.8rem]  text-sm">
                   Forgot Password?
                 </Link>
               </div>
@@ -118,8 +123,9 @@ const LoginForm = ({ onLogin }) => {
                 <button
                   onClick={() => handleSubmit()}
                   type="submit"
-                  className="bg-[#1383A6] text-white pl-6 pr-6 pt-2 pb-2 rounded-xl font-bold shadow-sm shadow-black active:shadow-none"
+                  className="bg-[#1383A6] flex text-white pl-6 pr-6 pt-2 pb-2 rounded-xl font-bold shadow-md shadow-black active:shadow-none active:translate-y-1"
                 >
+                  {loading ? <GoDot className="mt-2 animate-bounce" /> : null}{" "}
                   Login
                 </button>
               </div>
