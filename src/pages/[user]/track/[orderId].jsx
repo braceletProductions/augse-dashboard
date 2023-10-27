@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import BackButton from "@/components/BackButton";
 import AddressCard from "@/components/AddressCard";
+import Button from "@/components/Button";
 
 const TrackOrder = () => {
   const [order, setOrder] = useState({});
@@ -61,6 +62,43 @@ const TrackOrder = () => {
       downloadLink.download = "invoice.pdf";
       downloadLink.click();
       window.URL.revokeObjectURL(downloadLink.href);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const readyToDispatchHandler = async () => {
+    try {
+      const response = await axios.put(
+        process.env.NEXT_PUBLIC_SERVER_URL +
+          "/orders/orders/readyToDispatch/" +
+          orderId
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const dispatchedHandler = async () => {
+    try {
+      const response = await axios.put(
+        process.env.NEXT_PUBLIC_SERVER_URL +
+          "/orders/orders/dispatched/" +
+          orderId
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const deliveredHandler = async () => {
+    try {
+      const response = await axios.put(
+        process.env.NEXT_PUBLIC_SERVER_URL +
+          "/orders/orders/delivered/" +
+          orderId
+      );
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -166,24 +204,17 @@ const TrackOrder = () => {
               </span>
             </div>
             <div className="text-white flex my-[2rem] justify-center gap-[5rem]">
-              <div
-                className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer shadow-black shadow-sm active:shadow-none"
-                onClick={downloadInvoice}
-              >
-                Invoice
-              </div>
-              <div
-                className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer shadow-black shadow-sm active:shadow-none"
-                onClick={profileHandler}
-              >
-                Profile
-              </div>
-              <div
-                className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer shadow-black shadow-sm active:shadow-none"
-                onClick={trackHandler}
-              >
-                Track
-              </div>
+              <Button text="Invoice" onClick={downloadInvoice} />
+              <Button text="Profile" onClick={profileHandler} />
+              <Button text="Track" onClick={trackHandler} />
+            </div>
+            <div className="text-white flex my-[2rem] justify-center gap-[5rem]">
+              <Button
+                text="Ready To Dispatch"
+                onClick={readyToDispatchHandler}
+              />
+              <Button text="Dispatched" onClick={dispatchedHandler} />
+              <Button text="Delivered" onClick={deliveredHandler} />
             </div>
           </div>
         </div>
