@@ -1,9 +1,42 @@
 import React from "react";
 import Router, { useRouter } from "next/router";
 
-function OrdersChart({ data }) {
+function OrdersChart({
+  length,
+  newOrders,
+  readyToDispatch,
+  dispatched,
+  delivered,
+}) {
   const router = useRouter();
   const { user } = router.query;
+
+  const data = [];
+  for (let i = 0; i < length; i++) {
+    let arr = [];
+    if (newOrders[i]) {
+      arr.push(newOrders[i]);
+    } else {
+      arr.push({});
+    }
+    if (readyToDispatch[i]) {
+      arr.push(readyToDispatch[i]);
+    } else {
+      arr.push({});
+    }
+    if (dispatched[i]) {
+      arr.push(dispatched[i]);
+    } else {
+      arr.push({});
+    }
+    if (delivered[i]) {
+      arr.push(delivered[i]);
+    } else {
+      arr.push({});
+    }
+    console.log(arr);
+    data.push(arr);
+  }
 
   const showOrderDetailHandler = (id) => {
     Router.push({
@@ -26,10 +59,18 @@ function OrdersChart({ data }) {
         {data.map((item, index) => (
           <tr key={index} className="bg-blue-200 text-center">
             <td className="px-4 border-l-2 border-2">{index + 1}</td>
-            <td className="px-4 border-l-2 border-2">{item.userId.name}</td>
-            <td className="px-4 border-l-2 border-2">{item.userId.email}</td>
-            <td className="px-4 border-l-2 border-2">{item._id}</td>
-            <td className="px-4 border-l-2 border-2">{item._id}</td>
+            <td className="px-4 border-l-2 border-2 hover:underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white">
+              {item[0] ? item[0]._id : ""}
+            </td>
+            <td className="px-4 border-l-2 border-2 hover:underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white">
+              {item[1] ? item[1]._id : ""}
+            </td>
+            <td className="px-4 border-l-2 border-2 hover:underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white">
+              {item[2] ? item[2]._id : ""}
+            </td>
+            <td className="px-4 border-l-2 border-2 hover:underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white">
+              {item[3] ? item[3]._id : ""}
+            </td>
           </tr>
         ))}
       </tbody>

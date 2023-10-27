@@ -30,6 +30,22 @@ function chart() {
     fetchOrders();
   }, []);
 
+  const newOrders = orders.filter((data) => data.status == "Order Placed");
+  const readyToDispatch = orders.filter(
+    (data) => data.status == "Ready To Dispatch"
+  );
+  const dispatched = orders.filter((data) => data.status == "Dispatched");
+  const delivered = orders.filter((data) => data.status == "Delivered");
+  const length = Math.max(
+    newOrders.length,
+    Math.max(
+      readyToDispatch.length,
+      Math.max(dispatched.length, delivered.length)
+    )
+  );
+
+  console.log(newOrders, readyToDispatch, dispatched, delivered, length);
+
   return (
     <div className="w-full">
       <div className="max-w-screen-2xl mx-auto">
@@ -41,7 +57,13 @@ function chart() {
             <h1 className="font-bold  text-gray-100 pb-5 text-5xl">
               Orders Chart
             </h1>
-            <OrdersChart data={orders} />
+            <OrdersChart
+              length={length}
+              newOrders={newOrders}
+              readyToDispatch={readyToDispatch}
+              dispatched={dispatched}
+              delivered={delivered}
+            />
           </div>
         </div>
       </div>
