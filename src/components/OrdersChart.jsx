@@ -34,13 +34,13 @@ function OrdersChart({
     } else {
       arr.push({});
     }
-    console.log(arr);
     data.push(arr);
   }
 
-  const showOrderDetailHandler = (id) => {
+  const showOrderDetailHandler = (order) => {
+    if (!order._id) return;
     Router.push({
-      pathname: "/" + user + "/track/" + id,
+      pathname: "/" + user + "/track/" + order._id,
     });
   };
 
@@ -59,17 +59,29 @@ function OrdersChart({
         {data.map((item, index) => (
           <tr key={index} className="bg-blue-200 text-center">
             <td className="px-4 border-l-2 border-2">{index + 1}</td>
-            <td className="px-4 border-l-2 border-2 hover:underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white">
-              {item[0] ? item[0]._id : ""}
+            <td
+              className="px-4 border-l-2 border-2 hover:underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white"
+              onClick={() => showOrderDetailHandler(item[0])}
+            >
+              {item[0] && item[0].userId ? item[0].userId.name : ""}
             </td>
-            <td className="px-4 border-l-2 border-2 hover:underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white">
-              {item[1] ? item[1]._id : ""}
+            <td
+              className="px-4 border-l-2 border-2 hover:underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white"
+              onClick={() => showOrderDetailHandler(item[1])}
+            >
+              {item[1] && item[1].userId ? item[1].userId.name : ""}
             </td>
-            <td className="px-4 border-l-2 border-2 hover:underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white">
-              {item[2] ? item[2]._id : ""}
+            <td
+              className="px-4 border-l-2 border-2 hover:underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white"
+              onClick={() => showOrderDetailHandler(item[2])}
+            >
+              {item[2] && item[2].userId ? item[2].userId.name : ""}
             </td>
-            <td className="px-4 border-l-2 border-2 hover:underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white">
-              {item[3] ? item[3]._id : ""}
+            <td
+              className="px-4 border-l-2 border-2 hover:underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white"
+              onClick={() => showOrderDetailHandler(item[3])}
+            >
+              {item[3] && item[3].userId ? item[3].userId.name : ""}
             </td>
           </tr>
         ))}

@@ -44,8 +44,6 @@ function chart() {
     )
   );
 
-  console.log(newOrders, readyToDispatch, dispatched, delivered, length);
-
   return (
     <div className="w-full">
       <div className="max-w-screen-2xl mx-auto">
