@@ -4,9 +4,11 @@ import axios from "axios";
 import BackButton from "@/components/BackButton";
 import AddressCard from "@/components/AddressCard";
 import Button from "@/components/Button";
+import AWBPopup from "@/components/Awb";
 
 const TrackOrder = () => {
   const [order, setOrder] = useState({});
+  const [openAwbPopUp, setOpenAwbPopUp] = useState(false);
   const router = useRouter();
   const { user, orderId } = router.query;
   const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
@@ -79,29 +81,38 @@ const TrackOrder = () => {
       console.log(error);
     }
   };
-  const dispatchedHandler = async () => {
+
+  const dispatchedHandler = async (awb) => {
     try {
       const response = await axios.put(
         process.env.NEXT_PUBLIC_SERVER_URL +
           "/orders/orders/dispatched/" +
-          orderId
+          orderId,
+        {
+          awb,
+        }
       );
       console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
+
   const deliveredHandler = async () => {
-    try {
-      const response = await axios.put(
-        process.env.NEXT_PUBLIC_SERVER_URL +
-          "/orders/orders/delivered/" +
-          orderId
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const response = await axios.put(
+    //     process.env.NEXT_PUBLIC_SERVER_URL +
+    //       "/orders/orders/delivered/" +
+    //       orderId
+    //   );
+    //   console.log(response.data);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
+
+  const closeAwb = () => {
+    setOpenAwbPopUp(false);
   };
 
   if (order && order.userId)
@@ -111,6 +122,9 @@ const TrackOrder = () => {
           <BackButton />
         </div>
         <div className="max-w-screen-2xl mx-auto p-[1.5rem]">
+          {openAwbPopUp && (
+            <AWBPopup onClose={closeAwb} onSubmit={dispatchedHandler} />
+          )}
           <div className="bg-white min-h-screen rounded-3xl p-[2rem]">
             <div className="text-lg">
               <div className="text-2xl">{order.userId.name}</div>
@@ -213,7 +227,7 @@ const TrackOrder = () => {
                 text="Ready To Dispatch"
                 onClick={readyToDispatchHandler}
               />
-              <Button text="Dispatched" onClick={dispatchedHandler} />
+              <Button text="Dispatched" onClick={() => setOpenAwbPopUp(true)} />
               <Button text="Delivered" onClick={deliveredHandler} />
             </div>
           </div>
