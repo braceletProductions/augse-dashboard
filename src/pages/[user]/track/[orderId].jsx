@@ -126,10 +126,10 @@ const TrackOrder = () => {
             <AWBPopup onClose={closeAwb} onSubmit={dispatchedHandler} />
           )}
           <div className="bg-white min-h-screen rounded-3xl p-[2rem]">
-            <div className="text-lg">
+            <div className="text-lg leading-6">
               <div className="text-2xl">{order.userId.name}</div>
-              <div className="">{order.userId.email}</div>
-              <div className="">{order.userId.phone}</div>
+              <p>{order.userId.email}</p>
+              <p>{order.userId.phone}</p>
               <AddressCard val={order.addressId} />
             </div>
             <div className="lg:flex w-full gap-[2rem] text-xl my-[2rem]">
@@ -211,7 +211,7 @@ const TrackOrder = () => {
             </div>
             <div className="text-center text-2xl">
               Payment Status :
-              <span className="text-green-600">
+              <span className={`text-${[order.payment_successful?"green":"red"]}-600`}>
                 {" "}
                 {order.paymentMode} (
                 {order.payment_successful ? "Successful" : "Failed"})
