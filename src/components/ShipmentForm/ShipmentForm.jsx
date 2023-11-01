@@ -4,7 +4,7 @@ import InputBox from "./InputBox";
 import Dropdown from "./DropDown";
 import DatePicker from "./DatePicker";
 
-const ShipmentForm = () => {
+const ShipmentForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     name: "",
     add: "",
@@ -51,6 +51,11 @@ const ShipmentForm = () => {
       ...prevData,
       order_date: date,
     }));
+  };
+
+  const formSubmitHandler = (event) => {
+    event.preventDefault();
+    onSubmit(formData);
   };
 
   return (
@@ -210,6 +215,7 @@ const ShipmentForm = () => {
           <button
             className="ml-4 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white font-semibold py-2 px-4 rounded-full hover:shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300"
             type="button"
+            onClick={formSubmitHandler}
           >
             Place Dispatch
           </button>

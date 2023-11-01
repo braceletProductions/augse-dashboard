@@ -4,14 +4,12 @@ import axios from "axios";
 import BackButton from "@/components/BackButton";
 import AddressCard from "@/components/AddressCard";
 import Button from "@/components/Button";
-import AWBPopup from "@/components/Awb";
 
 const TrackOrder = () => {
   const [order, setOrder] = useState({});
-  const [openAwbPopUp, setOpenAwbPopUp] = useState(false);
   const router = useRouter();
   const { user, orderId } = router.query;
-  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30;
   const currentTimestamp = Math.floor(
     Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
   );
@@ -82,20 +80,8 @@ const TrackOrder = () => {
     }
   };
 
-  const dispatchedHandler = async (awb) => {
-    try {
-      const response = await axios.put(
-        process.env.NEXT_PUBLIC_SERVER_URL +
-          "/orders/orders/dispatched/" +
-          orderId,
-        {
-          awb,
-        }
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+  const dispatchedHandler = () => {
+    router.push("/" + user + "/orders/dispatch/forward?orderId=" + orderId);
   };
 
   const deliveredHandler = async () => {
@@ -111,10 +97,6 @@ const TrackOrder = () => {
     // }
   };
 
-  const closeAwb = () => {
-    setOpenAwbPopUp(false);
-  };
-
   if (order && order.userId)
     return (
       <div className="w-full font-medium">
@@ -122,9 +104,6 @@ const TrackOrder = () => {
           <BackButton />
         </div>
         <div className="max-w-screen-2xl mx-auto p-[1.5rem]">
-          {openAwbPopUp && (
-            <AWBPopup onClose={closeAwb} onSubmit={dispatchedHandler} />
-          )}
           <div className="bg-white min-h-screen rounded-3xl p-[2rem]">
             <div className="text-lg leading-6">
               <div className="text-2xl">{order.userId.name}</div>
@@ -211,7 +190,11 @@ const TrackOrder = () => {
             </div>
             <div className="text-center text-2xl">
               Payment Status :
-              <span className={`text-${[order.payment_successful?"green":"red"]}-600`}>
+              <span
+                className={`text-${[
+                  order.payment_successful ? "green" : "red",
+                ]}-600`}
+              >
                 {" "}
                 {order.paymentMode} (
                 {order.payment_successful ? "Successful" : "Failed"})
@@ -227,7 +210,7 @@ const TrackOrder = () => {
                 text="Ready To Dispatch"
                 onClick={readyToDispatchHandler}
               />
-              <Button text="Dispatched" onClick={() => setOpenAwbPopUp(true)} />
+              <Button text="Dispatched" onClick={dispatchedHandler} />
               <Button text="Delivered" onClick={deliveredHandler} />
             </div>
           </div>
