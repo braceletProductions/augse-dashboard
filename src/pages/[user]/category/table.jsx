@@ -15,7 +15,12 @@ function table() {
     const fetchCategory = async () => {
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/category/category"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/category/category",
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         setCategoryData(res.data.category);
       } catch (error) {

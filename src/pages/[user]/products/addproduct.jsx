@@ -72,7 +72,12 @@ function addproduct() {
         );
         setTagsOptions(res.data.tags);
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/category/category"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/category/category",
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         setCategory(response.data.category);
       } catch (error) {

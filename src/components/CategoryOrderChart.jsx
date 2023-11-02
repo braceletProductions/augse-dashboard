@@ -9,11 +9,21 @@ function CategoryOrderChart() {
   const startDateRef = useRef();
   const endDateRef = useRef();
 
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const currentTimestamp = Math.floor(
+    Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
+  );
+
   useEffect(() => {
     const fetchCategoryData = async () => {
       try {
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/sales/daily/category"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/sales/daily/category",
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         if (response.data.sales) setCategoryCounts(response.data.sales);
       } catch (error) {}
@@ -63,7 +73,12 @@ function CategoryOrderChart() {
           minDate +
           "/" +
           maxDate +
-          "/category"
+          "/category",
+        {
+          params: {
+            timestamp: currentTimestamp,
+          },
+        }
       );
       setCategoryCounts(res.data.sales);
     } catch (error) {}

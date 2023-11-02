@@ -7,6 +7,11 @@ const SalesDateRangeForm = () => {
   const [sales, setSales] = useState(0);
   const [gst, setGst] = useState(0);
 
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const currentTimestamp = Math.floor(
+    Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
+  );
+
   const handleRangeChange = (e) => {
     setSelectedRange(e.target.value);
   };
@@ -14,7 +19,12 @@ const SalesDateRangeForm = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        process.env.NEXT_PUBLIC_SERVER_URL + "/sales/sales/" + selectedRange
+        process.env.NEXT_PUBLIC_SERVER_URL + "/sales/sales/" + selectedRange,
+        {
+          params: {
+            timestamp: currentTimestamp,
+          },
+        }
       );
       setSales(response.data.totalSales);
       setGst(response.data.totalGst);

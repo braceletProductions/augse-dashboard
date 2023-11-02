@@ -59,15 +59,30 @@ function updateProduct() {
   const offeredValueRef = useRef();
   const detailRef = useRef();
 
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const currentTimestamp = Math.floor(
+    Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
+  );
+
   useEffect(() => {
     const fetchDetails = async () => {
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/tags/tags"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/tags/tags",
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         setTagsOptions(res.data.tags);
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/category/category"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/category/category",
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         setCategory(response.data.category);
       } catch (error) {
@@ -81,7 +96,12 @@ function updateProduct() {
     const fetchDetails = async () => {
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/products/product/" + productId
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/product/" + productId,
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         nameRef.current.value = res.data.productName;
         descriptionRef.current.value = res.data.shortDescription;
