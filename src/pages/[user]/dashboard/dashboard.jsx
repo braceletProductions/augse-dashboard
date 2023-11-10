@@ -231,10 +231,8 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <div>
-        <Header />
-      </div>
+    <div className="flex flex-col max-w-screen-2xl mx-auto min-h-screen">
+      <Header />
       <div className="flex-grow  lg:flex lg:mt-5 ">
         <Sidebar />
         <div className="flex-grow flex flex-col pl-4 pr-4  lg:w-3/4">

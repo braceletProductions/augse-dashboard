@@ -1,5 +1,5 @@
 import Sidebar from "@/components/Sidebar";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import { useSelector } from "react-redux";
 import Router, { useRouter } from "next/router";
+import Header from "@/components/Header";
 
 ChartJS.register(
   Title,
@@ -102,41 +103,42 @@ const Categories = () => {
   };
 
   return (
-    <div className="flex mt-5">
-      <Sidebar />
-
-      <div className="flex flex-grow bg-gray-100 ml-2 rounded-2xl pr-10 pl-10 pt-10">
-        <div className="w-full p-10">
-          <h1
-            className="text-4xl font-semibold"
-            style={{ color: "rgb(27,21,121)" }}
-          >
-            Categories
-          </h1>
-
-          <div className="md:flex md:justify-between mt-10 ">
-            <div
-              className="text-2xl md:w-1/2 min-w-[100px] max-w-[600px] min-h-[100px] max-h-[400px] overflow-auto md:mr-2 p-10"
-              style={{ color: "rgb(27,21,172)" }}
+    <Fragment>
+      <Header />
+      <div className="flex mt-5">
+        <Sidebar />
+        <div className="flex flex-grow bg-gray-100 ml-2 rounded-2xl pr-10 pl-10 pt-10">
+          <div className="w-full p-10">
+            <h1
+              className="text-4xl font-semibold"
+              style={{ color: "rgb(27,21,121)" }}
             >
-              {[...categoryCountsMap.keys()].map((name) => (
-                <p
-                  key={name}
-                  className="mb-2 cursor-pointer hover:underline"
-                  onClick={() => openCategoryPage(name)}
-                >
-                  {name} ({categoryCountsMap.get(name)})
-                </p>
-              ))}
-            </div>
+              Categories
+            </h1>
+            <div className="md:flex md:justify-between mt-10 ">
+              <div
+                className="text-2xl md:w-1/2 min-w-[100px] max-w-[600px] min-h-[100px] max-h-[400px] overflow-auto md:mr-2 p-10"
+                style={{ color: "rgb(27,21,172)" }}
+              >
+                {[...categoryCountsMap.keys()].map((name) => (
+                  <p
+                    key={name}
+                    className="mb-2 cursor-pointer hover:underline"
+                    onClick={() => openCategoryPage(name)}
+                  >
+                    {name} ({categoryCountsMap.get(name)})
+                  </p>
+                ))}
+              </div>
 
-            <div className="md:w-1/2 md:mr-20  md:mt-0 ml-0  text-blue-400  rounded-xl h-[22rem] p-2">
-              <Pie data={pieChartData} options={pieChartOptions} />
+              <div className="md:w-1/2 md:mr-20  md:mt-0 ml-0  text-blue-400  rounded-xl h-[22rem] p-2">
+                <Pie data={pieChartData} options={pieChartOptions} />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 };
 

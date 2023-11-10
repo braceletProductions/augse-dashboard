@@ -6,8 +6,12 @@ import {
   AiOutlineUser,
   AiOutlineMenu,
 } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { toggleSidebar } from "../../store/slices/ui";
 
 const Header = () => {
+  const dispatch = useDispatch();
+
   return (
     <div className="  top-0 right-0 left-0 z-30 p-2">
       <header className="flex justify-end items-center">
@@ -16,7 +20,12 @@ const Header = () => {
           <AiOutlineBell className="text-white text-xl cursor-pointer" />
           <AiOutlineSetting className="text-white text-xl cursor-pointer" />
           <AiOutlineUser className="text-white text-xl cursor-pointer" />
-          <AiOutlineMenu className="text-white text-2xl cursor-pointer block lg:hidden" />
+          <AiOutlineMenu
+            className="text-white text-2xl cursor-pointer block lg:hidden"
+            onClick={() => {
+              dispatch(toggleSidebar());
+            }}
+          />
         </div>
       </header>
     </div>
