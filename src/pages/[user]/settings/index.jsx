@@ -1,5 +1,6 @@
 import React from "react";
 import BackButton from "@/components/BackButton";
+import SettingsChart from "@/components/Settings/SettingsChart";
 
 function index() {
   return (
@@ -12,9 +13,7 @@ function index() {
           </h1>
           <div />
         </div>
-        <div className="bg-white min-h-screen rounded-3xl p-6">
-          Inner content
-        </div>
+        <SettingsChart />
       </div>
     </div>
   );
