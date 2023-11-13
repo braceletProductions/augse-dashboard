@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 const SpecialCouponForm = () => {
@@ -18,9 +19,25 @@ const SpecialCouponForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    try {
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_SERVER_URL + "/rewards/add/coupon/special",
+        formData
+      );
+      console.log(response.data);
+      setFormData({
+        code: "",
+        discountPercentage: "",
+        description: "",
+        expiryDate: "",
+        minPrice: "",
+        otherValidations: [],
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
