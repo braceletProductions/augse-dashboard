@@ -19,8 +19,17 @@ const UserForm = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        process.env.NEXT_PUBLIC_SERVER_URL + ""
+        process.env.NEXT_PUBLIC_SERVER_URL + "/user/employee/register",
+        formData
       );
+      console.log(response);
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        password: "",
+        adminType: "",
+      });
     } catch (error) {
       console.log(error);
     }
