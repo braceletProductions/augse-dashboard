@@ -63,25 +63,25 @@ function OrdersChart({
               className="px-4 border-l-2 border-2 hover:underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white"
               onClick={() => showOrderDetailHandler(item[0])}
             >
-              {item[0] && item[0].userId ? item[0].userId.name : ""}
+              {item[0] && item[0].userId ? item[0].userId.email : ""}
             </td>
             <td
               className="px-4 border-l-2 border-2 hover:underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white"
               onClick={() => showOrderDetailHandler(item[1])}
             >
-              {item[1] && item[1].userId ? item[1].userId.name : ""}
+              {item[1] && item[1].userId ? item[1].userId.email : ""}
             </td>
             <td
               className="px-4 border-l-2 border-2 hover:underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white"
               onClick={() => showOrderDetailHandler(item[2])}
             >
-              {item[2] && item[2].userId ? item[2].userId.name : ""}
+              {item[2] && item[2].userId ? item[2].userId.email : ""}
             </td>
             <td
               className="px-4 border-l-2 border-2 hover:underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white"
               onClick={() => showOrderDetailHandler(item[3])}
             >
-              {item[3] && item[3].userId ? item[3].userId.name : ""}
+              {item[3] && item[3].userId ? item[3].userId.email : ""}
             </td>
           </tr>
         ))}
