@@ -62,13 +62,13 @@ const SalesDateRangeForm = () => {
       >
         Search
       </button>
-      <button className="bg-gray-100 w-full lg:w-[15rem] rounded-full py-2 mt-3">
+      <button className="bg-gray-100 text-black w-full lg:w-[15rem] rounded-full py-2 mt-3">
         Amount: {formatToINR(sales + gst)}
       </button>
-      <button className="bg-gray-100 w-full lg:w-[15rem] rounded-full py-2">
+      <button className="bg-gray-100 text-black w-full lg:w-[15rem] rounded-full py-2">
         GST: {formatToINR(gst)}
       </button>
-      <button className="bg-gray-100 w-full lg:w-[15rem] rounded-full py-2">
+      <button className="bg-gray-100 text-black w-full lg:w-[15rem] rounded-full py-2">
         Total Revenue: {formatToINR(sales)}
       </button>
     </div>
