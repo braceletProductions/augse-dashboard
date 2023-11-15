@@ -24,6 +24,10 @@ body {
   background: rgb(34, 86, 141);
 }
 
+input {
+  color: black;
+}
+
 .link {
   letter-spacing: 0.1em;
   width: full;
