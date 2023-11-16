@@ -3,6 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import BackButton from "@/components/BackButton";
 import AddressCard from "@/components/AddressCard";
+import LoadingSpinner from "@/components/LoadingSpnner";
 
 const CustomerDetailPage = () => {
   const [customer, setCustomer] = useState({});
@@ -43,7 +44,7 @@ const CustomerDetailPage = () => {
   }, [customerId]);
 
   if (!customer.address) {
-    return <div>Customer not found</div>;
+    return <LoadingSpinner />;
   }
 
   const coinsAndCoupons = {
@@ -68,7 +69,7 @@ const CustomerDetailPage = () => {
           ))}
         </div>
         {/* Right side */}
-        <div className="  lg:block w-1/3 pt-10  ">
+        <div className="lg:block lg:w-1/3 pt-10">
           {/* Render dynamic order details */}
 
           <div className="text-black mt-6  ">
@@ -78,7 +79,6 @@ const CustomerDetailPage = () => {
             <p className="text-blue-400 pb-5">
               Total Order placed: {customer.orders.length}
             </p>
-
             <p className="text-blue-400 pb-5">Canceled Orders: {cancel}</p>
             <p className="text-blue-400 pb-5">Return Orders: {returned}</p>
           </div>

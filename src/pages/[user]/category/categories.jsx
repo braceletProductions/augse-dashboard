@@ -105,21 +105,15 @@ const Categories = () => {
   return (
     <Fragment>
       <Header />
-      <div className="flex mt-5">
+      <div className="flex max-xl:flex-col mt-5">
         <Sidebar />
-        <div className="flex flex-grow bg-gray-100 ml-2 rounded-2xl pr-10 pl-10 pt-10">
-          <div className="w-full p-10">
-            <h1
-              className="text-4xl font-semibold"
-              style={{ color: "rgb(27,21,121)" }}
-            >
+        <div className="flex flex-grow bg-gray-100 mx-2 rounded-2xl lg:px-10 lg:pt-10">
+          <div className="w-full">
+            <h1 className="text-4xl lg:p-10 p-5 font-semibold text-blue-800">
               Categories
             </h1>
-            <div className="md:flex md:justify-between mt-10 ">
-              <div
-                className="text-2xl md:w-1/2 min-w-[100px] max-w-[600px] min-h-[100px] max-h-[400px] overflow-auto md:mr-2 p-10"
-                style={{ color: "rgb(27,21,172)" }}
-              >
+            <div className="md:flex md:justify-between">
+              <div className="lg:text-2xl text-xl md:w-1/2 min-w-[100px] max-w-[600px] min-h-[100px] max-h-[400px] overflow-auto md:mr-2 lg:px-10 px-5 lg:py-5 text-blue-900">
                 {[...categoryCountsMap.keys()].map((name) => (
                   <p
                     key={name}
@@ -131,7 +125,7 @@ const Categories = () => {
                 ))}
               </div>
 
-              <div className="md:w-1/2 md:mr-20  md:mt-0 ml-0  text-blue-400  rounded-xl h-[22rem] p-2">
+              <div className="md:w-1/2 md:mr-20 md:mt-0 ml-0 text-blue-400 rounded-xl h-[22rem] p-2">
                 <Pie data={pieChartData} options={pieChartOptions} />
               </div>
             </div>

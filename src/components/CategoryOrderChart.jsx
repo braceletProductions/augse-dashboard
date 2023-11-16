@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Bar } from "react-chartjs-2";
-import { AiOutlineSearch } from "react-icons/ai";
 
 function CategoryOrderChart() {
   const [categoryCounts, setCategoryCounts] = useState([]);
@@ -86,7 +85,7 @@ function CategoryOrderChart() {
 
   return (
     <div
-      className="mx-auto my-8 rounded-md mt-6 ml-5 p-5 text-center max-h-[20rem] flex gap-[5rem] items-center"
+      className="mx-auto my-8 rounded-md mt-6 ml-5 lg:p-5 text-center lg:max-h-[20rem] flex max-lg:flex-col gap-[5rem] items-center"
       style={{
         width: "80%",
       }}
