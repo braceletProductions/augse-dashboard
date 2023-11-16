@@ -57,6 +57,8 @@ function updateProduct() {
   const cancelOrderRef = useRef();
   const mrpRef = useRef();
   const offeredValueRef = useRef();
+  const hsnRef = useRef();
+  const keywordRef = useRef();
   const detailRef = useRef();
 
   const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
@@ -116,6 +118,8 @@ function updateProduct() {
         cancelOrderRef.current.value = res.data.isCancelAble;
         mrpRef.current.value = res.data.mrp;
         offeredValueRef.current.value = res.data.offeredPrice;
+        hsnRef.current.value = res.data.hsn;
+        keywordRef.current.value = res.data.keywords;
         detailRef.current.value = res.data.detailedDescription;
         setMainImageUrl(res.data.mainImage);
         if (res.data.otherImages) {
@@ -258,6 +262,8 @@ function updateProduct() {
     formData.append("isCancelAble", cancelOrderRef.current.value);
     formData.append("mrp", mrpRef.current.value);
     formData.append("offeredPrice", offeredValueRef.current.value);
+    formData.append("hsn", hsnRef.current.value);
+    formData.append("keywords", keywordRef.current.value);
     formData.append("detailedDescription", detailRef.current.value);
     formData.append("mainImage", mainImagePath);
     formData.append("firstImage", firstImagePath);
@@ -498,6 +504,24 @@ function updateProduct() {
                 <input
                   type="text"
                   ref={offeredValueRef}
+                  className="border-b-2 border-[#4379a0]"
+                />
+              </div>
+            </div>
+            <div className="lg:flex mt-[0.7rem]">
+              <div className="lg:w-[50%]">
+                <div className="text-lg ml-[1rem] my-[0.5rem]">HSN Code</div>
+                <input
+                  type="text"
+                  ref={hsnRef}
+                  className="border-b-2 border-[#4379a0]"
+                />
+              </div>
+              <div className="w-[50%]">
+                <div className="text-lg ml-[1rem] my-[0.5rem]">Keywords</div>
+                <input
+                  type="text"
+                  ref={keywordRef}
                   className="border-b-2 border-[#4379a0]"
                 />
               </div>
