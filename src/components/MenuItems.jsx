@@ -31,7 +31,7 @@ const MenuItems = (props) => {
   const { user } = router.query;
 
   return (
-    <div className="flex-grow flex flex-col pl-4 pr-4 mb-[1rem] lg:w-full">
+    <div className="flex-grow flex flex-col mb-[1rem] lg:w-full">
       <div className="bg-gray-100 rounded-3xl py-[0.5rem] px-[2rem] xl:flex xl:flex-row sm:grid xl:justify-between gap-[1rem] sm:grid-cols-2 flex flex-col justify-center items-center">
         {menuItems.map((item, index) => (
           <Link

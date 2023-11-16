@@ -38,7 +38,7 @@ const SalesDateRangeForm = () => {
   }, []);
 
   return (
-    <div className="flex w-[20rem] lg:w-[30rem] flex-col items-center gap-4">
+    <div className="flex w-[20rem] lg:w-[30rem] flex-col items-center mx-auto gap-4">
       <div className="flex items-center">
         <label className="text-sm font-semibold mr-2 text-white">
           Date Range:

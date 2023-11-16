@@ -233,11 +233,11 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col max-w-screen-2xl mx-auto min-h-screen">
       <Header />
-      <div className="flex-grow  lg:flex lg:mt-5 ">
+      <div className="flex-grow lg:flex lg:mt-5">
         <Sidebar />
-        <div className="flex-grow flex flex-col pl-4 pr-4  lg:w-3/4">
+        <div className="flex-grow flex flex-col px-4 lg:w-3/4">
           <MenuItems orders={orders} users={users} products={products} />
-          <div className="flex gap-9 flex-grow  flex-col lg:flex-row">
+          <div className="flex gap-4 flex-grow flex-col lg:flex-row">
             <div className="bg-gray-100 lg:w-1/2 overflow-y-scroll rounded-2xl lg:h-[18rem] pt-1 pl-5 pr-5 mb-2 lg:mb-0 overflow-hidden relative">
               <div className="flex justify-between items-center mb-3 lg:mb-4">
                 <h1 className="font-semibold text-gray-700 text-[1.25rem]">
@@ -271,7 +271,7 @@ const Dashboard = () => {
             </div>
 
             <div className="bg-gray-100 w-1/2 lg:h-[18rem] rounded-2xl mb-2 lg:mb-0">
-              <div className="flex justify-center items-center h-full">
+              <div className="flex justify-center items-center h-full bg-white min-w-[22rem] rounded-lg">
                 <Doughnut
                   data={doughnutChartData}
                   options={doughnutChartOptions}
@@ -279,8 +279,8 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="lg:flex flex-grow gap-2 lg:gap-9 lg:w-full lg:flex-row">
-            <div className="flex gap-[4rem] px-[1.5rem] bg-white w-4/5 rounded-2xl lg:h-72 mb-1 lg:mb-0">
+          <div className="lg:flex flex-grow gap-2 lg:gap-9 my-2 lg:w-full lg:flex-row">
+            <div className="lg:flex gap-[4rem] px-[1.5rem] bg-white lg:w-4/5 rounded-2xl lg:h-72 mb-1 lg:mb-0">
               <form>
                 <label
                   htmlFor="yearSelect"
@@ -293,7 +293,7 @@ const Dashboard = () => {
                   name="year"
                   value={year}
                   onChange={handleYearChange}
-                  className="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                  className="block w-32 mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                 >
                   {yearOptions.map((year) => (
                     <option key={year} value={year}>
