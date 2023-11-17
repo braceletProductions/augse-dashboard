@@ -95,7 +95,7 @@ const Sidebar = () => {
           </li>
           <li className="mb-6 lg:mb-5">
             <a
-              href={`/${user}/dashboard/dashboard`}
+              href={`/${user}/payment`}
               className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
             >
               Payment
