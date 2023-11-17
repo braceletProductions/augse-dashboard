@@ -28,7 +28,39 @@ function index() {
     setFilteredOrders(orders);
   }, [orders]);
 
-  const downloadPdf = () => {
+  useEffect(() => {
+    const currentDate = new Date();
+
+    const filteredOrders = orders.filter((order) => {
+      const orderDate = new Date(order.createdAt);
+
+      switch (selectedPeriod) {
+        case "thisMonth":
+          return (
+            orderDate.getFullYear() === currentDate.getFullYear() &&
+            orderDate.getMonth() === currentDate.getMonth()
+          );
+        case "threeMonths":
+          const threeMonthsAgo = new Date();
+          threeMonthsAgo.setMonth(currentDate.getMonth() - 3);
+          return orderDate >= threeMonthsAgo;
+        case "sixMonths":
+          const sixMonthsAgo = new Date();
+          sixMonthsAgo.setMonth(currentDate.getMonth() - 6);
+          return orderDate >= sixMonthsAgo;
+        case "oneYear":
+          const oneYearAgo = new Date();
+          oneYearAgo.setFullYear(currentDate.getFullYear() - 1);
+          return orderDate >= oneYearAgo;
+        default:
+          return true;
+      }
+    });
+
+    setFilteredOrders(filteredOrders);
+  }, [orders, selectedPeriod]);
+
+  const downloadPdf = async () => {
     setIsDownloading(true);
   };
 
