@@ -62,6 +62,10 @@ function index() {
 
   const downloadPdf = async () => {
     setIsDownloading(true);
+    window.print();
+    setTimeout(() => {
+      setIsDownloading(false);
+    }, 1000);
   };
 
   if (filteredOrders.length === 0) return <NoOrder />;
