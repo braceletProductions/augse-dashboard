@@ -488,7 +488,7 @@ function updateProduct() {
                 </select>
               </div>
             </div>
-            <div className="lg:flex mt-[0.8rem]">
+            <div className="lg:flex mt-[0.5rem]">
               <div className="lg:w-[50%]">
                 <div className="text-lg ml-[1rem] my-[0.5rem]">MRP</div>
                 <input
@@ -508,7 +508,7 @@ function updateProduct() {
                 />
               </div>
             </div>
-            <div className="lg:flex mt-[0.7rem]">
+            <div className="lg:flex mt-[0.5rem]">
               <div className="lg:w-[50%]">
                 <div className="text-lg ml-[1rem] my-[0.5rem]">HSN Code</div>
                 <input
@@ -526,7 +526,7 @@ function updateProduct() {
                 />
               </div>
             </div>
-            <div className="flex flex-col mt-[0.8rem]">
+            <div className="flex flex-col mt-[0.5rem]">
               <div className="text-lg ml-[1rem] my-[0.5rem]">
                 Product's other images
               </div>
@@ -546,12 +546,12 @@ function updateProduct() {
               </div>
             </div>
             <div className="flex flex-col">
-              <div className="text-lg ml-[1rem] my-[0.8rem]">
+              <div className="text-lg ml-[1rem] my-[0.5rem]">
                 Detailed description of product
               </div>
               <textarea
                 className="border-2 border-[#4379a0]"
-                rows="5"
+                rows="3"
                 ref={detailRef}
                 cols="30"
               />
