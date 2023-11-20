@@ -132,7 +132,7 @@ function updateProduct() {
       }
     };
     if (productId) fetchDetails();
-  }, [productId]);
+  }, [productId, category]);
 
   const mainImageHandler = (file) => {
     setMainImageFile(file);
