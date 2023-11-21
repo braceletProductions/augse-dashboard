@@ -208,7 +208,7 @@ function addproduct() {
   return (
     <div className="flex flex-col min-h-screen mt-[4rem]">
       {isLoading && (
-        <div className="absolute z-50 bg-[rgba(34,84,114,0.2)] w-full">
+        <div className="absolute z-50 top-0 bg-[rgba(34,84,114,0.2)] w-full">
           <LoadingSpinner />
         </div>
       )}
