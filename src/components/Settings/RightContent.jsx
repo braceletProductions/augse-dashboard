@@ -1,7 +1,6 @@
 import React from "react";
 import SpecialCouponForm from "./SpecialCouponForm";
 import CouponTable from "./CouponTable";
-import CreateEmployee from "./CreateEmployee";
 
 function RightContent() {
   return (
@@ -11,7 +10,6 @@ function RightContent() {
         <CouponTable />
       </div>
       <SpecialCouponForm />
-      <CreateEmployee />
     </div>
   );
 }
