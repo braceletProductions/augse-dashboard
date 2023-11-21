@@ -62,7 +62,9 @@ function index() {
 
   const downloadPdf = async () => {
     setIsDownloading(true);
-    window.print();
+    setTimeout(() => {
+      window.print();
+    }, 500);
     setTimeout(() => {
       setIsDownloading(false);
     }, 1000);
@@ -73,7 +75,7 @@ function index() {
   return (
     <div className="w-full">
       <div className="max-w-screen-2xl mx-auto p-4">
-        <BackButton />
+        {!isDownloading && <BackButton />}
         <div className="my-4 flex justify-between px-4">
           <div className="flex gap-4">
             <label htmlFor="period" className="text-white text-2xl">
@@ -94,7 +96,12 @@ function index() {
               </option>
             </select>
           </div>
-          <DownloadButton isDownloading={isDownloading} onClick={downloadPdf} />
+          {!isDownloading && (
+            <DownloadButton
+              isDownloading={isDownloading}
+              onClick={downloadPdf}
+            />
+          )}
         </div>
         <div className="my-4">
           <PaymentTable

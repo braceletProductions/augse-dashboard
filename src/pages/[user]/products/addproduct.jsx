@@ -5,6 +5,7 @@ import Sidebar from "@/components/Sidebar";
 import ImageUpload from "@/components/ImageUpload";
 import Backdrop from "@/components/Backdrop";
 import AddAttributes from "@/components/AddAttributes";
+import LoadingSpinner from "@/components/LoadingSpnner";
 
 const sizeData = [
   { id: 1, name: "N/A", value: null },
@@ -31,6 +32,7 @@ const helperData = [
 function addproduct() {
   const router = useRouter();
   const { user } = router.query;
+  const [isLoading, setIsLoading] = useState(false);
   const [showTags, setShowTags] = useState(false);
   const [showAddTags, setShowAddTags] = useState(false);
   const [showAddCategory, setShowAddCategory] = useState(false);
@@ -123,6 +125,7 @@ function addproduct() {
     ) {
       return;
     }
+    setIsLoading(true);
     const mainformData = new FormData();
     mainformData.append("image", mainImageFile);
     let mainImagePath;
@@ -195,6 +198,7 @@ function addproduct() {
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   };
 
   const toggleShowtags = () => {
@@ -203,6 +207,11 @@ function addproduct() {
 
   return (
     <div className="flex flex-col min-h-screen mt-[4rem]">
+      {isLoading && (
+        <div className="absolute z-50 bg-[rgba(34,84,114,0.2)] w-full">
+          <LoadingSpinner />
+        </div>
+      )}
       <div className="flex-grow lg:flex lg:mt-5 ">
         <Sidebar />
         <div className="md:flex w-full lg:h-[40rem] lg:mx-[3rem] md:my-[0] my-[2rem] gap-[2%]">
