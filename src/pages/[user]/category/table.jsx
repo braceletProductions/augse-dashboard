@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import BackButton from "@/components/BackButton";
+import LoadingSpinner from "@/components/LoadingSpnner";
 
 function table() {
   const [categoryData, setCategoryData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [category, setCategory] = useState([]);
 
   const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
@@ -13,9 +15,15 @@ function table() {
 
   useEffect(() => {
     const fetchCategory = async () => {
+      setIsLoading(true);
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/category/category"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/category/category",
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         setCategoryData(res.data.category);
       } catch (error) {
@@ -28,6 +36,7 @@ function table() {
   useEffect(() => {
     let res = [];
     const fetchProducts = async () => {
+      setIsLoading(true);
       try {
         for (let i = 0; i < categoryData.length; i++) {
           const response = await axios.get(
@@ -46,9 +55,12 @@ function table() {
       } catch (error) {
         console.log(error);
       }
+      setIsLoading(false);
     };
     fetchProducts();
   }, [categoryData]);
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="w-full">

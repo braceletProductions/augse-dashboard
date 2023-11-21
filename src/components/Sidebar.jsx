@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import logo from "../../public/logo.png";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 const optionsProducts = [
   { label: "Add Product", link: "/products/addproduct" },
@@ -14,13 +15,18 @@ const Sidebar = () => {
   const [productOptions, setProductsOptions] = useState(false);
   const router = useRouter();
   const { user } = router.query;
+  const showSidebar = useSelector((state) => state.ui.sidebar);
 
   const showProductsOptions = () => {
     setProductsOptions((prev) => !prev);
   };
 
   return (
-    <div className="min-h-screen sm:w-1/5 w-[10rem]  lg:w-2/12 bg-gray-100 flex flex-col lg:flex-row lg:flex-col  text-center">
+    <div
+      className={`min-h-screen sm:w-1/5 w-[10rem] lg:w-2/12 bg-gray-100 flex flex-col lg:flex-col text-center ${
+        showSidebar ? "" : "max-lg:hidden"
+      }`}
+    >
       <div>
         <div className=" lg:p-1 w-full  h-28  flex justify-center align-items  items-center">
           <a href={`/${user}/dashboard/dashboard`}>
@@ -89,7 +95,7 @@ const Sidebar = () => {
           </li>
           <li className="mb-6 lg:mb-5">
             <a
-              href={`/${user}/dashboard/dashboard`}
+              href={`/${user}/payment`}
               className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
             >
               Payment

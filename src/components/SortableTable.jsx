@@ -115,7 +115,13 @@ function SortableTable({ data }) {
             </td>
             <td className="px-4 border-l-2 border-2">{item.paymentMode}</td>
             <td className="px-4 border-l-2 border-2">
-              {item.payment_successful ? "Successful" : "Pending"}
+              {item.payment_successful
+                ? "Successful"
+                : `${
+                    item.paymentMode == "Cash On Delivery"
+                      ? "Pending"
+                      : "Failed"
+                  }`}
             </td>
             <td
               className="px-4 border-l-2 border-2 underline text-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white"

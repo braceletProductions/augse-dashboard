@@ -7,6 +7,11 @@ const SalesDateRangeForm = () => {
   const [sales, setSales] = useState(0);
   const [gst, setGst] = useState(0);
 
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const currentTimestamp = Math.floor(
+    Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
+  );
+
   const handleRangeChange = (e) => {
     setSelectedRange(e.target.value);
   };
@@ -14,7 +19,12 @@ const SalesDateRangeForm = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        process.env.NEXT_PUBLIC_SERVER_URL + "/sales/sales/" + selectedRange
+        process.env.NEXT_PUBLIC_SERVER_URL + "/sales/sales/" + selectedRange,
+        {
+          params: {
+            timestamp: currentTimestamp,
+          },
+        }
       );
       setSales(response.data.totalSales);
       setGst(response.data.totalGst);
@@ -28,7 +38,7 @@ const SalesDateRangeForm = () => {
   }, []);
 
   return (
-    <div className="flex w-[20rem] lg:w-[30rem] flex-col items-center gap-4">
+    <div className="flex w-[20rem] lg:w-[30rem] flex-col items-center mx-auto gap-4">
       <div className="flex items-center">
         <label className="text-sm font-semibold mr-2 text-white">
           Date Range:
@@ -52,13 +62,13 @@ const SalesDateRangeForm = () => {
       >
         Search
       </button>
-      <button className="bg-gray-100 w-full lg:w-[15rem] rounded-full py-2 mt-3">
+      <button className="bg-gray-100 text-black w-full lg:w-[15rem] rounded-full py-2 mt-3">
         Amount: {formatToINR(sales + gst)}
       </button>
-      <button className="bg-gray-100 w-full lg:w-[15rem] rounded-full py-2">
+      <button className="bg-gray-100 text-black w-full lg:w-[15rem] rounded-full py-2">
         GST: {formatToINR(gst)}
       </button>
-      <button className="bg-gray-100 w-full lg:w-[15rem] rounded-full py-2">
+      <button className="bg-gray-100 text-black w-full lg:w-[15rem] rounded-full py-2">
         Total Revenue: {formatToINR(sales)}
       </button>
     </div>

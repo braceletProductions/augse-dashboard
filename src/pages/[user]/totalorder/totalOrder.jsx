@@ -1,14 +1,13 @@
 import React from "react";
-// import OrderCard from "@/components/OrderCard";
 import BackButton from "@/components/BackButton";
 import { useSelector } from "react-redux";
 import SortableTable from "@/components/SortableTable";
+import NoOrder from "@/components/NoOrder";
 
 const totalOrder = () => {
   const orders = useSelector((state) => state.orders.totalOrders);
 
-  if (orders.length === 0)
-    return <div className="text-center">No order found</div>;
+  if (orders.length === 0) return <NoOrder />;
 
   return (
     <div className="w-full">

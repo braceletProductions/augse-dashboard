@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import BackButton from "@/components/BackButton";
 import AddressCard from "@/components/AddressCard";
+import Button from "@/components/Button";
 
 const TrackOrder = () => {
   const [order, setOrder] = useState({});
   const router = useRouter();
   const { user, orderId } = router.query;
-  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30;
   const currentTimestamp = Math.floor(
     Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
   );
@@ -66,6 +67,36 @@ const TrackOrder = () => {
     }
   };
 
+  const readyToDispatchHandler = async () => {
+    try {
+      const response = await axios.put(
+        process.env.NEXT_PUBLIC_SERVER_URL +
+          "/orders/orders/readyToDispatch/" +
+          orderId
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const dispatchedHandler = () => {
+    router.push("/" + user + "/orders/dispatch/forward?orderId=" + orderId);
+  };
+
+  const deliveredHandler = async () => {
+    // try {
+    //   const response = await axios.put(
+    //     process.env.NEXT_PUBLIC_SERVER_URL +
+    //       "/orders/orders/delivered/" +
+    //       orderId
+    //   );
+    //   console.log(response.data);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
+
   if (order && order.userId)
     return (
       <div className="w-full font-medium">
@@ -74,10 +105,10 @@ const TrackOrder = () => {
         </div>
         <div className="max-w-screen-2xl mx-auto p-[1.5rem]">
           <div className="bg-white min-h-screen rounded-3xl p-[2rem]">
-            <div className="text-lg">
+            <div className="text-lg leading-6">
               <div className="text-2xl">{order.userId.name}</div>
-              <div className="">{order.userId.email}</div>
-              <div className="">{order.userId.phone}</div>
+              <p>{order.userId.email}</p>
+              <p>{order.userId.phone}</p>
               <AddressCard val={order.addressId} />
             </div>
             <div className="lg:flex w-full gap-[2rem] text-xl my-[2rem]">
@@ -159,31 +190,28 @@ const TrackOrder = () => {
             </div>
             <div className="text-center text-2xl">
               Payment Status :
-              <span className="text-green-600">
+              <span
+                className={`text-${[
+                  order.payment_successful ? "green" : "red",
+                ]}-600`}
+              >
                 {" "}
                 {order.paymentMode} (
-                {order.payment_successful ? "Successful" : "Pending"})
+                {order.payment_successful ? "Successful" : "Failed"})
               </span>
             </div>
             <div className="text-white flex my-[2rem] justify-center gap-[5rem]">
-              <div
-                className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer shadow-black shadow-sm active:shadow-none"
-                onClick={downloadInvoice}
-              >
-                Invoice
-              </div>
-              <div
-                className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer shadow-black shadow-sm active:shadow-none"
-                onClick={profileHandler}
-              >
-                Profile
-              </div>
-              <div
-                className="px-[1rem] py-[0.4rem] bg-blue-500 cursor-pointer shadow-black shadow-sm active:shadow-none"
-                onClick={trackHandler}
-              >
-                Track
-              </div>
+              <Button text="Invoice" onClick={downloadInvoice} />
+              <Button text="Profile" onClick={profileHandler} />
+              <Button text="Track" onClick={trackHandler} />
+            </div>
+            <div className="text-white flex my-[2rem] justify-center gap-[5rem]">
+              <Button
+                text="Ready To Dispatch"
+                onClick={readyToDispatchHandler}
+              />
+              <Button text="Dispatched" onClick={dispatchedHandler} />
+              <Button text="Delivered" onClick={deliveredHandler} />
             </div>
           </div>
         </div>

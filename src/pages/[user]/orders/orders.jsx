@@ -1,5 +1,5 @@
 import Sidebar from "@/components/Sidebar";
-import React from "react";
+import React, { Fragment } from "react";
 import { Doughnut } from "react-chartjs-2";
 import Link from "next/link";
 import CategoryOrderChart from "@/components/CategoryOrderChart";
@@ -15,6 +15,7 @@ import {
 } from "chart.js";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import Header from "@/components/Header";
 
 ChartJS.register(
   CategoryScale,
@@ -90,67 +91,69 @@ const Orders = () => {
   };
 
   return (
-    <div className="flex mt-5">
-      <Sidebar />
-      <div className="flex-grow bg-white mt-0 ml-2 rounded-2xl px-10 py-10 relative">
-        <div className="xl:flex justify-between">
-          <div className=" text-blue-400 text-xl p-6 rounded-xl mb-6 ">
-            <h1 className="mb-3 gap-x-7 flex items-center">
-              <Link href={`/${user}/totalorder/totalOrder`} passHref>
-                <p className="text-blue-600 hover:text-blue-900 hover:underline">
-                  Total Orders ({totalOrders})
-                </p>
-              </Link>
-            </h1>
-            <h1 className="mb-3 gap-x-7 flex items-center">
-              <Link href={`/${user}/shipping/shipping`} passHref>
-                <p className="text-blue-600 hover:text-blue-900 hover:underline">
-                  Pending Orders ({pendingOrders})
-                </p>
-              </Link>
-            </h1>
-            <h1 className="mb-3 gap-x-7 flex items-center">
-              <Link href={`/${user}/notDelivered/notdelivered`} passHref>
-                <p className="text-blue-600 hover:text-blue-900 hover:underline">
-                  Shipped but not delivered ({shippedOrders})
-                </p>
-              </Link>
-            </h1>
-            <h1 className="mb-3 gap-x-7 flex items-center">
-              <Link href={`/${user}/delivered/delivered`} passHref>
-                <p className="text-blue-600 hover:text-blue-900 hover:underline">
-                  Delivered Orders ({deliveredOrders})
-                </p>
-              </Link>
-            </h1>
-            <h1 className="mb-3 gap-x-7 flex items-center">
-              <Link href={`/${user}/cancel/cancel`} passHref>
-                <p className="text-blue-600 hover:text-blue-900 hover:underline">
-                  Cancelled Orders ({cancelledOrders})
-                </p>
-              </Link>
-            </h1>
-
-            <h1 className="mb-3 gap-x-7 flex items-center">
-              <Link href={`/${user}/return/return`} passHref>
-                <p className="text-blue-600 hover:text-blue-900 hover:underline">
-                  Returned Orders ({returnedOrders})
-                </p>
-              </Link>
-            </h1>
+    <Fragment>
+      <Header />
+      <div className="flex max-xl:flex-col mt-5">
+        <Sidebar />
+        <div className="flex-grow bg-white mt-0 mx-2 rounded-2xl lg:px-10 lg:py-10 relative">
+          <div className="flex max-xl:flex-col justify-between">
+            <div className=" text-blue-400 text-xl p-6 rounded-xl mb-6">
+              <h1 className="mb-3 gap-x-7 flex items-center">
+                <Link href={`/${user}/totalorder/totalOrder`} passHref>
+                  <p className="text-blue-600 hover:text-blue-900 hover:underline">
+                    Total Orders ({totalOrders})
+                  </p>
+                </Link>
+              </h1>
+              <h1 className="mb-3 gap-x-7 flex items-center">
+                <Link href={`/${user}/shipping/shipping`} passHref>
+                  <p className="text-blue-600 hover:text-blue-900 hover:underline">
+                    Pending Orders ({pendingOrders})
+                  </p>
+                </Link>
+              </h1>
+              <h1 className="mb-3 gap-x-7 flex items-center">
+                <Link href={`/${user}/notDelivered/notdelivered`} passHref>
+                  <p className="text-blue-600 hover:text-blue-900 hover:underline">
+                    Shipped but not delivered ({shippedOrders})
+                  </p>
+                </Link>
+              </h1>
+              <h1 className="mb-3 gap-x-7 flex items-center">
+                <Link href={`/${user}/delivered/delivered`} passHref>
+                  <p className="text-blue-600 hover:text-blue-900 hover:underline">
+                    Delivered Orders ({deliveredOrders})
+                  </p>
+                </Link>
+              </h1>
+              <h1 className="mb-3 gap-x-7 flex items-center">
+                <Link href={`/${user}/cancel/cancel`} passHref>
+                  <p className="text-blue-600 hover:text-blue-900 hover:underline">
+                    Cancelled Orders ({cancelledOrders})
+                  </p>
+                </Link>
+              </h1>
+              <h1 className="mb-3 gap-x-7 flex items-center">
+                <Link href={`/${user}/return/return`} passHref>
+                  <p className="text-blue-600 hover:text-blue-900 hover:underline">
+                    Returned Orders ({returnedOrders})
+                  </p>
+                </Link>
+              </h1>
+            </div>
+            <div className="lg:w-[40rem] max-h-[20rem] rounded-xl flex justify-center">
+              <Doughnut
+                data={doughnutData}
+                options={doughnutOptions}
+                height="200px"
+                width="200px"
+              />
+            </div>
           </div>
-          <div className="w-[40rem] max-h-[20rem] rounded-xl flex justify-center">
-            <Doughnut
-              data={doughnutData}
-              options={doughnutOptions}
-              height="200px"
-              width="200px"
-            />
-          </div>
+          <CategoryOrderChart />
         </div>
-        <CategoryOrderChart />
       </div>
-    </div>
+    </Fragment>
   );
 };
 

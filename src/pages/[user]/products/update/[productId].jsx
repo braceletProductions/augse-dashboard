@@ -5,6 +5,7 @@ import Sidebar from "@/components/Sidebar";
 import ImageUpload from "@/components/ImageUpload";
 import Backdrop from "@/components/Backdrop";
 import AddAttributes from "@/components/AddAttributes";
+import LoadingSpinner from "@/components/LoadingSpnner";
 
 const sizeData = [
   { id: 1, name: "N/A", value: null },
@@ -31,6 +32,7 @@ const helperData = [
 function updateProduct() {
   const router = useRouter();
   const { user, productId } = router.query;
+  const [isLoading, setIsLoading] = useState(false);
   const [showTags, setShowTags] = useState(false);
   const [showAddTags, setShowAddTags] = useState(false);
   const [showAddCategory, setShowAddCategory] = useState(false);
@@ -57,17 +59,34 @@ function updateProduct() {
   const cancelOrderRef = useRef();
   const mrpRef = useRef();
   const offeredValueRef = useRef();
+  const hsnRef = useRef();
+  const keywordRef = useRef();
   const detailRef = useRef();
+
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const currentTimestamp = Math.floor(
+    Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
+  );
 
   useEffect(() => {
     const fetchDetails = async () => {
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/tags/tags"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/tags/tags",
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         setTagsOptions(res.data.tags);
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/category/category"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/category/category",
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         setCategory(response.data.category);
       } catch (error) {
@@ -81,7 +100,12 @@ function updateProduct() {
     const fetchDetails = async () => {
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/products/product/" + productId
+          process.env.NEXT_PUBLIC_SERVER_URL + "/products/product/" + productId,
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         nameRef.current.value = res.data.productName;
         descriptionRef.current.value = res.data.shortDescription;
@@ -96,6 +120,8 @@ function updateProduct() {
         cancelOrderRef.current.value = res.data.isCancelAble;
         mrpRef.current.value = res.data.mrp;
         offeredValueRef.current.value = res.data.offeredPrice;
+        hsnRef.current.value = res.data.hsn;
+        keywordRef.current.value = res.data.keywords;
         detailRef.current.value = res.data.detailedDescription;
         setMainImageUrl(res.data.mainImage);
         if (res.data.otherImages) {
@@ -108,7 +134,7 @@ function updateProduct() {
       }
     };
     if (productId) fetchDetails();
-  }, [productId]);
+  }, [productId, category]);
 
   const mainImageHandler = (file) => {
     setMainImageFile(file);
@@ -144,6 +170,7 @@ function updateProduct() {
     ) {
       return;
     }
+    setIsLoading(true);
     let mainImagePath;
     if (mainImageFile) {
       try {
@@ -238,6 +265,8 @@ function updateProduct() {
     formData.append("isCancelAble", cancelOrderRef.current.value);
     formData.append("mrp", mrpRef.current.value);
     formData.append("offeredPrice", offeredValueRef.current.value);
+    formData.append("hsn", hsnRef.current.value);
+    formData.append("keywords", keywordRef.current.value);
     formData.append("detailedDescription", detailRef.current.value);
     formData.append("mainImage", mainImagePath);
     formData.append("firstImage", firstImagePath);
@@ -256,6 +285,7 @@ function updateProduct() {
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   };
 
   const toggleShowtags = () => {
@@ -264,6 +294,11 @@ function updateProduct() {
 
   return (
     <div className="flex flex-col min-h-screen mt-[4rem]">
+      {isLoading && (
+        <div className="absolute z-50 top-0 bg-[rgba(34,84,114,0.2)] w-full">
+          <LoadingSpinner />
+        </div>
+      )}
       <div className="flex-grow lg:flex lg:mt-5 ">
         <Sidebar />
         <div className="md:flex w-full lg:h-[38.2rem] lg:mx-[3rem] md:my-[0] my-[2rem] gap-[2%]">
@@ -462,7 +497,7 @@ function updateProduct() {
                 </select>
               </div>
             </div>
-            <div className="lg:flex mt-[0.8rem]">
+            <div className="lg:flex mt-[0.5rem]">
               <div className="lg:w-[50%]">
                 <div className="text-lg ml-[1rem] my-[0.5rem]">MRP</div>
                 <input
@@ -482,7 +517,25 @@ function updateProduct() {
                 />
               </div>
             </div>
-            <div className="flex flex-col mt-[0.8rem]">
+            <div className="lg:flex mt-[0.5rem]">
+              <div className="lg:w-[50%]">
+                <div className="text-lg ml-[1rem] my-[0.5rem]">HSN Code</div>
+                <input
+                  type="text"
+                  ref={hsnRef}
+                  className="border-b-2 border-[#4379a0]"
+                />
+              </div>
+              <div className="w-[50%]">
+                <div className="text-lg ml-[1rem] my-[0.5rem]">Keywords</div>
+                <input
+                  type="text"
+                  ref={keywordRef}
+                  className="border-b-2 border-[#4379a0]"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col mt-[0.5rem]">
               <div className="text-lg ml-[1rem] my-[0.5rem]">
                 Product's other images
               </div>
@@ -502,12 +555,12 @@ function updateProduct() {
               </div>
             </div>
             <div className="flex flex-col">
-              <div className="text-lg ml-[1rem] my-[0.8rem]">
+              <div className="text-lg ml-[1rem] my-[0.5rem]">
                 Detailed description of product
               </div>
               <textarea
                 className="border-2 border-[#4379a0]"
-                rows="5"
+                rows="3"
                 ref={detailRef}
                 cols="30"
               />

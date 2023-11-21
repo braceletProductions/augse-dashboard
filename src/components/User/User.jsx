@@ -8,11 +8,21 @@ const User = ({ customer }) => {
   const { userId } = customer;
   console.log("hi 1 customer", customer); // This will run after the component renders
 
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const currentTimestamp = Math.floor(
+    Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
+  );
+
   useEffect(() => {
     const fetchOrderData = async () => {
       try {
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + `/user/me/${userId}`
+          process.env.NEXT_PUBLIC_SERVER_URL + `/user/me/${userId}`,
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         console.log(response);
         response ? setOrderData(response.data) : null;

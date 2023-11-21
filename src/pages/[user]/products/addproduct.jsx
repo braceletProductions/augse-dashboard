@@ -5,6 +5,7 @@ import Sidebar from "@/components/Sidebar";
 import ImageUpload from "@/components/ImageUpload";
 import Backdrop from "@/components/Backdrop";
 import AddAttributes from "@/components/AddAttributes";
+import LoadingSpinner from "@/components/LoadingSpnner";
 
 const sizeData = [
   { id: 1, name: "N/A", value: null },
@@ -31,6 +32,7 @@ const helperData = [
 function addproduct() {
   const router = useRouter();
   const { user } = router.query;
+  const [isLoading, setIsLoading] = useState(false);
   const [showTags, setShowTags] = useState(false);
   const [showAddTags, setShowAddTags] = useState(false);
   const [showAddCategory, setShowAddCategory] = useState(false);
@@ -53,6 +55,8 @@ function addproduct() {
   const cancelOrderRef = useRef();
   const mrpRef = useRef();
   const offeredValueRef = useRef();
+  const hsnRef = useRef();
+  const keywordRef = useRef();
   const detailRef = useRef();
   const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
   const currentTimestamp = Math.floor(
@@ -72,7 +76,12 @@ function addproduct() {
         );
         setTagsOptions(res.data.tags);
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/category/category"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/category/category",
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         setCategory(response.data.category);
       } catch (error) {
@@ -116,6 +125,7 @@ function addproduct() {
     ) {
       return;
     }
+    setIsLoading(true);
     const mainformData = new FormData();
     mainformData.append("image", mainImageFile);
     let mainImagePath;
@@ -170,6 +180,8 @@ function addproduct() {
     formData.append("isCancelAble", cancelOrderRef.current.value);
     formData.append("mrp", mrpRef.current.value);
     formData.append("offeredPrice", offeredValueRef.current.value);
+    formData.append("hsn", hsnRef.current.value);
+    formData.append("keywords", keywordRef.current.value);
     formData.append("detailedDescription", detailRef.current.value);
     formData.append("mainImage", mainImagePath);
     formData.append("firstImage", firstImagePath);
@@ -186,6 +198,7 @@ function addproduct() {
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   };
 
   const toggleShowtags = () => {
@@ -194,9 +207,14 @@ function addproduct() {
 
   return (
     <div className="flex flex-col min-h-screen mt-[4rem]">
+      {isLoading && (
+        <div className="absolute z-50 top-0 bg-[rgba(34,84,114,0.2)] w-full">
+          <LoadingSpinner />
+        </div>
+      )}
       <div className="flex-grow lg:flex lg:mt-5 ">
         <Sidebar />
-        <div className="md:flex w-full lg:h-[38.2rem] lg:mx-[3rem] md:my-[0] my-[2rem] gap-[2%]">
+        <div className="md:flex w-full lg:h-[40rem] lg:mx-[3rem] md:my-[0] my-[2rem] gap-[2%]">
           <div className="bg-white lg:w-[49%] lg:rounded-s-3xl rounded-3xl lg:pl-[2rem] pl-[0.5rem] py-[2rem]">
             <div className="flex flex-row lg:gap-[1rem]">
               <div className="">
@@ -342,8 +360,8 @@ function addproduct() {
               </div>
             </div>
           </div>
-          <div className="bg-white lg:w-[49%] lg:h-auto h-[50rem] lg:rounded-e-3xl rounded-3xl pl-[1.5rem] pr-[2rem] py-[2rem]">
-            <div className="lg:flex gap-[1.2rem]">
+          <div className="bg-white lg:w-[49%] lg:h-auto h-[50rem] lg:rounded-e-3xl rounded-3xl pl-[1.5rem] pr-[2rem] py-[1.5rem]">
+            <div className="lg:flex gap-[1rem]">
               <div className="">
                 <div className="text-lg my-[0.5rem]">Cash On Delivery</div>
                 <select
@@ -387,7 +405,7 @@ function addproduct() {
                 </select>
               </div>
             </div>
-            <div className="lg:flex mt-[0.8rem]">
+            <div className="lg:flex mt-[0.7rem]">
               <div className="lg:w-[50%]">
                 <div className="text-lg ml-[1rem] my-[0.5rem]">MRP</div>
                 <input
@@ -403,6 +421,24 @@ function addproduct() {
                 <input
                   type="text"
                   ref={offeredValueRef}
+                  className="border-b-2 border-[#4379a0]"
+                />
+              </div>
+            </div>
+            <div className="lg:flex mt-[0.7rem]">
+              <div className="lg:w-[50%]">
+                <div className="text-lg ml-[1rem] my-[0.5rem]">HSN Code</div>
+                <input
+                  type="text"
+                  ref={hsnRef}
+                  className="border-b-2 border-[#4379a0]"
+                />
+              </div>
+              <div className="w-[50%]">
+                <div className="text-lg ml-[1rem] my-[0.5rem]">Keywords</div>
+                <input
+                  type="text"
+                  ref={keywordRef}
                   className="border-b-2 border-[#4379a0]"
                 />
               </div>
@@ -423,13 +459,13 @@ function addproduct() {
               </div>
               <textarea
                 className="border-2 border-[#4379a0]"
-                rows="5"
+                rows="3"
                 ref={detailRef}
                 cols="30"
               />
             </div>
             <button
-              className="hover:bg-[#4e87af] bg-[#467fa8] uppercase text-[white] py-1 px-3 cursor-pointer rounded-2xl mt-[1.2rem] float-right shadow-md shadow-black active:shadow-none"
+              className="hover:bg-[#4e87af] bg-[#467fa8] uppercase text-[white] py-1 px-3 cursor-pointer rounded-2xl mt-[1rem] float-right shadow-md shadow-black active:shadow-none"
               onClick={addProductHandler}
             >
               Add Product
