@@ -20,8 +20,12 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: black;
   background: rgb(34, 86, 141);
+}
+
+input {
+  color: black;
 }
 
 .link {
