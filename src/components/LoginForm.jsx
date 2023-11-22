@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import axios, { post } from "axios";
+import axios from "axios";
 import Link from "next/link";
 import { GoDot } from "react-icons/go";
+import { useDispatch } from "react-redux";
+import { login } from "../../store/slices/auth";
 
 const LoginForm = ({ onLogin }) => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +31,11 @@ const LoginForm = ({ onLogin }) => {
             password: password,
           }
         );
+        console.log(response);
         if (response.status === 200) {
+          dispatch(
+            login({ userId: response.data.userId, token: response.data.token })
+          );
           const res = await fetch("/api/setCookie", {
             method: "POST",
             headers: {
