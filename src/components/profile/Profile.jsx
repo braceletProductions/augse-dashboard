@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -5,11 +6,35 @@ import { useSelector } from "react-redux";
 
 const Profile = () => {
   const [profile, setProfile] = useState({});
+  const userId = useSelector((state) => state.auth.userId);
   const name = "John Doe";
   const phone = "123-456-7890";
   const email = "john.doe@example.com";
-  
-  useEffect(() => {}, []);
+
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const currentTimestamp = Math.floor(
+    Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
+  );
+
+  useEffect(() => {
+    const fetchProfileInfo = async () => {
+      if (!userId) return;
+      try {
+        const response = await axios.get(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/user/me/" + userId,
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
+        );
+        setProfile(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchProfileInfo();
+  }, []);
 
   return (
     <div className="w-full min-h-screen bg-white">
@@ -29,7 +54,7 @@ const Profile = () => {
             className="h-40 mx-auto"
             alt="Profile Picture"
           />
-          <h1 className="text-center">{name}</h1>
+          <h1 className="text-center">{profile.name}</h1>
         </div>
       </div>
       <div className="mt-36 flex mx-10 gap-10">
@@ -41,25 +66,33 @@ const Profile = () => {
                 <td className="border p-3 text-left text-gray-600 font-medium">
                   Name
                 </td>
-                <td className="border p-3 text-left text-gray-800">{name}</td>
+                <td className="border p-3 text-left text-gray-800">
+                  {profile.name}
+                </td>
               </tr>
               <tr>
                 <td className="border p-3 text-left text-gray-600 font-medium">
                   Phone
                 </td>
-                <td className="border p-3 text-left text-gray-800">{phone}</td>
+                <td className="border p-3 text-left text-gray-800">
+                  {profile.phone}
+                </td>
               </tr>
               <tr>
                 <td className="border p-3 text-left text-gray-600 font-medium">
                   Email
                 </td>
-                <td className="border p-3 text-left text-gray-800">{email}</td>
+                <td className="border p-3 text-left text-gray-800">
+                  {profile.email}
+                </td>
               </tr>
               <tr>
                 <td className="border p-3 text-left text-gray-600 font-medium">
                   Employee Type
                 </td>
-                <td className="border p-3 text-left text-gray-800">{email}</td>
+                <td className="border p-3 text-left text-gray-800">
+                  {profile.employeeType}
+                </td>
               </tr>
             </tbody>
           </table>
