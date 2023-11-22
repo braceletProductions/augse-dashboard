@@ -3,6 +3,7 @@ import currencyFormatter from "../../utils/currencyFormatter";
 import BackButton from "./BackButton";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Image from "next/image";
 
 const Product = ({ product }) => {
   const [visibility, setVisiblity] = useState(product.visibility);
@@ -52,10 +53,12 @@ const Product = ({ product }) => {
               <p className="font-semibold text-xl">{product.productName}</p>
               <p className="mt-[1rem] text-base">{product.shortDescription}</p>
             </div>
-            <img
+            <Image
               src={process.env.NEXT_PUBLIC_IMAGE_URL + product.mainImage}
               className="max-h-[12rem]"
-              alt=""
+              alt={product.productName}
+              height="200"
+              width="130"
             />
           </div>
           <div className="grid grid-cols-2 mt-[2rem] gap-2 text-lg">
@@ -144,17 +147,26 @@ const Product = ({ product }) => {
               <h1 className="text-xl font-semibold">Product's other Images:</h1>
             </div>
             <div className="flex lg:flex-row flex-col gap-3">
-              <img
+              <Image
                 src={process.env.NEXT_PUBLIC_IMAGE_URL + product.otherImages[0]}
                 className="gap-10 bg-gray-500 max-h-[10rem] md:max-w-[10rem] lg:max-w-none"
+                alt={product.productName}
+                height="150"
+                width="100"
               />
-              <img
+              <Image
                 src={process.env.NEXT_PUBLIC_IMAGE_URL + product.otherImages[1]}
                 className="gap-10 bg-gray-500 max-h-[10rem] md:max-w-[10rem] lg:max-w-none"
+                alt={product.productName}
+                height="150"
+                width="100"
               />
-              <img
+              <Image
                 src={process.env.NEXT_PUBLIC_IMAGE_URL + product.otherImages[2]}
                 className="gap-10 bg-gray-500 max-h-[10rem] md:max-w-[10rem] lg:max-w-none"
+                alt={product.productName}
+                height="150"
+                width="100"
               />
             </div>
             <div className="mt-10 text-lg">
