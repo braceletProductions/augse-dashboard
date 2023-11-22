@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -11,10 +12,12 @@ function ProductCard(props) {
       href={"/" + user + "/product/" + props.id}
       className="w-[10rem] bg-white pb-1"
     >
-      <img
+      <Image
         src={process.env.NEXT_PUBLIC_IMAGE_URL + props.image}
+        height="150"
+        width="100"
         className="max-h-[10rem] mx-[auto]"
-        alt=""
+        alt={props.name}
       />
       <div className="text-center font-medium truncate px-1">{props.name}</div>
       {props.status ? (

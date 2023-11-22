@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Product from "@/components/Product";
+import LoadingSpinner from "@/components/LoadingSpnner";
 
 const ProductDetail = () => {
   const router = useRouter();
@@ -31,7 +32,7 @@ const ProductDetail = () => {
     fetchData();
   }, [productId]);
 
-  if (!product._id) return <div className="">Loading...</div>;
+  if (!product._id) return <LoadingSpinner />;
 
   return (
     <div className="mx-auto max-w-screen-2xl">

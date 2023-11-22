@@ -4,6 +4,7 @@ import axios from "axios";
 import BackButton from "@/components/BackButton";
 import AddressCard from "@/components/AddressCard";
 import Button from "@/components/Button";
+import LoadingSpinner from "@/components/LoadingSpnner";
 
 const TrackOrder = () => {
   const [order, setOrder] = useState({});
@@ -218,7 +219,7 @@ const TrackOrder = () => {
       </div>
     );
 
-  return <div>Order detail not found</div>;
+  return <LoadingSpinner />;
 };
 
 export default TrackOrder;
