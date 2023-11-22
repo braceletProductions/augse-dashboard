@@ -1,10 +1,12 @@
-// UpdatePassword.js
+import axios from "axios";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 const UpdatePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const token = useSelector((state) => state.auth.token);
 
   const handleOldPasswordChange = (e) => {
     setOldPassword(e.target.value);
@@ -21,11 +23,33 @@ const UpdatePassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (password !== confirmPassword) {
+      alert("Password mismatch");
+      return;
+    }
+
+    if (!token) return;
+
     try {
-    } catch (error) {}
-    setOldPassword("");
-    setPassword("");
-    setConfirmPassword("");
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_SERVER_URL + "/user/update/pwd",
+        {
+          oldPassword,
+          password,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      console.log(response);
+      setOldPassword("");
+      setPassword("");
+      setConfirmPassword("");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
