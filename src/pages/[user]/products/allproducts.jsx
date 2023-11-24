@@ -27,6 +27,7 @@ function allproducts() {
             <tr className="bg-blue-800 text-gray-100 text-center">
               <th className="font-semibold lg:px-4 py-1">S.No.</th>
               <th className="font-semibold lg:px-4 py-1">Product Name</th>
+              <th className="font-semibold lg:px-4 py-1">HSN Code</th>
               <th className="font-semibold lg:px-4 py-1">In Stock</th>
               <th className="font-semibold lg:px-4 py-1">Sold</th>
               <th className="font-semibold lg:px-4 py-1">Offered Price</th>
@@ -39,6 +40,7 @@ function allproducts() {
               <tr key={index} className="bg-blue-200 text-center">
                 <td className="px-4 border-l-2 border-2">{index + 1}</td>
                 <td className="px-4 border-l-2 border-2">{item.productName}</td>
+                <td className="px-4 border-l-2 border-2">{item.hsn}</td>
                 <td className="px-4 border-l-2 border-2">{item.quantity}</td>
                 <td className="px-4 border-l-2 border-2">{item.sold}</td>
                 <td className="px-4 border-l-2 border-2">
