@@ -2,14 +2,23 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../store/slices/auth";
+import { useRouter } from "next/router";
 
 const Profile = () => {
   const [profile, setProfile] = useState({});
   const userId = useSelector((state) => state.auth.userId);
+  const dispatch = useDispatch();
+  const router = useRouter();
   const name = "John Doe";
   const phone = "123-456-7890";
   const email = "john.doe@example.com";
+
+  const handleLogout = () => {
+    dispatch(logout());
+    router.replace("/");
+  };
 
   const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
   const currentTimestamp = Math.floor(
@@ -57,7 +66,7 @@ const Profile = () => {
           <h1 className="text-center">{profile.name}</h1>
         </div>
       </div>
-      <div className="mt-36 flex mx-10 gap-10">
+      <div className="mt-36 xl:flex mx-10 gap-10">
         <div className="flex-1">
           <h2 className="text-center">Basic Information</h2>
           <table className="w-full border-collapse mt-4">
@@ -129,6 +138,12 @@ const Profile = () => {
           </table>
         </div>
       </div>
+      <button
+        className="text-white absolute bottom-10 right-10 px-4 py-2 bg-[#033A57] rounded hover:bg-[#041E3E]"
+        onClick={handleLogout}
+      >
+        Logout
+      </button>
     </div>
   );
 };
