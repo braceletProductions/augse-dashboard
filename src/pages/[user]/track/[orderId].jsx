@@ -86,17 +86,23 @@ const TrackOrder = () => {
     router.push("/" + user + "/orders/dispatch/forward?orderId=" + orderId);
   };
 
-  const deliveredHandler = async () => {
-    // try {
-    //   const response = await axios.put(
-    //     process.env.NEXT_PUBLIC_SERVER_URL +
-    //       "/orders/orders/delivered/" +
-    //       orderId
-    //   );
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+  const generateShippingLabel = async () => {
+    if (order.wayBill) {
+      try {
+        const response = await axios.get(
+          process.env.NEXT_PUBLIC_SERVER_URL +
+            "/shipping/shipmentLabel?wayBill=" +
+            order.wayBill
+        );
+        for (let i = 0; i < response.data.data.packages_found; i++) {
+          window.open(response.data.data.packages[i].pdf_download_link);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log("No wayBill found");
+    }
   };
 
   if (order && order.userId)
@@ -207,6 +213,9 @@ const TrackOrder = () => {
               <Button text="Invoice" onClick={downloadInvoice} />
               <Button text="Profile" onClick={profileHandler} />
               <Button text="Track" onClick={trackHandler} />
+              {order.wayBill && (
+                <Button text="Shipping Label" onClick={generateShippingLabel} />
+              )}
             </div>
             <div className="text-white flex my-[2rem] justify-center gap-[5rem]">
               <Button
@@ -214,7 +223,6 @@ const TrackOrder = () => {
                 onClick={readyToDispatchHandler}
               />
               <Button text="Dispatched" onClick={dispatchedHandler} />
-              <Button text="Delivered" onClick={deliveredHandler} />
             </div>
           </div>
         </div>
