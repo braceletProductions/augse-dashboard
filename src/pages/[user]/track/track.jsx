@@ -4,11 +4,14 @@ import { useRouter } from "next/router";
 import dateFormatter from "../../../../utils/dateFormatter";
 import { useEffect, useState } from "react";
 import timeFormatter from "../../../../utils/timeFormatter";
+import LoadingSpinner from "@/components/LoadingSpnner";
 
 const TrackOrder = () => {
   const [order, setOrder] = useState({});
+  const [trackData, setTrackData] = useState({});
   const router = useRouter();
   const { orderId } = router.query;
+
   const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
   const currentTimestamp = Math.floor(
     Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
@@ -19,7 +22,8 @@ const TrackOrder = () => {
       if (!orderId) return;
       try {
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/orders/orders/" + orderId,{
+          process.env.NEXT_PUBLIC_SERVER_URL + "/orders/orders/" + orderId,
+          {
             params: {
               timestamp: currentTimestamp,
             },
@@ -31,8 +35,25 @@ const TrackOrder = () => {
     fetchDetails();
   }, [orderId]);
 
+  useEffect(() => {
+    const track = async () => {
+      if (!order.wayBill) return;
+      try {
+        const response = await axios.get(
+          process.env.NEXT_PUBLIC_SERVER_URL +
+            "/shipping/track?wayBill=" +
+            order.wayBill
+        );
+        setTrackData(response.data.ShipmentData[0].Shipment);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    track();
+  }, [order]);
+
   if (!order.userId) {
-    return <div>Order not found.</div>;
+    return <LoadingSpinner />;
   }
 
   return (
@@ -43,9 +64,17 @@ const TrackOrder = () => {
           Track Orders
         </h1>
         <div className="mt-[2rem] text-blue-500">
-          <div className="px-[2rem] max-w-fit bg-white rounded-3xl py-1">
-            <div className="text-3xl font-medium">{order.userId.name}</div>
-            <div className="text-2xl">{order.userId.email}</div>
+          <div className="flex justify-between">
+            <div className="px-[2rem] max-w-fit bg-white rounded-3xl py-1">
+              <div className="text-3xl font-medium">{order.userId.name}</div>
+              <div className="text-2xl">{order.userId.email}</div>
+            </div>
+            <div className="px-[2rem] max-w-fit bg-white rounded-3xl py-1">
+              <div className="text-xl">WayBill: {order.wayBill}</div>
+              <div className="text-xl">
+                Warehouse: {trackData.PickupLocation}
+              </div>
+            </div>
           </div>
           <div className="bg-white flex w-[45rem] h-[14rem] rounded-t-3xl mt-[5rem] relative m-auto p-[2rem]">
             <div className="absolute top-[6rem] left-[12.3rem] z-20 border-l-[20px] border-l-transparent border-t-[30px] border-t-[#58dcd5] border-r-[20px] border-r-transparent"></div>
@@ -65,20 +94,25 @@ const TrackOrder = () => {
             <div className="w-[10rem] h-[5rem] flex relative my-[5rem] translate-x-4 justify-center rounded-b-full bg-[#3ce88a] border-[black]">
               <div className="w-[8rem] h-[8rem] bg-[#3ce88a] text-white rounded-full border-[1rem] absolute bottom-[1rem] border-[white] flex flex-col justify-center items-center">
                 <div>
-                  {order.shipped ? dateFormatter(order.shipped) : "Pending"}
+                  {trackData.PickUpDate
+                    ? dateFormatter(trackData.PickUpDate)
+                    : "Pending"}
                 </div>
-                <div>{order.shipped && timeFormatter(order.shipped)}</div>
+                <div>
+                  {trackData.PickUpDate && timeFormatter(trackData.PickUpDate)}
+                </div>
               </div>
             </div>
             <div className="w-[10rem] h-[5rem] flex relative justify-center rounded-t-full bg-blue-500">
               <div className="w-[8rem] h-[8rem] bg-blue-500 rounded-full border-[1rem] text-white my-[1rem] border-[white] flex flex-col justify-center items-center">
                 <div>
-                  {order.outForDelivery
-                    ? dateFormatter(order.outForDelivery)
+                  {trackData.OutDestinationDate
+                    ? dateFormatter(trackData.OutDestinationDate)
                     : "Pending"}
                 </div>
                 <div>
-                  {order.outForDelivery && timeFormatter(order.outForDelivery)}
+                  {trackData.OutDestinationDate &&
+                    timeFormatter(trackData.OutDestinationDate)}
                 </div>
               </div>
               <div className="absolute top-[4rem] z-20 -right-3 border-l-[20px] border-l-transparent border-t-[30px] border-t-blue-500 border-r-[20px] border-r-transparent"></div>
@@ -86,9 +120,14 @@ const TrackOrder = () => {
             <div className="w-[10rem] h-[5rem] flex relative my-[5rem] -translate-x-4 justify-center rounded-b-full bg-[#3b58dc] border-[black]">
               <div className="w-[8rem] h-[8rem] text-white bg-[#3b58dc] rounded-full border-[1rem] absolute bottom-[1rem]  border-[white] flex flex-col justify-center items-center">
                 <div>
-                  {order.delivered ? dateFormatter(order.delivered) : "Pending"}
+                  {trackData.DeliveryDate
+                    ? dateFormatter(trackData.DeliveryDate)
+                    : "Pending"}
                 </div>
-                <div>{order.delivered && timeFormatter(order.delivered)}</div>
+                <div>
+                  {trackData.DeliveryDate &&
+                    timeFormatter(trackData.DeliveryDate)}
+                </div>
               </div>
               <div className="absolute z-20 -top-[1.4rem] -right-3 border-l-[20px] rotate-180 border-l-transparent border-t-[30px] border-t-[#3b58dc] border-r-[20px] border-r-transparent"></div>
             </div>
