@@ -8,8 +8,19 @@ function forward() {
   const { orderId } = router.query;
 
   const placeDispatchRequest = async (formData) => {
+    const updatedFormData = { ...formData };
+
+    try {
+      const response = await axios.get(
+        process.env.NEXT_PUBLIC_SERVER_URL + "/shipping/waybill"
+      );
+      updatedFormData.waybill = response.data.waybill;
+    } catch (error) {
+      console.log(error);
+    }
+
     const data = {
-      shipments: [formData],
+      shipments: [updatedFormData],
       pickup_location: {
         name: "Augse",
         add: "Address",
@@ -19,6 +30,7 @@ function forward() {
         phone: "123456789",
       },
       orderId: orderId,
+      waybill: updatedFormData.waybill,
     };
 
     try {

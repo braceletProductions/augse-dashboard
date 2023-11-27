@@ -10,6 +10,7 @@ const TrackOrder = () => {
   const [order, setOrder] = useState({});
   const router = useRouter();
   const { user, orderId } = router.query;
+
   const serverTimeZoneOffsetMinutes = 5 * 60 + 30;
   const currentTimestamp = Math.floor(
     Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
@@ -110,6 +111,7 @@ const TrackOrder = () => {
               <div className="text-2xl">{order.userId.name}</div>
               <p>{order.userId.email}</p>
               <p>{order.userId.phone}</p>
+              {order.wayBill && <p>Waybill :{order.wayBill}</p>}
               <AddressCard val={order.addressId} />
             </div>
             <div className="lg:flex w-full gap-[2rem] text-xl my-[2rem]">
