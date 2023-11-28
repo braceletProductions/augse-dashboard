@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import CardWithBackDrop from "../Settings/CardWithBackDrop";
 
-const options = ["DEFER_DLV", "EDIT_DETAILS", "RE-ATTEMPT"];
+const options = [
+  { label: "Deferred Delivery", value: "DEFER_DLV" },
+  { label: "Edit Details", value: "EDIT_DETAILS" },
+  { label: "Re-attempt", value: "RE-ATTEMPT" },
+];
 
 function NDRForm({ onClose }) {
   const [formData, setFormData] = useState({
     act: "DEFER_DLV",
+    deferred_date: "",
+    name: "",
+    phone: "",
+    add: "",
   });
 
   const handleChange = (e) => {
@@ -40,22 +48,80 @@ function NDRForm({ onClose }) {
                 Select Action
               </option>
               {options.map((data) => (
-                <option key={data} value={data}>
-                  {data}
+                <option key={data.value} value={data.value}>
+                  {data.label}
                 </option>
               ))}
             </select>
-          </div>
-          <div className="pointer-events-none absolute top-2 right-4 inset-y-0 flex items-center px-2 text-gray-700">
-            <svg
-              className="fill-current h-4 w-4"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 12.582l-6.293-6.293a1 1 0 0 0-1.414 1.414l7 7a1 1 0 0 0 1.414 0l7-7a1 1 0 1 0-1.414-1.414L10 12.582z" />
-            </svg>
+            <div className="pointer-events-none absolute right-1 inset-y-0 flex items-center px-2 text-gray-700">
+              <svg
+                className="fill-current h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path d="M10 12.582l-6.293-6.293a1 1 0 0 0-1.414 1.414l7 7a1 1 0 0 0 1.414 0l7-7a1 1 0 1 0-1.414-1.414L10 12.582z" />
+              </svg>
+            </div>
           </div>
         </div>
+        {formData.act === "DEFER_DLV" && (
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600">
+              Deferred Date:
+            </label>
+            <input
+              type="date"
+              id="deferred_date"
+              name="deferred_date"
+              value={formData.deferred_date}
+              onChange={handleChange}
+              className="mt-1 p-2 block w-full border rounded-md"
+            />
+          </div>
+        )}
+        {formData.act === "EDIT_DETAILS" && (
+          <Fragment>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-600">
+                Consignee Name:
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="mt-1 p-2 block w-full border rounded-md"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-600">
+                Consignee Phone:
+              </label>
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="mt-1 p-2 block w-full border rounded-md"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-600">
+                Consignee Address:
+              </label>
+              <input
+                type="text"
+                id="add"
+                name="add"
+                value={formData.add}
+                onChange={handleChange}
+                className="mt-1 p-2 block w-full border rounded-md"
+              />
+            </div>
+          </Fragment>
+        )}
         <button
           type="submit"
           className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600"
