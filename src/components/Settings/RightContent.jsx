@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import SpecialCouponForm from "./SpecialCouponForm";
 import CouponTable from "./CouponTable";
 import CreateEmployee from "./CreateEmployee";
+import PickupRequestForm from "../ShipmentForm/PickupRequest";
+import CreateWarehouse from "../ShipmentForm/CreateWarehouse";
+import UpdateWarehouse from "../ShipmentForm/UpdateWarehouse";
 
 function RightContent() {
   const [showCouponForm, setShowSpecialCouponForm] = useState(false);
   const [showAddEmployee, setShowAddEmployee] = useState(false);
+  const [showAddWarehouse, setShowAddWarehouse] = useState(false);
+  const [showUpdateWarehouse, setShowUpdateWarehouse] = useState(false);
+  const [showCreatePickup, setShowCreatePickup] = useState(false);
 
   return (
     <div className="w-1/2 pl-2 h-full">
@@ -13,7 +19,7 @@ function RightContent() {
       <div className="my-4 bg-black overflow-scroll max-h-64 border rounded">
         <CouponTable />
       </div>
-      <div className="flex gap-4">
+      <div className="grid grid-cols-2 gap-2">
         <button
           className="text-white mx-auto w-60 px-4 py-2 bg-[#40a0d3] rounded hover:bg-[#041E3E]"
           onClick={() => setShowSpecialCouponForm(true)}
@@ -26,11 +32,35 @@ function RightContent() {
         >
           Add New Employee
         </button>
+        <button
+          className="text-white mx-auto w-60 px-4 py-2 bg-[#40a0d3] rounded hover:bg-[#041E3E]"
+          onClick={() => setShowAddWarehouse(true)}
+        >
+          Create Warehouse
+        </button>
+        <button
+          className="text-white mx-auto w-60 px-4 py-2 bg-[#40a0d3] rounded hover:bg-[#041E3E]"
+          onClick={() => setShowUpdateWarehouse(true)}
+        >
+          Update Warehouse
+        </button>
+        <button
+          className="text-white mx-auto w-60 px-4 py-2 bg-[#40a0d3] rounded hover:bg-[#041E3E]"
+          onClick={() => setShowCreatePickup(true)}
+        >
+          Create Pickup Request
+        </button>
       </div>
       {showCouponForm ? (
         <SpecialCouponForm onClose={() => setShowSpecialCouponForm(false)} />
       ) : showAddEmployee ? (
         <CreateEmployee onClose={() => setShowAddEmployee(false)} />
+      ) : showAddWarehouse ? (
+        <CreateWarehouse onClose={() => setShowAddWarehouse(false)} />
+      ) : showUpdateWarehouse ? (
+        <UpdateWarehouse onClose={() => setShowUpdateWarehouse(false)} />
+      ) : showCreatePickup ? (
+        <PickupRequestForm onClose={() => setShowCreatePickup(false)} />
       ) : null}
     </div>
   );
