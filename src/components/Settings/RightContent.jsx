@@ -5,6 +5,7 @@ import CreateEmployee from "./CreateEmployee";
 import PickupRequestForm from "../ShipmentForm/PickupRequest";
 import CreateWarehouse from "../ShipmentForm/CreateWarehouse";
 import UpdateWarehouse from "../ShipmentForm/UpdateWarehouse";
+import NDRForm from "../ShipmentForm/NDRForm";
 
 function RightContent() {
   const [showCouponForm, setShowSpecialCouponForm] = useState(false);
@@ -62,6 +63,7 @@ function RightContent() {
       ) : showCreatePickup ? (
         <PickupRequestForm onClose={() => setShowCreatePickup(false)} />
       ) : null}
+      <NDRForm />
     </div>
   );
 }
