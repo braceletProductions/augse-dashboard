@@ -9,6 +9,7 @@ const options = [
 
 function NDRForm({ onClose }) {
   const [formData, setFormData] = useState({
+    waybill: "",
     act: "DEFER_DLV",
     deferred_date: "",
     name: "",
@@ -33,6 +34,19 @@ function NDRForm({ onClose }) {
     <CardWithBackDrop onClose={onClose}>
       <h2 className="text-xl font-semibold mb-4 text-center">NDR Action API</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-600">
+            WayBill:
+          </label>
+          <input
+            type="text"
+            id="waybill"
+            name="waybill"
+            value={formData.waybill}
+            onChange={handleChange}
+            className="mt-1 p-2 block w-full border rounded-md"
+          />
+        </div>
         <div className="mb-2 w-full">
           <label className="block text-gray-700 ml-1 text-sm font-bold mb-2">
             Action
