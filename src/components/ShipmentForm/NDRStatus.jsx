@@ -24,9 +24,9 @@ function NDRStatus({ onClose }) {
       const response = await axios.get(
         process.env.NEXT_PUBLIC_SERVER_URL +
           "/shipping/ndr_status/" +
-          upl +
+          formData.upl +
           "/" +
-          verbose
+          formData.verbose
           ? "true"
           : "false",
         formData
