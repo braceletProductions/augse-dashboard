@@ -105,6 +105,8 @@ const TrackOrder = () => {
     }
   };
 
+  console.log(order);
+
   if (order && order.userId)
     return (
       <div className="w-full font-medium">
@@ -156,7 +158,7 @@ const TrackOrder = () => {
                 <div className="">
                   <div className="flex mb-[0.5rem]">
                     <div className="">On the way :</div>
-                    {!!order.shipped && (
+                    {order.status == "Dispatched" && (
                       <img
                         src="https://cdn-icons-png.flaticon.com/512/8832/8832119.png"
                         className="ml-[1rem] h-[2rem]"
@@ -216,13 +218,15 @@ const TrackOrder = () => {
               {order.wayBill && (
                 <Button text="Shipping Label" onClick={generateShippingLabel} />
               )}
-            </div>
-            <div className="text-white flex my-[2rem] justify-center gap-[5rem]">
-              <Button
-                text="Ready To Dispatch"
-                onClick={readyToDispatchHandler}
-              />
-              <Button text="Dispatched" onClick={dispatchedHandler} />
+              {order.status == "Order Placed" && (
+                <Button
+                  text="Ready To Dispatch"
+                  onClick={readyToDispatchHandler}
+                />
+              )}
+              {order.status == "Ready To Dispatch" && (
+                <Button text="Dispatched" onClick={dispatchedHandler} />
+              )}
             </div>
           </div>
         </div>
