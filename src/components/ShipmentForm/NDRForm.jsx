@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import CardWithBackDrop from "../Settings/CardWithBackDrop";
+import axios from "axios";
 
 const options = [
   { label: "Deferred Delivery", value: "DEFER_DLV" },
@@ -27,7 +28,23 @@ function NDRForm({ onClose }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData);
+    try {
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_SERVER_URL + "/shipping/ndr_api",
+        formData
+      );
+      console.log(response.data);
+      setFormData({
+        waybill: "",
+        act: "DEFER_DLV",
+        deferred_date: "",
+        name: "",
+        phone: "",
+        add: "",
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

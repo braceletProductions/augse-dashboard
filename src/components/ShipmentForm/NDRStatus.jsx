@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CardWithBackDrop from "../Settings/CardWithBackDrop";
 import CheckedCheckBox from "../SVGComponents/CheckedCheckBox";
 import UnCheckedCheckBox from "../SVGComponents/UnCheckedCheckBox";
+import axios from "axios";
 
 function NDRStatus({ onClose }) {
   const [formData, setFormData] = useState({
@@ -19,7 +20,21 @@ function NDRStatus({ onClose }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData);
+    try {
+      const response = await axios.get(
+        process.env.NEXT_PUBLIC_SERVER_URL +
+          "/shipping/ndr_status/" +
+          upl +
+          "/" +
+          verbose
+          ? "true"
+          : "false",
+        formData
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
