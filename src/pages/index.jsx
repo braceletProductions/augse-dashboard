@@ -6,8 +6,8 @@ const Home = () => {
   const handleLogin = (email, password, path) => {
     if (
       path === "admin" ||
-      path === "seller" ||
-      path === "procurment" ||
+      path === "sales" ||
+      path === "procurement" ||
       path === "accounts"
     ) {
       Router.push(`/${path}/dashboard`);
