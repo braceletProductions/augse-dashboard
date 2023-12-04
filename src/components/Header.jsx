@@ -18,12 +18,14 @@ const Header = ({ user }) => {
     <div className="  top-0 right-0 left-0 z-30 p-2">
       <header className="flex justify-end items-center">
         <div className="flex items-center space-x-4 ">
-          <AiOutlineSetting
-            className="text-white text-xl cursor-pointer"
-            onClick={() => {
-              router.push("/" + user + "/settings");
-            }}
-          />
+          {user === "admin" && (
+            <AiOutlineSetting
+              className="text-white text-xl cursor-pointer"
+              onClick={() => {
+                router.push("/" + user + "/settings");
+              }}
+            />
+          )}
           <AiOutlineUser
             className="text-white text-xl cursor-pointer"
             onClick={() => {

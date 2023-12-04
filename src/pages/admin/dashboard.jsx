@@ -14,9 +14,7 @@ import {
 } from "chart.js"; // Import Chart and CategoryScale
 import MenuItems from "@/components/MenuItems";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import SalesDateRangeForm from "@/components/SalesDateRangeForm";
-import { useSelector } from "react-redux";
 
 Chart.register(
   CategoryScale,
@@ -43,7 +41,7 @@ const months = [
 ];
 
 const Dashboard = () => {
-  const user = useSelector((state) => state.auth.userType);
+  const user = "admin";
   const [users, setUsers] = useState(0);
   const [orders, setOrders] = useState(0);
   const [products, setProducts] = useState(0);
