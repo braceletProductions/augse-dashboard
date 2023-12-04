@@ -16,6 +16,7 @@ import MenuItems from "@/components/MenuItems";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import SalesDateRangeForm from "@/components/SalesDateRangeForm";
+import { useSelector } from "react-redux";
 
 Chart.register(
   CategoryScale,
@@ -42,8 +43,7 @@ const months = [
 ];
 
 const Dashboard = () => {
-  const router = useRouter();
-  const { user } = router.query;
+  const user = useSelector((state) => state.auth.userType);
   const [users, setUsers] = useState(0);
   const [orders, setOrders] = useState(0);
   const [products, setProducts] = useState(0);
@@ -232,11 +232,16 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col max-w-screen-2xl mx-auto min-h-screen">
-      <Header />
+      <Header user={user} />
       <div className="flex-grow lg:flex lg:mt-5">
-        <Sidebar />
+        <Sidebar user={user} />
         <div className="flex-grow flex flex-col px-4 lg:w-3/4">
-          <MenuItems orders={orders} users={users} products={products} />
+          <MenuItems
+            orders={orders}
+            users={users}
+            products={products}
+            user={user}
+          />
           <div className="flex gap-4 flex-grow flex-col lg:flex-row">
             <div className="bg-gray-100 lg:w-1/2 overflow-y-scroll rounded-2xl lg:h-[18rem] pt-1 pl-5 pr-5 mb-2 lg:mb-0 overflow-hidden relative">
               <div className="flex justify-between items-center mb-3 lg:mb-4">

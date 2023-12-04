@@ -10,10 +10,9 @@ import { useDispatch } from "react-redux";
 import { toggleSidebar } from "../../store/slices/ui";
 import { useRouter } from "next/router";
 
-const Header = () => {
+const Header = ({ user }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { user } = router.query;
 
   return (
     <div className="  top-0 right-0 left-0 z-30 p-2">

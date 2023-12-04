@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import logo from "../../public/logo.png";
-import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
+import Link from "next/link";
 
 const optionsProducts = [
   { label: "Add Product", link: "/products/addproduct" },
@@ -11,10 +11,8 @@ const optionsProducts = [
   { label: "Less in Stock", link: "/products/status/lessinstock" },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ user }) => {
   const [productOptions, setProductsOptions] = useState(false);
-  const router = useRouter();
-  const { user } = router.query;
   const showSidebar = useSelector((state) => state.ui.sidebar);
 
   const showProductsOptions = () => {
@@ -29,36 +27,36 @@ const Sidebar = () => {
     >
       <div>
         <div className=" lg:p-1 w-full  h-28  flex justify-center align-items  items-center">
-          <a href={`/${user}/dashboard/dashboard`}>
+          <Link href={`/${user}/dashboard`}>
             <Image src={logo} width={150} height={40} alt="Logo" />
-          </a>
+          </Link>
         </div>
       </div>
       <div className="flex-grow sm:w-full overflow-x-auto overflow-y-auto">
         <ul className="lg:w-full">
           <li className="mb-6 lg:mb-5">
-            <a
-              href={`/${user}/dashboard/dashboard`}
+            <Link
+              href={`/${user}/dashboard`}
               className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
             >
               Dashboard
-            </a>
+            </Link>
           </li>
           <li className="mb-6 lg:mb-5">
-            <a
+            <Link
               href={`/${user}/category/categories`}
               className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
             >
               Category
-            </a>
+            </Link>
           </li>
           <li className="mb-6 lg:mb-5">
-            <a
+            <Link
               href={`/${user}/orders/orders`}
               className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
             >
               Orders
-            </a>
+            </Link>
           </li>
           <li className="lg:mb-5">
             <div
@@ -75,31 +73,31 @@ const Sidebar = () => {
               {productOptions &&
                 optionsProducts.map((option, index) => (
                   <div className="m-1" key={index}>
-                    <a
+                    <Link
                       href={"/" + user + option.link}
                       className="text-black font-medium hover:text-gray-100 p-1 px-2 link hover:rounded-xl justify-center"
                     >
                       {option.label}
-                    </a>
+                    </Link>
                   </div>
                 ))}
             </div>
           </li>
           <li className="my-6 lg:mb-5">
-            <a
+            <Link
               href={`/${user}/customers/customer`}
               className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
             >
               Customers
-            </a>
+            </Link>
           </li>
           <li className="mb-6 lg:mb-5">
-            <a
+            <Link
               href={`/${user}/payment`}
               className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
             >
               Payment
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

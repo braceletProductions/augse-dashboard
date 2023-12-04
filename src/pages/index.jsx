@@ -10,7 +10,7 @@ const Home = () => {
       path === "procurment" ||
       path === "accountant"
     ) {
-      Router.push(`/${path}/dashboard/dashboard`);
+      Router.push(`/${path}/dashboard`);
     } else {
       window.location.href = "https://augse.in"; // Redirect to Augse.in using JavaScript
     }
