@@ -34,7 +34,11 @@ const LoginForm = ({ onLogin }) => {
         console.log(response);
         if (response.status === 200) {
           dispatch(
-            login({ userId: response.data.userId, token: response.data.token })
+            login({
+              userId: response.data.userId,
+              token: response.data.token,
+              userType: response.data.userType,
+            })
           );
           const res = await fetch("/api/setCookie", {
             method: "POST",
