@@ -8,7 +8,7 @@ const Home = () => {
       path === "admin" ||
       path === "seller" ||
       path === "procurment" ||
-      path === "accountant"
+      path === "accounts"
     ) {
       Router.push(`/${path}/dashboard`);
     } else {

@@ -2,7 +2,7 @@ import React from "react";
 import Orders from "./orders/Orders";
 import formatToINR from "../../../utils/currencyFormatter";
 
-const Accountent = () => {
+const Accountant = () => {
   const OrdersNumber = 120;
   const amount = 1000000;
   const gst = 180000;
@@ -27,4 +27,4 @@ const Accountent = () => {
   );
 };
 
-export default Accountent;
+export default Accountant;
