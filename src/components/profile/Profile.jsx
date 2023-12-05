@@ -11,9 +11,6 @@ const Profile = () => {
   const userId = useSelector((state) => state.auth.userId);
   const dispatch = useDispatch();
   const router = useRouter();
-  const name = "John Doe";
-  const phone = "123-456-7890";
-  const email = "john.doe@example.com";
 
   const handleLogout = () => {
     dispatch(logout());
