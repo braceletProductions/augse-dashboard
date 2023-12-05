@@ -66,84 +66,59 @@ const Profile = () => {
           <h1 className="text-center">{profile.name}</h1>
         </div>
       </div>
-      <div className="mt-36 xl:flex mx-10 gap-10">
-        <div className="flex-1">
-          <h2 className="text-center">Basic Information</h2>
-          <table className="w-full border-collapse mt-4">
-            <tbody>
-              <tr>
-                <td className="border p-3 text-left text-gray-600 font-medium">
-                  Name
-                </td>
-                <td className="border p-3 text-left text-gray-800">
-                  {profile.name}
-                </td>
-              </tr>
-              <tr>
-                <td className="border p-3 text-left text-gray-600 font-medium">
-                  Phone
-                </td>
-                <td className="border p-3 text-left text-gray-800">
-                  {profile.phone}
-                </td>
-              </tr>
-              <tr>
-                <td className="border p-3 text-left text-gray-600 font-medium">
-                  Email
-                </td>
-                <td className="border p-3 text-left text-gray-800">
-                  {profile.email}
-                </td>
-              </tr>
-              <tr>
-                <td className="border p-3 text-left text-gray-600 font-medium">
-                  Employee Type
-                </td>
-                <td className="border p-3 text-left text-gray-800">
-                  {profile.employeeType}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div className="flex-1">
-          <h2 className="text-center">Other Information</h2>
-          <table className="w-full border-collapse mt-4">
-            <tbody>
-              <tr>
-                <td className="border p-3 text-left text-gray-600 font-medium">
-                  Name
-                </td>
-                <td className="border p-3 text-left text-gray-800">{name}</td>
-              </tr>
-              <tr>
-                <td className="border p-3 text-left text-gray-600 font-medium">
-                  Phone
-                </td>
-                <td className="border p-3 text-left text-gray-800">{phone}</td>
-              </tr>
-              <tr>
-                <td className="border p-3 text-left text-gray-600 font-medium">
-                  Email
-                </td>
-                <td className="border p-3 text-left text-gray-800">{email}</td>
-              </tr>
-              <tr>
-                <td className="border p-3 text-left text-gray-600 font-medium">
-                  Employee Type
-                </td>
-                <td className="border p-3 text-left text-gray-800">{email}</td>
-              </tr>
-            </tbody>
-          </table>
+      <div className="mt-36 mx-auto gap-10 w-1/2">
+        <h2 className="text-center">Basic Information</h2>
+        <table className="w-full border-collapse mt-4">
+          <tbody>
+            <tr>
+              <td className="border p-3 text-left text-gray-600 font-medium">
+                Name
+              </td>
+              <td className="border p-3 text-left text-gray-800">
+                {profile.name}
+              </td>
+            </tr>
+            <tr>
+              <td className="border p-3 text-left text-gray-600 font-medium">
+                Phone
+              </td>
+              <td className="border p-3 text-left text-gray-800">
+                {profile.phone}
+              </td>
+            </tr>
+            <tr>
+              <td className="border p-3 text-left text-gray-600 font-medium">
+                Email
+              </td>
+              <td className="border p-3 text-left text-gray-800">
+                {profile.email}
+              </td>
+            </tr>
+            <tr>
+              <td className="border p-3 text-left text-gray-600 font-medium">
+                Employee Type
+              </td>
+              <td className="border p-3 text-left text-gray-800">
+                {profile.employeeType}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div className="w-full flex justify-end gap-14 mt-20">
+          <button
+            className="text-white bottom-10 right-10 px-4 py-2 bg-[#033A57] rounded hover:bg-[#041E3E]"
+            onClick={handleLogout}
+          >
+            Change Password
+          </button>
+          <button
+            className="text-white bottom-10 right-10 px-4 py-2 bg-[#033A57] rounded hover:bg-[#041E3E]"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
         </div>
       </div>
-      <button
-        className="text-white absolute bottom-10 right-10 px-4 py-2 bg-[#033A57] rounded hover:bg-[#041E3E]"
-        onClick={handleLogout}
-      >
-        Logout
-      </button>
     </div>
   );
 };
