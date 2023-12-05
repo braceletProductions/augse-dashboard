@@ -3,6 +3,7 @@ import Image from "next/image";
 import logo from "../../public/logo.png";
 import { useSelector } from "react-redux";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const optionsProducts = [
   { label: "Add Product", link: "/products/addproduct" },
@@ -13,7 +14,12 @@ const optionsProducts = [
 
 const Sidebar = ({ user }) => {
   const [productOptions, setProductsOptions] = useState(false);
+  const router = useRouter();
   const showSidebar = useSelector((state) => state.ui.sidebar);
+
+  if (user === undefined) {
+    user = router.query.user;
+  }
 
   const showProductsOptions = () => {
     setProductsOptions((prev) => !prev);
