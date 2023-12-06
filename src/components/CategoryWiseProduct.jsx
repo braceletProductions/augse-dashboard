@@ -57,14 +57,15 @@ function CategoryWiseProduct({ user }) {
 
   return (
     <div
-      className={`bg-gray-100 lg:w-1/2 rounded-2xl ${
-        user === "admin" && "overflow-y-scroll lg:h-[18rem] overflow-hidden"
+      className={`bg-gray-100 lg:w-1/2 min-h-[18rem] rounded-2xl ${
+        user !== "procurement" &&
+        "overflow-y-scroll lg:h-[18rem] overflow-hidden"
       } pt-1 pl-5 pr-5 mb-2 lg:mb-0 relative`}
     >
       <div className="flex justify-between items-center mb-3 lg:mb-4">
-        <h1 className="font-semibold text-gray-700 text-[1.25rem]">
+        <h2 className="font-semibold text-gray-700 text-[1.25rem]">
           Total Product Count
-        </h1>
+        </h2>
         <Link href={`/${user}/category/table`}>
           <img
             src="https://cdn-icons-png.flaticon.com/512/151/151926.png"
