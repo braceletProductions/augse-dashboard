@@ -1,6 +1,8 @@
-import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
-import { Line } from "react-chartjs-2";
+import dynamic from "next/dynamic";
+import axios from "axios";
+
+const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const months = [
   "Apr",
@@ -21,7 +23,7 @@ function SalesChart() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [salesData, setSalesData] = useState([]);
 
-  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30;
   const currentTimestamp = Math.floor(
     Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
   );
@@ -54,33 +56,21 @@ function SalesChart() {
   }, [year]);
 
   const salesChartData = {
-    labels: months,
-    datasets: [
-      {
-        label: "Sales",
-        data: salesData,
-        backgroundColor: "rgba(75,192,192,0.2)",
-        borderColor: "rgba(75,192,192,1)",
-        borderWidth: 1,
-      },
-    ],
-    scales: {
-      x: {
-        type: "Months",
-        labels: months,
-        grid: {
-          display: false,
-        },
-      },
-      y: {
-        beginAtZero: true,
+    options: {
+      xaxis: {
+        categories: months,
       },
     },
+    series: [
+      {
+        name: "Sales",
+        data: salesData,
+      },
+    ],
   };
 
   return (
-    <Fragment>
-      <div className="lg:flex gap-[4rem] px-[1.5rem] bg-white lg:w-4/5 rounded-2xl lg:h-72 mb-1 lg:mb-0">
+      <div className="lg:flex justify-between gap-4 px-4 bg-white lg:w-4/5 rounded-2xl lg:h-80 mb-1 lg:mb-0">
         <form>
           <label
             htmlFor="yearSelect"
@@ -102,9 +92,17 @@ function SalesChart() {
             ))}
           </select>
         </form>
-        <Line data={salesChartData} />
+        {typeof window !== "undefined" && (
+          <div className="w-full">
+            <ApexChart
+              options={salesChartData.options}
+              series={salesChartData.series}
+              type="line"
+              height={300}
+            />
+          </div>
+        )}
       </div>
-    </Fragment>
   );
 }
 

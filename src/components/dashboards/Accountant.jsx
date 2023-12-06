@@ -13,7 +13,7 @@ const Accountant = () => {
         <BsCart4 /> Orders ({orders.length})
       </div>
       <div className="mx-8 flex justify-between mt-20 text-black">
-        {/* <SalesChart /> */}
+        <SalesChart />
         <SalesDateRangeForm />
       </div>
     </div>
