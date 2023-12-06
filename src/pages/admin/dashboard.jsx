@@ -13,9 +13,9 @@ import {
   ArcElement,
 } from "chart.js"; // Import Chart and CategoryScale
 import MenuItems from "@/components/MenuItems";
-import Link from "next/link";
 import SalesDateRangeForm from "@/components/SalesDateRangeForm";
 import SalesChart from "@/components/SalesChart";
+import CategoryWiseProduct from "@/components/CategoryWiseProduct";
 
 Chart.register(
   CategoryScale,
@@ -38,8 +38,6 @@ const Dashboard = () => {
   const currentTimestamp = Math.floor(
     Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
   );
-
-  
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -175,38 +173,7 @@ const Dashboard = () => {
             user={user}
           />
           <div className="flex gap-4 flex-grow flex-col lg:flex-row">
-            <div className="bg-gray-100 lg:w-1/2 overflow-y-scroll rounded-2xl lg:h-[18rem] pt-1 pl-5 pr-5 mb-2 lg:mb-0 overflow-hidden relative">
-              <div className="flex justify-between items-center mb-3 lg:mb-4">
-                <h1 className="font-semibold text-gray-700 text-[1.25rem]">
-                  Total Product Count
-                </h1>
-                <Link href={`/${user}/category/table`}>
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/512/151/151926.png"
-                    className="h-[2rem] hover:bg-slate-300 p-1 hover:scale-110 transition-colors cursor-pointer"
-                  />
-                </Link>
-              </div>
-              <table className="my-4 w-full border border-collapse">
-                <thead>
-                  <tr className="bg-blue-800 text-gray-100 text-center">
-                    <th className="font-semibold px-4 py-1">Category</th>
-                    <th className="font-semibold px-4 py-1">Count</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {category.map((item, index) => (
-                    <tr key={index} className="bg-blue-200 text-center">
-                      <td className="px-4 border-l-2 border-2">
-                        {categoryData[index]}
-                      </td>
-                      <td className="px-4 border-l-2 border-2">{item}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
+            <CategoryWiseProduct user="admin" />
             <div className="bg-gray-100 w-1/2 lg:h-[18rem] rounded-2xl mb-2 lg:mb-0">
               <div className="flex justify-center items-center h-full bg-white min-w-[22rem] rounded-lg">
                 <Doughnut

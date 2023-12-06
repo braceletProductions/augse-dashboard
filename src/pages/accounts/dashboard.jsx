@@ -5,6 +5,7 @@ import React from "react";
 
 function dashboard() {
   const user = "accounts";
+  
   return (
     <div className="w-full">
       <div className="max-w-screen-2xl mx-auto">
