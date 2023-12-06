@@ -102,7 +102,7 @@ function SalesChart() {
             ))}
           </select>
         </form>
-        <Line data={salesChartData} />
+        {/* <Line data={salesChartData} /> */}
       </div>
     </Fragment>
   );
