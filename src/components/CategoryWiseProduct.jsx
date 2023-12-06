@@ -57,7 +57,7 @@ function CategoryWiseProduct({ user }) {
 
   return (
     <div
-      className={`bg-gray-100 lg:w-1/2 min-h-[18rem] rounded-2xl ${
+      className={`bg-gray-100 lg:w-1/2 min-h-[20rem] rounded-2xl ${
         user !== "procurement" &&
         "overflow-y-scroll lg:h-[18rem] overflow-hidden"
       } pt-1 pl-5 pr-5 mb-2 lg:mb-0 relative`}

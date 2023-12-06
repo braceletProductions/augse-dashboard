@@ -174,7 +174,7 @@ const Dashboard = () => {
           />
           <div className="flex gap-4 flex-grow flex-col lg:flex-row">
             <CategoryWiseProduct user="admin" />
-            <div className="bg-gray-100 w-1/2 lg:h-[18rem] rounded-2xl mb-2 lg:mb-0">
+            <div className="bg-gray-100 w-1/2 lg:h-[20rem] rounded-2xl mb-2 lg:mb-0">
               <div className="flex justify-center items-center h-full bg-white min-w-[22rem] rounded-lg">
                 <Doughnut
                   data={doughnutChartData}
