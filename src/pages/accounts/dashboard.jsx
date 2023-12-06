@@ -8,7 +8,7 @@ function dashboard() {
   return (
     <Fragment>
       <Header user={user} />
-      <div className="w-full flex">
+      <div className="w-full flex text-blue-400">
         <Sidebar user={user} />
         <Accountant />
       </div>
