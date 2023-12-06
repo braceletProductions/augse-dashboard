@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { ArcElement, Legend, Tooltip, Title } from "chart.js/auto";
-import LoadingSpinner from "./LoadingSpnner";
+import SkyBlueLoadingSpinner from "./SVGComponents/SkyBlueLoadingSpinner";
 
 function CategoryWiseSaleChart() {
   const [categoryCounts, setCategoryCounts] = useState([]);
@@ -88,13 +88,13 @@ function CategoryWiseSaleChart() {
       <h2 className="text-center font-semibold text-gray-700 text-[1.25rem]">
         Category Wise Monthly Sale
       </h2>
-      {categoryCounts.length > 0 ? (
-        <div className="h-[17.8rem] flex justify-center items-center">
+      <div className="h-[17.8rem] flex justify-center items-center">
+        {categoryCounts.length > 0 ? (
           <Doughnut data={doughnutData} options={doughnutOptions} />
-        </div>
-      ) : (
-        <LoadingSpinner />
-      )}
+        ) : (
+          <SkyBlueLoadingSpinner />
+        )}
+      </div>
     </div>
   );
 }
