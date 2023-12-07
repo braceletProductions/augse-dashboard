@@ -61,7 +61,7 @@ const Sidebar = ({ user }) => {
           {(user === "admin" || user === "procurement" || user == "sales") && (
             <li className="mb-6 lg:mb-5">
               <Link
-                href={`/${user}/orders/orders`}
+                href={`/${user}/orders`}
                 className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
               >
                 Orders

@@ -99,42 +99,42 @@ const Orders = () => {
           <div className="flex max-xl:flex-col justify-between">
             <div className=" text-blue-400 text-xl p-6 rounded-xl mb-6">
               <h1 className="mb-3 gap-x-7 flex items-center">
-                <Link href={`/${user}/totalorder/totalOrder`} passHref>
+                <Link href={`/${user}/orders/totalOrder`} passHref>
                   <p className="text-blue-600 hover:text-blue-900 hover:underline">
                     Total Orders ({totalOrders})
                   </p>
                 </Link>
               </h1>
               <h1 className="mb-3 gap-x-7 flex items-center">
-                <Link href={`/${user}/shipping/shipping`} passHref>
+                <Link href={`/${user}/orders/pending`} passHref>
                   <p className="text-blue-600 hover:text-blue-900 hover:underline">
                     Pending Orders ({pendingOrders})
                   </p>
                 </Link>
               </h1>
               <h1 className="mb-3 gap-x-7 flex items-center">
-                <Link href={`/${user}/notDelivered/notdelivered`} passHref>
+                <Link href={`/${user}/orders/shipped`} passHref>
                   <p className="text-blue-600 hover:text-blue-900 hover:underline">
                     Shipped but not delivered ({shippedOrders})
                   </p>
                 </Link>
               </h1>
               <h1 className="mb-3 gap-x-7 flex items-center">
-                <Link href={`/${user}/delivered/delivered`} passHref>
+                <Link href={`/${user}/orders/delivered`} passHref>
                   <p className="text-blue-600 hover:text-blue-900 hover:underline">
                     Delivered Orders ({deliveredOrders})
                   </p>
                 </Link>
               </h1>
               <h1 className="mb-3 gap-x-7 flex items-center">
-                <Link href={`/${user}/cancel/cancel`} passHref>
+                <Link href={`/${user}/orders/cancelled`} passHref>
                   <p className="text-blue-600 hover:text-blue-900 hover:underline">
                     Cancelled Orders ({cancelledOrders})
                   </p>
                 </Link>
               </h1>
               <h1 className="mb-3 gap-x-7 flex items-center">
-                <Link href={`/${user}/return/return`} passHref>
+                <Link href={`/${user}/orders/returned`} passHref>
                   <p className="text-blue-600 hover:text-blue-900 hover:underline">
                     Returned Orders ({returnedOrders})
                   </p>
