@@ -98,7 +98,7 @@ const Sidebar = ({ user }) => {
           {user === "admin" && (
             <li className="my-6 lg:mb-5">
               <Link
-                href={`/${user}/customers/customer`}
+                href={`/${user}/customers`}
                 className="block lg:inline-block text-gray-900 font-bold hover:text-gray-100 link p-3 hover:rounded-xl justify-center align-items  items-center "
               >
                 Customers

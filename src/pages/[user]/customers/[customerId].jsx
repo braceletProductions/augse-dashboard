@@ -10,11 +10,18 @@ const CustomerDetailPage = () => {
   const [cancel, setCancel] = useState(0);
   const [returned, setReturned] = useState(0);
   const router = useRouter();
-  const { customerId } = router.query;
+  const { user, customerId } = router.query;
+
   const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
   const currentTimestamp = Math.floor(
     Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
   );
+
+  useEffect(() => {
+    if (typeof window !== undefined && user && user !== "admin") {
+      router.replace("/");
+    }
+  }, [user]);
 
   useEffect(() => {
     const fetchDetails = async () => {
