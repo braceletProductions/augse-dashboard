@@ -18,6 +18,17 @@ function index() {
   const [isDownloading, setIsDownloading] = useState(false);
   const orders = useSelector((state) => state.orders.totalOrders);
 
+  useEffect(() => {
+    if (
+      typeof window !== undefined &&
+      user &&
+      user !== "admin" &&
+      user !== "accounts"
+    ) {
+      router.replace("/");
+    }
+  }, [user]);
+
   const showPaymentDetailHandler = (orderId) => {
     router.push({
       pathname: "/" + user + "/track/" + orderId,

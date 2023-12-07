@@ -21,7 +21,7 @@
 
 body {
   color: black;
-  background: rgb(34, 86, 141);
+  background: rgb(30, 87, 153);
 }
 
 input {
@@ -31,7 +31,6 @@ input {
 .link {
   letter-spacing: 0.1em;
   width: full;
-  /* height: 1.5em; */
   line-height: 1.5em;
   position: relative;
   overflow: hidden;
