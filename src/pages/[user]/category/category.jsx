@@ -7,8 +7,19 @@ import CategoryCard from "@/components/CategoryCard";
 const Category = () => {
   const [categoryData, setCategoryData] = useState([]);
   const router = useRouter();
-  const { categoryName } = router.query;
+  const { user, categoryName } = router.query;
   const products = useSelector((state) => state.products.totalProducts);
+
+  useEffect(() => {
+    if (
+      typeof window !== undefined &&
+      user &&
+      user !== "admin" &&
+      user != "procurement"
+    ) {
+      router.replace("/");
+    }
+  }, [user]);
 
   useEffect(() => {
     const filteredProducts = products.filter(

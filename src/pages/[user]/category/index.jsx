@@ -32,6 +32,17 @@ const Categories = () => {
   const products = useSelector((state) => state.products.totalProducts);
 
   useEffect(() => {
+    if (
+      typeof window !== undefined &&
+      user &&
+      user !== "admin" &&
+      user !== "procurement"
+    ) {
+      router.replace("/");
+    }
+  }, [user]);
+
+  useEffect(() => {
     const fetchCategoryData = async () => {
       try {
         const countsMap = new Map();
