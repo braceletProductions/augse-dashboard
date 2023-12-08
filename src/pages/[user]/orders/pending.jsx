@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BackButton from "@/components/BackButton";
 import { useSelector } from "react-redux";
 import SortableTable from "@/components/SortableTable";
+import { useRouter } from "next/router";
 
 const Shipping = () => {
+  const router = useRouter();
+  const { user } = router.query;
   const orders = useSelector((state) => state.orders.pendingOrders);
+
+  useEffect(() => {
+    if (
+      typeof window !== undefined &&
+      user &&
+      user !== "admin" &&
+      user !== "procurement" &&
+      user !== "sales"
+    ) {
+      router.redirect("/");
+    }
+  }, [user]);
 
   return (
     <div className="flex-1 flex-wrap">

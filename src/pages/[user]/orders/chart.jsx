@@ -2,14 +2,29 @@ import React, { useState, useEffect } from "react";
 import BackButton from "@/components/BackButton";
 import OrdersChart from "@/components/OrdersChart";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 function chart() {
+  const router = useRouter();
+  const { user } = router.query;
   const [orders, setOrders] = useState([]);
 
   const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
   const currentTimestamp = Math.floor(
     Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
   );
+
+  useEffect(() => {
+    if (
+      typeof window !== undefined &&
+      user &&
+      user !== "admin" &&
+      user !== "procurement" &&
+      user !== "sales"
+    ) {
+      router.redirect("/");
+    }
+  }, [user]);
 
   useEffect(() => {
     const fetchOrders = async () => {

@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BackButton from "@/components/BackButton";
 import { useSelector } from "react-redux";
 import SortableTable from "@/components/SortableTable";
 import NoOrder from "@/components/NoOrder";
+import { useRouter } from "next/router";
 
 const totalOrder = () => {
+  const router = useRouter();
+  const { user } = router.query;
   const orders = useSelector((state) => state.orders.totalOrders);
+
+  useEffect(() => {
+    if (
+      typeof window !== undefined &&
+      user &&
+      user !== "admin" &&
+      user !== "procurement" &&
+      user !== "sales"
+    ) {
+      router.redirect("/");
+    }
+  }, [user]);
 
   if (orders.length === 0) return <NoOrder />;
 

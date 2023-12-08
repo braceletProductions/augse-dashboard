@@ -18,7 +18,14 @@ const CustomerDetailPage = () => {
   );
 
   useEffect(() => {
-    if (typeof window !== undefined && user && user !== "admin") {
+    if (
+      typeof window !== undefined &&
+      user &&
+      user !== "admin" &&
+      user !== "procurement" &&
+      user != "sales" &&
+      user != "accounts"
+    ) {
       router.replace("/");
     }
   }, [user]);

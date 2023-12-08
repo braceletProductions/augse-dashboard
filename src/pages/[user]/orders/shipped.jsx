@@ -4,7 +4,21 @@ import { useSelector } from "react-redux";
 import SortableTable from "@/components/SortableTable";
 
 const Shipping = () => {
+  const router = useRouter();
+  const { user } = router.query;
   const orders = useSelector((state) => state.orders.shippedOrders);
+
+  useEffect(() => {
+    if (
+      typeof window !== undefined &&
+      user &&
+      user !== "admin" &&
+      user !== "procurement" &&
+      user !== "sales"
+    ) {
+      router.redirect("/");
+    }
+  }, [user]);
 
   return (
     <div className="flex-1 flex-wrap">

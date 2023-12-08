@@ -1,5 +1,5 @@
 import Sidebar from "@/components/Sidebar";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import Link from "next/link";
 import CategoryOrderChart from "@/components/CategoryOrderChart";
@@ -49,6 +49,18 @@ const Orders = () => {
   const shippedOrders = useSelector(
     (state) => state.orders.shippedOrders.length
   );
+
+  useEffect(() => {
+    if (
+      typeof window !== undefined &&
+      user &&
+      user !== "admin" &&
+      user !== "procurement" &&
+      user !== "sales"
+    ) {
+      router.redirect("/");
+    }
+  }, [user]);
 
   const doughnutData = {
     labels: ["Canceled", "Returned", "Delivered", "Pending", "Shipped"],
