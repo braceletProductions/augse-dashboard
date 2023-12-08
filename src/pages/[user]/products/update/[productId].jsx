@@ -69,6 +69,18 @@ function updateProduct() {
   );
 
   useEffect(() => {
+    if (
+      typeof window !== undefined &&
+      user &&
+      user !== "admin" &&
+      user !== "procurement" &&
+      user != "sales"
+    ) {
+      router.replace("/");
+    }
+  }, [user]);
+
+  useEffect(() => {
     const fetchDetails = async () => {
       try {
         const res = await axios.get(

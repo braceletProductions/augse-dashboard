@@ -17,6 +17,19 @@ const TrackOrder = () => {
   );
 
   useEffect(() => {
+    if (
+      typeof window !== undefined &&
+      user &&
+      user !== "admin" &&
+      user !== "procurement" &&
+      user != "sales" &&
+      user != "accounts"
+    ) {
+      router.replace("/");
+    }
+  }, [user]);
+
+  useEffect(() => {
     const fetchDetails = async () => {
       if (!orderId) return;
       try {

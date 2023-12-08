@@ -1,9 +1,19 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import BackButton from "@/components/BackButton";
 import SettingsChart from "@/components/Settings/SettingsChart";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 function index() {
+  const router = useRouter();
+  const { user } = router.query;
+
+  useEffect(() => {
+    if (typeof window !== undefined && user && user !== "admin") {
+      router.replace("/");
+    }
+  }, [user]);
+
   return (
     <Fragment>
       <Head>

@@ -6,12 +6,25 @@ import LoadingSpinner from "@/components/LoadingSpnner";
 
 const ProductDetail = () => {
   const router = useRouter();
-  const { productId } = router.query;
+  const { user, productId } = router.query;
   const [product, setProduct] = useState({});
   const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
   const currentTimestamp = Math.floor(
     Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
   );
+
+  useEffect(() => {
+    if (
+      typeof window !== undefined &&
+      user &&
+      user !== "admin" &&
+      user !== "procurement" &&
+      user != "sales" &&
+      user != "accounts"
+    ) {
+      router.replace("/");
+    }
+  }, [user]);
 
   useEffect(() => {
     const fetchData = async () => {

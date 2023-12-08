@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BackButton from "@/components/BackButton";
 import Router, { useRouter } from "next/router";
 import formatToINR from "../../../../utils/currencyFormatter";
@@ -8,6 +8,18 @@ function allproducts() {
   const router = useRouter();
   const { user } = router.query;
   const products = useSelector((state) => state.products.totalProducts);
+
+  useEffect(() => {
+    if (
+      typeof window !== undefined &&
+      user &&
+      user !== "admin" &&
+      user !== "procurement" &&
+      user != "sales"
+    ) {
+      router.replace("/");
+    }
+  }, [user]);
 
   const showOrderDetailHandler = (id) => {
     Router.push({

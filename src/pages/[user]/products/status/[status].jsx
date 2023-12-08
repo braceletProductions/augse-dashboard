@@ -10,8 +10,20 @@ function status() {
   const [outofstock, setoutofstock] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const router = useRouter();
-  const status = router.query.status;
+  const { user, status } = router.query;
   const products = useSelector((state) => state.products.totalProducts);
+
+  useEffect(() => {
+    if (
+      typeof window !== undefined &&
+      user &&
+      user !== "admin" &&
+      user !== "procurement" &&
+      user != "sales"
+    ) {
+      router.replace("/");
+    }
+  }, [user]);
 
   if (!products) {
     return <LoadingSpinner />;
