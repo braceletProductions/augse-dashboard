@@ -14,6 +14,7 @@ import {
 import { useSelector } from "react-redux";
 import Router, { useRouter } from "next/router";
 import Header from "@/components/Header";
+import LoadingSpinner from "@/components/LoadingSpnner";
 
 ChartJS.register(
   Title,
@@ -28,6 +29,7 @@ ChartJS.register(
 const Categories = () => {
   const router = useRouter();
   const { user } = router.query;
+  const [isLoading, setIsLoading] = useState(true);
   const [categoryCountsMap, setCategoryCountsMap] = useState(new Map());
   const products = useSelector((state) => state.products.totalProducts);
 
@@ -39,6 +41,8 @@ const Categories = () => {
       user !== "procurement"
     ) {
       router.replace("/");
+    } else {
+      setIsLoading(false);
     }
   }, [user]);
 
@@ -112,6 +116,8 @@ const Categories = () => {
       query: { categoryName: name },
     });
   };
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <Fragment>

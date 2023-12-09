@@ -3,14 +3,15 @@ import { useSelector } from "react-redux";
 import BackButton from "@/components/BackButton";
 import { useRouter } from "next/router";
 import PaymentTable from "@/components/Payment/PaymentTable";
-import NoOrder from "@/components/NoOrder";
 import DownloadButton from "@/components/Payment/DownloadButton";
+import LoadingSpinner from "@/components/LoadingSpnner";
 
 const date = new Date();
 const month = date.getMonth();
 const startingYear = month > 2 ? date.getFullYear() : date.getFullYear() - 1;
 
 function index() {
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { user } = router.query;
   const [filteredOrders, setFilteredOrders] = useState([]);
@@ -26,6 +27,8 @@ function index() {
       user !== "accounts"
     ) {
       router.replace("/");
+    } else {
+      setIsLoading(false);
     }
   }, [user]);
 
@@ -81,7 +84,7 @@ function index() {
     }, 1000);
   };
 
-  if (filteredOrders.length === 0) return <NoOrder />;
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="w-full">

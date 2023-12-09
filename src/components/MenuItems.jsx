@@ -6,12 +6,12 @@ const menuItems = [
   {
     label: "Orders",
     icon: <FaShoppingCart className="text-2xl" />,
-    href: "/totalorder/totalOrder",
+    href: "/orders/totalOrder",
   },
   {
     label: "Users",
     icon: <FaUser className="text-2xl" />,
-    href: "/customers/customer",
+    href: "/customers",
   },
   {
     label: "Products",
