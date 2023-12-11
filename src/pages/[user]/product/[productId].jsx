@@ -6,6 +6,7 @@ import LoadingSpinner from "@/components/LoadingSpnner";
 
 const ProductDetail = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
   const { user, productId } = router.query;
   const [product, setProduct] = useState({});
   const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
@@ -23,6 +24,10 @@ const ProductDetail = () => {
       user != "accounts"
     ) {
       router.replace("/");
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     }
   }, [user]);
 
@@ -45,7 +50,7 @@ const ProductDetail = () => {
     fetchData();
   }, [productId]);
 
-  if (!product._id) return <LoadingSpinner />;
+  if (isLoading || !product._id) return <LoadingSpinner />;
 
   return (
     <div className="mx-auto max-w-screen-2xl">

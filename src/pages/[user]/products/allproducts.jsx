@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import BackButton from "@/components/BackButton";
 import Router, { useRouter } from "next/router";
 import formatToINR from "../../../../utils/currencyFormatter";
 import { useSelector } from "react-redux";
+import LoadingSpinner from "@/components/LoadingSpnner";
 
 function allproducts() {
   const router = useRouter();
   const { user } = router.query;
+  const [isLoading, setIsLoading] = useState(true);
   const products = useSelector((state) => state.products.totalProducts);
 
   useEffect(() => {
@@ -18,6 +20,8 @@ function allproducts() {
       user != "sales"
     ) {
       router.replace("/");
+    } else {
+      setIsLoading(false);
     }
   }, [user]);
 
@@ -26,6 +30,8 @@ function allproducts() {
       pathname: "/" + user + "/product/" + id,
     });
   };
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="w-full">

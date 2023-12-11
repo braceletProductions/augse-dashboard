@@ -9,6 +9,7 @@ import LoadingSpinner from "@/components/LoadingSpnner";
 function status() {
   const [outofstock, setoutofstock] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { user, status } = router.query;
   const products = useSelector((state) => state.products.totalProducts);
@@ -22,12 +23,12 @@ function status() {
       user != "sales"
     ) {
       router.replace("/");
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     }
   }, [user]);
-
-  if (!products) {
-    return <LoadingSpinner />;
-  }
 
   useEffect(() => {
     if (status == "outofstock") {
@@ -41,6 +42,10 @@ function status() {
       setFilteredProducts(filter);
     }
   }, [status, products]);
+
+  if (isLoading || !products) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="w-full">
