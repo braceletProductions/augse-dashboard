@@ -9,6 +9,7 @@ const CustomerDetailPage = () => {
   const [customer, setCustomer] = useState({});
   const [cancel, setCancel] = useState(0);
   const [returned, setReturned] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { user, customerId } = router.query;
 
@@ -27,6 +28,10 @@ const CustomerDetailPage = () => {
       user != "accounts"
     ) {
       router.replace("/");
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1500);
     }
   }, [user]);
 
@@ -61,10 +66,7 @@ const CustomerDetailPage = () => {
     return <LoadingSpinner />;
   }
 
-  const coinsAndCoupons = {
-    totalCoins: 50,
-    totalCoupons: 3,
-  };
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="text-gray-100 font-medium">
@@ -96,19 +98,6 @@ const CustomerDetailPage = () => {
             <p className="text-blue-400 pb-5">Canceled Orders: {cancel}</p>
             <p className="text-blue-400 pb-5">Return Orders: {returned}</p>
           </div>
-
-          {/* Render dynamic coins and coupons */}
-          {/* <div className="text-black mt-10">
-            <h1 className="text-blue-500 font-bold text-3xl pb-5">
-              Coins/Coupons
-            </h1>
-            <p className="text-blue-400 pb-5">
-              Total Coins: {coinsAndCoupons.totalCoins}
-            </p>
-            <p className="text-blue-400 pb-5">
-              Total Coupons: {coinsAndCoupons.totalCoupons}
-            </p>
-          </div> */}
         </div>
       </div>
     </div>

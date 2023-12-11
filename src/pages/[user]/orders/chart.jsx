@@ -3,8 +3,10 @@ import BackButton from "@/components/BackButton";
 import OrdersChart from "@/components/OrdersChart";
 import axios from "axios";
 import { useRouter } from "next/router";
+import LoadingSpinner from "@/components/LoadingSpnner";
 
 function chart() {
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { user } = router.query;
   const [orders, setOrders] = useState([]);
@@ -22,7 +24,11 @@ function chart() {
       user !== "procurement" &&
       user !== "sales"
     ) {
-      router.redirect("/");
+      router.replace("/");
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
   }, [user]);
 
@@ -58,6 +64,8 @@ function chart() {
       Math.max(dispatched.length, delivered.length)
     )
   );
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="w-full">

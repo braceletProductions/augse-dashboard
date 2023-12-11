@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import BackButton from "@/components/BackButton";
 import { useSelector } from "react-redux";
 import SortableTable from "@/components/SortableTable";
 import { useRouter } from "next/router";
+import LoadingSpinner from "@/components/LoadingSpnner";
 
 const Return = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { user } = router.query;
   const orders = useSelector((state) => state.orders.returnedOrders);
@@ -17,9 +19,15 @@ const Return = () => {
       user !== "procurement" &&
       user !== "sales"
     ) {
-      router.redirect("/");
+      router.replace("/");
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
   }, [user]);
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="flex-1 flex-wrap">

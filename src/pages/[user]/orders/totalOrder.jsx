@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import BackButton from "@/components/BackButton";
 import { useSelector } from "react-redux";
 import SortableTable from "@/components/SortableTable";
 import NoOrder from "@/components/NoOrder";
 import { useRouter } from "next/router";
+import LoadingSpinner from "@/components/LoadingSpnner";
 
 const totalOrder = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { user } = router.query;
   const orders = useSelector((state) => state.orders.totalOrders);
@@ -18,9 +20,15 @@ const totalOrder = () => {
       user !== "procurement" &&
       user !== "sales"
     ) {
-      router.redirect("/");
+      router.replace("/");
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
   }, [user]);
+
+  if (isLoading) return <LoadingSpinner />;
 
   if (orders.length === 0) return <NoOrder />;
 

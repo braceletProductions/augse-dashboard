@@ -1,5 +1,5 @@
 import Sidebar from "@/components/Sidebar";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import Link from "next/link";
 import CategoryOrderChart from "@/components/CategoryOrderChart";
@@ -16,6 +16,7 @@ import {
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Header from "@/components/Header";
+import LoadingSpinner from "@/components/LoadingSpnner";
 
 ChartJS.register(
   CategoryScale,
@@ -31,6 +32,7 @@ const calculatePercentage = (value, total) =>
   ((value / total) * 100).toFixed(2);
 
 const Orders = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { user } = router.query;
   const totalOrders = useSelector((state) => state.orders.totalOrders.length);
@@ -58,7 +60,11 @@ const Orders = () => {
       user !== "procurement" &&
       user !== "sales"
     ) {
-      router.redirect("/");
+      router.replace("/");
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
   }, [user]);
 
@@ -101,6 +107,8 @@ const Orders = () => {
     cutout: "55%",
     responsive: true,
   };
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <Fragment>
