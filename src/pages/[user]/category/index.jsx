@@ -42,7 +42,9 @@ const Categories = () => {
     ) {
       router.replace("/");
     } else {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
   }, [user]);
 

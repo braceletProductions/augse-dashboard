@@ -28,7 +28,9 @@ function index() {
     ) {
       router.replace("/");
     } else {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
     }
   }, [user]);
 
@@ -81,7 +83,7 @@ function index() {
     }, 500);
     setTimeout(() => {
       setIsDownloading(false);
-    }, 1000);
+    }, 500);
   };
 
   if (isLoading) return <LoadingSpinner />;

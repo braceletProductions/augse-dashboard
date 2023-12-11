@@ -3,9 +3,11 @@ import { useRouter } from "next/router";
 import BackButton from "@/components/BackButton";
 import { useSelector } from "react-redux";
 import CategoryCard from "@/components/CategoryCard";
+import LoadingSpinner from "@/components/LoadingSpnner";
 
 const Category = () => {
   const [categoryData, setCategoryData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { user, categoryName } = router.query;
   const products = useSelector((state) => state.products.totalProducts);
@@ -18,6 +20,10 @@ const Category = () => {
       user != "procurement"
     ) {
       router.replace("/");
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
   }, [user]);
 
@@ -27,6 +33,8 @@ const Category = () => {
     );
     setCategoryData(filteredProducts);
   }, [products]);
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="w-full">

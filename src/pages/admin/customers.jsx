@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Sidebar from "@/components/Sidebar";
@@ -6,18 +6,11 @@ import Header from "@/components/Header";
 
 const Customer = () => {
   const router = useRouter();
-  const { user } = router.query;
   const [customers, setCustomers] = useState([]);
   const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
   const currentTimestamp = Math.floor(
     Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
   );
-
-  useEffect(() => {
-    if (typeof window !== undefined && user && user !== "admin") {
-      router.replace("/");
-    }
-  }, [user]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -39,7 +32,7 @@ const Customer = () => {
   }, []);
 
   const handleProfileClick = (customerId) => {
-    router.push(`/${user}/customers/${customerId}`); // Navigate to customer detail page
+    router.push(`/admin/customers/${customerId}`); // Navigate to customer detail page
   };
 
   return (
@@ -47,7 +40,7 @@ const Customer = () => {
       <div className="max-w-screen-2xl mx-auto">
         <Header />
         <div className="flex flex-col sm:flex-row min-h-screen mt-5 lg:mt-5">
-          <Sidebar />
+          <Sidebar user="admin" />
           <div className="flex-1">
             <div className="mt-10 mb-12 px-4">
               <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-3xl text-gray-100 pb-5">
