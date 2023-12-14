@@ -61,11 +61,14 @@ const ShipmentForm = ({ onSubmit, orderId }) => {
           country: orderDetails.addressId.country,
           payment_mode:
             orderDetails.paymentMode === "Online" ? "Prepaid" : "COD",
+          cod_amount:
+            orderDetails.paymentMode === "Online" ? "0" : orderDetails.price,
           total_amount: orderDetails.price,
           quantity: orderDetails.quantity.reduce(
             (acc, currentValue) => acc + currentValue,
             0
           ),
+          order_date: new Date(orderDetails.order_placed).toISOString(),
         }));
       } catch (error) {
         console.log(error);
