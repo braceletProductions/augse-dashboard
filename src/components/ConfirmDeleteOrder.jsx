@@ -1,18 +1,7 @@
 import React from "react";
 import CardWithBackDrop from "./Settings/CardWithBackDrop";
-import axios from "axios";
 
-const ConfirmDeleteOrder = ({ orderId, onCancel }) => {
-  const confirmDelete = async () => {
-    try {
-      const response = await axios.delete(
-        process.env.NEXT_PUBLIC_SERVER_URL + "/orders/orders/" + orderId
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+const ConfirmDeleteOrder = ({ orderId, onCancel, onDelete }) => {
   return (
     <CardWithBackDrop>
       <p className="text-lg text-gray-800 mb-4">
@@ -27,7 +16,7 @@ const ConfirmDeleteOrder = ({ orderId, onCancel }) => {
         </button>
         <button
           className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded transition duration-300"
-          onClick={confirmDelete}
+          onClick={onDelete}
         >
           Confirm Delete
         </button>

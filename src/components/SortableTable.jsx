@@ -3,6 +3,8 @@ import formatToINR from "../../utils/currencyFormatter";
 import Router, { useRouter } from "next/router";
 import { AiFillDelete } from "react-icons/ai";
 import ConfirmDeleteOrder from "./ConfirmDeleteOrder";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function SortableTable({ data }) {
   const router = useRouter();
@@ -49,12 +51,29 @@ function SortableTable({ data }) {
     });
   };
 
+  const confirmDelete = async () => {
+    try {
+      const response = await axios.delete(
+        process.env.NEXT_PUBLIC_SERVER_URL + "/orders/orders/" + deleteOrderId
+      );
+      toast.error(response.data.message);
+      const filteredOrder = sortedData.filter(
+        (data) => data._id !== deleteOrderId
+      );
+      setSortedData(filteredOrder);
+      setDeleteOrderId(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Fragment>
       {deleteOrderId && (
         <ConfirmDeleteOrder
           orderId={deleteOrderId}
           onCancel={() => setDeleteOrderId(false)}
+          onDelete={confirmDelete}
         />
       )}
       <table className="my-4 w-full border border-collapse">
