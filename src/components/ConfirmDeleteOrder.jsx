@@ -5,7 +5,9 @@ import axios from "axios";
 const ConfirmDeleteOrder = ({ orderId, onCancel }) => {
   const confirmDelete = async () => {
     try {
-      const response = axios.delete();
+      const response = await axios.delete(
+        process.env.NEXT_PUBLIC_SERVER_URL + "/orders/orders/" + orderId
+      );
     } catch (error) {
       console.log(error);
     }
