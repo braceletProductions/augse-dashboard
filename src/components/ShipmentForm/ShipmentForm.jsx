@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BackButton from "../BackButton";
 import InputBox from "./InputBox";
 import Dropdown from "./DropDown";
 import DatePicker from "./DatePicker";
+import axios from "axios";
 
-const ShipmentForm = ({ onSubmit }) => {
+const ShipmentForm = ({ onSubmit, orderId }) => {
   const [formData, setFormData] = useState({
     name: "",
     add: "",
@@ -38,6 +39,40 @@ const ShipmentForm = ({ onSubmit }) => {
     shipping_mode: "",
     address_type: "",
   });
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      if (!orderId) return;
+      try {
+        const response = await axios.get(
+          process.env.NEXT_PUBLIC_SERVER_URL + "/orders/orders/" + orderId
+        );
+        const orderDetails = response.data;
+        console.log(orderDetails);
+        setFormData((prev) => ({
+          ...prev,
+          order: orderId,
+          name: orderDetails.userId.name,
+          phone: orderDetails.addressId.phone,
+          add: `${orderDetails.addressId.name}, ${orderDetails.addressId.landmark}, ${orderDetails.addressId.street}`,
+          city: orderDetails.addressId.city,
+          pin: orderDetails.addressId.pinCode,
+          state: orderDetails.addressId.state,
+          country: orderDetails.addressId.country,
+          payment_mode:
+            orderDetails.paymentMode === "Online" ? "Prepaid" : "COD",
+          total_amount: orderDetails.price,
+          quantity: orderDetails.quantity.reduce(
+            (acc, currentValue) => acc + currentValue,
+            0
+          ),
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDetails();
+  }, [orderId]);
 
   const handleInputChange = (value, name) => {
     setFormData((prevData) => ({
@@ -182,12 +217,6 @@ const ShipmentForm = ({ onSubmit }) => {
             />
           </div>
           <div className="flex gap-4">
-            <InputBox
-              label="Waybill"
-              id="waybill"
-              value={formData.waybill}
-              onChange={handleInputChange}
-            />
             <InputBox
               label="Weight"
               type="number"

@@ -44,7 +44,7 @@ function forward() {
     }
   };
 
-  return <ShipmentForm onSubmit={placeDispatchRequest} />;
+  return <ShipmentForm onSubmit={placeDispatchRequest} orderId={orderId} />;
 }
 
 export default forward;
