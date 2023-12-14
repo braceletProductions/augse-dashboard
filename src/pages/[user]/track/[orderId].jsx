@@ -238,7 +238,7 @@ const TrackOrder = () => {
                 />
               )}
               {order.status == "Ready To Dispatch" && (
-                <Button text="Dispatched" onClick={dispatchedHandler} />
+                <Button text="Dispatch Now" onClick={dispatchedHandler} />
               )}
             </div>
           </div>
