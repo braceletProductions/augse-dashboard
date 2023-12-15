@@ -6,7 +6,9 @@ function AddressCard(props) {
           Address {props.index && props.index + 1}
         </div>
         <div
-          className={`sm:w-96 text-black leading-6 font-normal ${props.index && "px-5"}`}
+          className={`sm:w-96 text-black leading-6 font-normal ${
+            props.index && "px-5"
+          }`}
         >
           <span className="font-semibold">{props.val.name}</span>
           <p>
@@ -14,8 +16,8 @@ function AddressCard(props) {
             {props.val.houseNumber} {props.val.street}
           </p>
           <p>
-            <span className="font-semibold">Landmark:</span>{" "}
-            {props.val.landmark}
+            <span className="font-semibold">Address Type:</span>{" "}
+            {props.val.addressType}
           </p>
           <p>
             <span className="font-semibold">City:</span> {props.val.city}

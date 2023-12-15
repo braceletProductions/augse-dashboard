@@ -48,17 +48,17 @@ const ShipmentForm = ({ onSubmit, orderId }) => {
           process.env.NEXT_PUBLIC_SERVER_URL + "/orders/orders/" + orderId
         );
         const orderDetails = response.data;
-        console.log(orderDetails);
         setFormData((prev) => ({
           ...prev,
           order: orderId,
           name: orderDetails.userId.name,
           phone: orderDetails.addressId.phone,
-          add: `${orderDetails.addressId.name}, ${orderDetails.addressId.landmark}, ${orderDetails.addressId.street}`,
+          add: `${orderDetails.addressId.name}, ${orderDetails.addressId.street}`,
           city: orderDetails.addressId.city,
           pin: orderDetails.addressId.pinCode,
           state: orderDetails.addressId.state,
           country: orderDetails.addressId.country,
+          address_type: orderDetails.addressId.addressType,
           payment_mode:
             orderDetails.paymentMode === "Online" ? "Prepaid" : "COD",
           cod_amount:
@@ -93,7 +93,7 @@ const ShipmentForm = ({ onSubmit, orderId }) => {
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
-    onSubmit(formData);
+    if (formData.shipping_mode !== "") onSubmit(formData);
   };
 
   return (
