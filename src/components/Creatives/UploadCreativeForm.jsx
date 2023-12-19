@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import CardWithBackDrop from "../Settings/CardWithBackDrop";
 import Image from "next/image";
+import { GoDot } from "react-icons/go";
 
 function UploadCreativeForm({ onSubmit, onClose, loading }) {
   const fileInputRef = useRef(null);
@@ -64,7 +65,7 @@ function UploadCreativeForm({ onSubmit, onClose, loading }) {
             onClick={() => onSubmit(selectedFile)}
             disabled={loading}
           >
-            Upload
+            {loading ? <GoDot className="mt-2 animate-bounce" /> : null} Upload
           </button>
         </div>
       </div>

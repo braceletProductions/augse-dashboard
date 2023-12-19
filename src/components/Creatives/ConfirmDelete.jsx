@@ -1,5 +1,6 @@
 import React from "react";
 import CardWithBackDrop from "../Settings/CardWithBackDrop";
+import { GoDot } from "react-icons/go";
 
 function ConfirmDelete({ onCancel, onDelete, loading }) {
   return (
@@ -19,7 +20,8 @@ function ConfirmDelete({ onCancel, onDelete, loading }) {
           onClick={onDelete}
           disabled={loading}
         >
-          Confirm Delete
+          {loading ? <GoDot className="mt-2 animate-bounce" /> : null} Confirm
+          Delete
         </button>
       </div>
     </CardWithBackDrop>
