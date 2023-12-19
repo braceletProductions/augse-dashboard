@@ -14,6 +14,11 @@ function creatives() {
   const [creatives1, setCreatives1] = useState([]);
   const [creatives2, setCreatives2] = useState([]);
 
+  const serverTimeZoneOffsetMinutes = 5 * 60 + 30; // 5 hours and 30 minutes in minutes
+  const currentTimestamp = Math.floor(
+    Date.now() / 1000 - serverTimeZoneOffsetMinutes * 60
+  );
+
   const handleDeleteClick = (id) => {
     setShowDeleteDialog(id);
   };
@@ -65,7 +70,12 @@ function creatives() {
       if (isDeleting || isUploading) return;
       try {
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/creative/Main"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/creative/Main",
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         setCreativesMain(response.data.creatives);
       } catch (error) {
@@ -73,7 +83,12 @@ function creatives() {
       }
       try {
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/creative/Creative1"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/creative/Creative1",
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         setCreatives1(response.data.creatives);
       } catch (error) {
@@ -81,7 +96,12 @@ function creatives() {
       }
       try {
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_SERVER_URL + "/creative/Creative2"
+          process.env.NEXT_PUBLIC_SERVER_URL + "/creative/Creative2",
+          {
+            params: {
+              timestamp: currentTimestamp,
+            },
+          }
         );
         setCreatives2(response.data.creatives);
       } catch (error) {
