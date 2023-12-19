@@ -18,13 +18,15 @@ function Rect({ onDelete, onUpload, creatives1, creatives2 }) {
             />
           )}
           <div className="flex justify-center">
-            <button
-              className="bg-white text-red-600 flex justify-center border-2 border-red-500 items-center py-1 px-2 rounded-md mx-auto hover:text-white hover:bg-red-700"
-              onClick={() => onDelete(creatives1[0]._id)}
-            >
-              <AiFillDelete />
-              DELETE
-            </button>
+            {creatives1.length > 0 && (
+              <button
+                className="bg-white text-red-600 flex justify-center border-2 border-red-500 items-center py-1 px-2 rounded-md mx-auto hover:text-white hover:bg-red-700"
+                onClick={() => onDelete(creatives1[0]._id)}
+              >
+                <AiFillDelete />
+                DELETE
+              </button>
+            )}
             <button
               className="bg-white text-green-600 flex justify-center border-2 border-green-500 items-center py-1 px-2 rounded-md mx-auto hover:text-white hover:bg-green-700"
               onClick={() => onUpload("Creative1")}
