@@ -7,6 +7,7 @@ import CreateWarehouse from "../ShipmentForm/CreateWarehouse";
 import UpdateWarehouse from "../ShipmentForm/UpdateWarehouse";
 import NDRForm from "../ShipmentForm/NDRForm";
 import NDRStatus from "../ShipmentForm/NDRStatus";
+import Link from "next/link";
 
 function RightContent() {
   const [showCouponForm, setShowSpecialCouponForm] = useState(false);
@@ -36,7 +37,7 @@ function RightContent() {
         >
           Add New Employee
         </button>
-        <button
+        {/* <button
           className="text-white mx-auto w-60 px-4 py-2 bg-[#40a0d3] rounded hover:bg-[#041E3E]"
           onClick={() => setShowAddWarehouse(true)}
         >
@@ -47,7 +48,7 @@ function RightContent() {
           onClick={() => setShowUpdateWarehouse(true)}
         >
           Update Warehouse
-        </button>
+        </button> */}
         <button
           className="text-white mx-auto w-60 px-4 py-2 bg-[#40a0d3] rounded hover:bg-[#041E3E]"
           onClick={() => setShowCreatePickup(true)}
@@ -66,6 +67,12 @@ function RightContent() {
         >
           NDR Status
         </button>
+        <Link
+          href={"/admin/settings/creatives"}
+          className="text-white mx-auto w-60 text-center px-4 py-2 bg-[#40a0d3] rounded hover:bg-[#041E3E]"
+        >
+          Manage Creatives
+        </Link>
       </div>
       {showCouponForm ? (
         <SpecialCouponForm onClose={() => setShowSpecialCouponForm(false)} />
