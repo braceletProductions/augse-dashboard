@@ -1,7 +1,7 @@
 import React from "react";
 import CardWithBackDrop from "../Settings/CardWithBackDrop";
 
-function ConfirmDelete({ onCancel, onDelete }) {
+function ConfirmDelete({ onCancel, onDelete, loading }) {
   return (
     <CardWithBackDrop>
       <p className="text-lg text-gray-800 mb-4">
@@ -17,6 +17,7 @@ function ConfirmDelete({ onCancel, onDelete }) {
         <button
           className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded transition duration-300"
           onClick={onDelete}
+          disabled={loading}
         >
           Confirm Delete
         </button>
