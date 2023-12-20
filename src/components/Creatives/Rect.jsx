@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { AiFillDelete, AiOutlineUpload } from "react-icons/ai";
 
 function Rect({ onDelete, onUpload, creatives1, creatives2 }) {
@@ -39,11 +38,9 @@ function Rect({ onDelete, onUpload, creatives1, creatives2 }) {
         <h2 className="text-white my-2">Creative 2:</h2>
         <div className="bg-gray-200">
           {creatives2.length > 0 && (
-            <Image
+            <img
               src={process.env.NEXT_PUBLIC_IMAGE_URL + creatives2[0].path}
               alt="Creative2"
-              height="150"
-              width="300"
               className="w-[30rem]"
             />
           )}

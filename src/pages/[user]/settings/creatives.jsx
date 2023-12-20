@@ -132,6 +132,7 @@ function creatives() {
             onCancel={handleCancelDelete}
             onDelete={handleConfirmDelete}
             loading={isDeleting}
+            path={showDeleteDialog}
           />
         )}
         {showUploadOption && (

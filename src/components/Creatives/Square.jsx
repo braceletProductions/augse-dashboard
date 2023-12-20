@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { AiFillDelete, AiOutlineUpload } from "react-icons/ai";
 
 function Square({ onDelete, onUpload, creatives }) {

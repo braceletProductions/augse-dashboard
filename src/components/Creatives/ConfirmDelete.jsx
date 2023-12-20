@@ -2,12 +2,17 @@ import React from "react";
 import CardWithBackDrop from "../Settings/CardWithBackDrop";
 import { GoDot } from "react-icons/go";
 
-function ConfirmDelete({ onCancel, onDelete, loading }) {
+function ConfirmDelete({ onCancel, onDelete, loading, path }) {
   return (
     <CardWithBackDrop>
       <p className="text-lg text-gray-800 mb-4">
         Are you sure you want to delete image?
       </p>
+      <img
+        src={process.env.NEXT_PUBLIC_IMAGE_URL + path}
+        alt="Creative"
+        className="max-w-[10rem]"
+      />
       <div className="flex justify-end space-x-4">
         <button
           className="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded transition duration-300"
