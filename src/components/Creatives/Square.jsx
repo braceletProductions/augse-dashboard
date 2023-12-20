@@ -9,12 +9,9 @@ function Square({ onDelete, onUpload, creatives }) {
       <div className="w-full grid grid-cols-3 gap-2">
         {creatives.map((creative, index) => (
           <div className="bg-gray-200" key={index}>
-            {console.log(process.env.NEXT_PUBLIC_IMAGE_URL + creative.path)}
-            <Image
+            <img
               src={process.env.NEXT_PUBLIC_IMAGE_URL + creative.path}
               alt="Creative1"
-              height="250"
-              width="250"
             />
             <button
               className="bg-white text-red-600 flex justify-center border-2 border-red-500 items-center py-1 px-2 rounded-md mx-auto hover:text-white hover:bg-red-700"
