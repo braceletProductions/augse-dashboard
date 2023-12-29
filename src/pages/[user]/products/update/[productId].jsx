@@ -292,7 +292,7 @@ function updateProduct() {
         formData
       );
       Router.push({
-        pathname: `/${user}/dashboard/dashboard`,
+        pathname: `/${user}/dashboard`,
       });
     } catch (error) {
       console.log(error);
